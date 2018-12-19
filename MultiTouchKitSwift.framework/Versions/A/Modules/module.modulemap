@@ -1,0 +1,11 @@
+framework module MultiTouchKitSwift {
+  umbrella header "MultiTouchKitSwift.h"
+
+  export *
+  module * { export * }
+}
+
+module MultiTouchKitSwift.Swift {
+    header "MultiTouchKitSwift-Swift.h"
+    requires objc
+}
