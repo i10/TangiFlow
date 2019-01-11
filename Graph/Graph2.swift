@@ -69,7 +69,7 @@ class Graph2{
                     
                 } else {
                     self.redrawArc(arc: activity.from ?? activity.to, with: -1)
-                    self.edgeManager.removeEdge(with: activity.edge!.id!)
+                    self.edgeManager.removeEdge(with: activity.edge?.id)
                 }
                 
                 TraceToActivity.activityList = TraceToActivity.activityList.filter{$0.id != trace.uuid}
@@ -164,4 +164,50 @@ class Graph2{
             }
         }
     }
+    
+    func newCoord(node:Node, pos:CGPoint){
+        let deltaX = pos.x - node.position.x
+        let deltaY = pos.y - node.position.y
+        // print(CGPoint(x:deltaX,y:deltaY))
+        if (abs(deltaX) > 2 || abs(deltaY) > 2) {
+            node.position.x = node.position.x + deltaX
+            node.position.y = node.position.y + deltaY
+            self.moveArcs(node: node, deltaX: deltaX, deltaY: deltaY)
+        }
+        
+    }
+    
+    func moveArcs(node:Node,deltaX:CGFloat,deltaY:CGFloat){
+        for item in node.arcManager!.inputArcs + node.arcManager!.outputArcs {
+            var point = CGPoint(x: (item.globalPos?.x)! + deltaX, y: (item.globalPos?.y)! + deltaY)
+            item.globalPos = point
+            if item.isInput{
+                for item1 in item.edges{
+                    item1.redrawEdge(from: (item1.fromPoint)!, to: item.globalPos!)
+                    scene?.addChild(item1)
+                }
+            } else {
+                for item1 in item.edges{
+                    item1.redrawEdge(from: item.globalPos!, to: (item1.toPoint)!)
+                    scene?.addChild(item1)
+                }
+            }
+        }
+    }
+    
+    func moveNode(node:Node?,pos:CGPoint){
+//        if self.moveStart == nil {
+//            self.moveStart = Date()
+//        }
+        if let nodeToMove = node {
+            
+                self.newCoord(node: nodeToMove, pos: pos)
+//                if self.moveStart != nil {
+//                    self.moveEnd = Date()
+//                    
+//                }
+            
+        }
+    }
+
 }

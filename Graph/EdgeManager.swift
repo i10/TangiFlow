@@ -28,9 +28,12 @@ class EdgeManager{
         return  self.edgeList.filter {$0.id == id}[0]
     }
     
-    func removeEdge(with id:String){
+    func removeEdge(with id:String?){
+        if let id = id {
         let edge = getEdge(by: id)
         edge.removeFromParent()
-        self.edgeList = self.edgeList.filter {$0.id != id}
+            self.edgeList = self.edgeList.filter {$0.id != id}
+            
+        }
     }
 }

@@ -53,7 +53,7 @@ class GameScene: MTKScene {
                         tangible.checkTraceLost()
                         if tangible.canMove{
                             print("i am on move")
-                            self.graph?.touchDown(trace: passiveTangible.position)
+                            self.graph?.moveNode(node: tangible.node, pos: passiveTangible.position)
 //                            self.graph?.touchMoved(toPoint: passiveTangible.position)
 //                            self.graph?.touchUp(atPoint: passiveTangible.position)
                         }
@@ -78,6 +78,30 @@ class GameScene: MTKScene {
                 graph?.touchUp(trace: trace)
             }
         }
+        
+        
+        
+        
+        
+        
+        
+//        for passiveTangible in self.passiveTangibles {
+//            print(passiveTangible.state)
+//            print(traceSet)
+//            if passiveTangible.state == .initializedAndRecognized{
+//                if let tangible = PassiveTangibleEx.getTangible(by: passiveTangible.identifier){
+//                        self.graph?.moveNode(node: tangible.node, pos: passiveTangible.position)
+//                }else{
+//                    var tangible = PassiveTangibleEx(tangible: passiveTangible)
+//                    let node = Node(position: passiveTangible.position)
+//                    tangible.node = node
+//
+//                    self.graph?.addNode(node: node)
+//                }
+//            }
+//
+//        }
+        
         return traceSet
     }
 

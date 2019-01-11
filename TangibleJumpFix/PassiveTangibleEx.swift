@@ -101,9 +101,8 @@ class PassiveTangibleEx {
                 self.canMove = self.traceCmoving
             }
         }
-//        self.traceAmoving = false
-//        self.traceBmoving = false
-//        self.traceCmoving = false
+
+        
     }
     
     

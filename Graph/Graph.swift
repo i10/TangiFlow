@@ -118,9 +118,9 @@
 //            node.position.y = node.position.y + deltaY
 //            self.moveArcs(node: node, deltaX: deltaX, deltaY: deltaY)
 //        }
-//        
+//
 //        }
-//        
+//
 //    
 //    func putEdge(to pos:CGPoint, scene:GameScene){
 //        if (scene.nodes(at:pos).indices.contains(1)){
@@ -168,7 +168,7 @@
 //            }
 //        }
 //    }
-//    
+//
 //    
 //    
 //    func changeEdgeEnds(startArc:Arc?, endArc:Arc, scene:GameScene, direction:Int) throws{
@@ -202,7 +202,7 @@
 //            }
 //        }
 //    }
-//    
+//
 //    func popNeighbour(arc:Arc){
 //        let parent = self.selectedArc!.parent!
 //        self.selectedArc?.redrawArc(with: -1)
