@@ -11,12 +11,15 @@ import SpriteKit
 
 
 class EdgeManager{
-    var edgeList:[Edge] = []
+    var edgeList:Set<Edge> = Set()
     var scene:SKScene? = nil
 
     func addEdge(edge:Edge){
-        self.edgeList.append(edge)
-        self.scene?.addChild(edge)
+        
+            self.edgeList.insert(edge)
+            self.scene?.addChild(edge)
+            
+        
         
     }
     

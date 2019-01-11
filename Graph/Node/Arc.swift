@@ -113,7 +113,8 @@ class Arc:SKShapeNode{
             if self.edges.count == 0 {
                 self.edges.append(edge)
             }else{
-                NSException(name:NSExceptionName(rawValue: "name"), reason:"reason", userInfo:nil).raise()
+                print("I AM HUGE NASTY EXCEPTION")
+                NSException(name:NSExceptionName(rawValue: "CanNotPutEdge"), reason:"Arc can not accept more edge", userInfo:nil).raise()
             }
         }
     }
