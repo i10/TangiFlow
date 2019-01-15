@@ -53,8 +53,7 @@ class Graph2{
     func touchUp(trace:MTKTrace) {
         if let scene = self.scene as? GameScene{
             var allNodes = scene.nodes(at: trace.position!).filter{!($0 is MTKPassiveTangible)}
-            print("Got nodes")
-            print(TraceToActivity.activityList)
+            
             if let activity = TraceToActivity.getActivity(by: trace.uuid)  {
                 if  let from = activity.from ,let to =  activity.to {
                     activity.edge?.redrawEdge(from: from.globalPos!, to: to.globalPos!)
@@ -73,13 +72,11 @@ class Graph2{
                 }
                 
                 TraceToActivity.activityList = TraceToActivity.activityList.filter{$0.id != trace.uuid}
-                print("deleting")
-                print(TraceToActivity.activityList)
+                
                 
             }
         }
-        print("Edges")
-        print(self.edgeManager.edgeList)
+        
 
     }
     
