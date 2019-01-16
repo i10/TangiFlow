@@ -10,13 +10,9 @@ import SpriteKit
 
 import MultiTouchKitSwift
 class GameScene: MTKScene {
-    var angle:CGFloat = 0.0 {
-        didSet {
-            if angle == 0.0 {
-                start = nil
-            }
-        }
-    }
+    var counter = 0
+    var liftcounter = 0
+    var angle:CGFloat = 0.0
     var isRotating:Bool = false
     var start:Date?
     var endDate:Date?
@@ -62,65 +58,71 @@ class GameScene: MTKScene {
 //            print("+++++AM I WORKING+++++")
             if passiveTangible.state == .initializedAndRecognized{
                 
-                
                 if let prevZ = self.prevZ {
                     let deltaZ = abs(prevZ - passiveTangible.zRotation)
-                    if deltaZ > 0.1 && deltaZ < 1.0{
+                    if deltaZ > 0.1 && deltaZ < 0.5{
                         if self.start == nil {
                             self.start = Date()
                         }
                         self.angle += deltaZ
                         
-                    }
-                    
-                    else {
-                        
+                    }else {
                         self.angle = 0
                     }
                     
 
                     if angle > 0.8 {
-                        
-                        print(" YEEEEEES CAN LIFT")
-                    }else{
-                        print("NOOO CAN NOT LIFT")
+                        self.start = Date()
+//                        print(" YEEEEEES CAN LIFT")
                     }
                     self.prevZ = passiveTangible.zRotation
                 }else{
                     self.prevZ = passiveTangible.zRotation
                 }
             } else {
-                print("DEINIT angle")
-                print(self.angle)
+                if let start = self.start{
+                    print("Start acquired")
+                    let end = Date()
+                    let delta = end.timeIntervalSince(start)
+                    print(delta)
+                    if delta > 0.02 && delta < 2.0 {
+                        print("LIIIIIIIIFT")
+                        liftcounter += 1
+                        var node = PassiveTangibleEx.getTangible(by: passiveTangible.identifier)?.node
+                        node?.removeFromParent()
+                    
+                    }
+                    self.start = nil
+                }
                 
                 self.prevZ = nil
                 self.angle = 0
                 
             }
-            
+            print(liftcounter)
             
         
             tangibleTraces += passiveTangible.usedTraces
-//                if passiveTangible.state == .initializedAndRecognized{
-//                    if let tangible = PassiveTangibleEx.getTangible(by: passiveTangible.identifier){
-//                        //print("===============IF BLOCK====================")
-//                        tangible.checkTangibleMove()
-//                        tangible.checkTraceLost()
-//                        if tangible.canMove{
-//                            print("i am on move")
-//                            self.graph?.moveNode(node: tangible.node, pos: passiveTangible.position)
-////                            self.graph?.touchMoved(toPoint: passiveTangible.position)
-////                            self.graph?.touchUp(atPoint: passiveTangible.position)
-//                        }
-//                    }else{
-//                        //print("===============ELSE BLOCK====================")
-//                        var tangible = PassiveTangibleEx(tangible: passiveTangible)
-//                        let node = Node(position: passiveTangible.position)
-//                        tangible.node = node
-//                        //self.tangibleToNode[passiveTangible.identifier] = node
-//                        self.graph?.addNode(node: node)
-//                    }
-//                }
+                if passiveTangible.state == .initializedAndRecognized{
+                    if let tangible = PassiveTangibleEx.getTangible(by: passiveTangible.identifier){
+                        //print("===============IF BLOCK====================")
+                        tangible.checkTangibleMove()
+                        tangible.checkTraceLost()
+                        if tangible.canMove{
+                            print("i am on move")
+                            self.graph?.moveNode(node: tangible.node, pos: passiveTangible.position)
+//                            self.graph?.touchMoved(toPoint: passiveTangible.position)
+//                            self.graph?.touchUp(atPoint: passiveTangible.position)
+                        }
+                    }else{
+                        //print("===============ELSE BLOCK====================")
+                        var tangible = PassiveTangibleEx(tangible: passiveTangible)
+                        let node = Node(position: passiveTangible.position)
+                        tangible.node = node
+                        //self.tangibleToNode[passiveTangible.identifier] = node
+                        self.graph?.addNode(node: node)
+                    }
+                }
 
         }
         touchTraces = traceSet.filter{!tangibleTraces.contains($0) }
