@@ -69,14 +69,11 @@ class Arc:SKShapeNode{
     
     func redrawArc(with factor:Int){
         self.removeFromParent()
-        print("huhu")
         if(factor==1 && !popped){
-            print("huhu1")
             self.radius = self.radius! + self.segmentRadius
             self.segmentRadius = 2*self.segmentRadius
             self.popped = true
         } else if(factor == -1 && popped && self.edges.isEmpty){
-            print("huhu2")
             self.radius = self.radius! - self.segmentRadius/2
             self.segmentRadius = self.segmentRadius/2
             self.popped = false

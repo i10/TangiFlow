@@ -15,12 +15,8 @@ class EdgeManager{
     var scene:SKScene? = nil
 
     func addEdge(edge:Edge){
-        
             self.edgeList.insert(edge)
             self.scene?.addChild(edge)
-            
-        
-        
     }
     
     

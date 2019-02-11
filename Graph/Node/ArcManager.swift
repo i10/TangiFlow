@@ -99,9 +99,6 @@ class ArcManager{
     
     func popArc(at position:CGPoint){
         if !(self.scene?.nodes(at: position).isEmpty)!{
-            print("i worked")
-            print(self.counter)
-            self.counter = self.counter + 1
             if let a = self.scene?.nodes(at: position)[0] as? Arc{
                 var parent = a.parent
                 var currentParent = self.currentArc?.parent
@@ -120,7 +117,6 @@ class ArcManager{
                 }
             }
         }else {
-            print("i did not")
             let parent = self.currentArc?.parent
             self.currentArc?.redrawArc(with: -1)
             parent?.addChild(self.currentArc!)
