@@ -23,7 +23,7 @@ class GameScene: MTKScene {
     var startArc:Arc?
     var endArc:Arc?
     var currentDrawnEdge:Edge?
-    var graph:Graph2?
+    var graph:InteractionA?
     var selectedArc:Arc?
     var selectedNode:Node?
     var traceAmoving:Bool?
@@ -35,12 +35,12 @@ class GameScene: MTKScene {
     
     var result:CGFloat = 0.0
     override func setupScene() {
-        graph = Graph2(scene: self)
+        graph = InteractionA(scene: self)
         MTKHub.sharedHub.traceDelegate = self
-        var node = Node(position: CGPoint(x:1000,y:400))
-        var node1 = Node(position: CGPoint(x:500,y:1000))
-        var node2 = Node(position: CGPoint(x:1000,y:1000))
-        var node3 = Node(position: CGPoint(x:1400,y:1000))
+        var node = Node(position: CGPoint(x:3000,y:400))
+        var node1 = Node(position: CGPoint(x:3000,y:1000))
+        var node2 = Node(position: CGPoint(x:2500,y:1000))
+        var node3 = Node(position: CGPoint(x:2000,y:1000))
         self.graph?.addNode(node: node)
         self.graph?.addNode(node: node1)
         self.graph?.addNode(node: node2)
@@ -131,8 +131,9 @@ class GameScene: MTKScene {
         for trace in touchTraces{
             if trace.state == MTKUtils.MTKTraceState.beginningTrace{
                 graph?.touchDown(trace: trace)
-           } else if trace.state == MTKUtils.MTKTraceState.movingTrace{
-                graph?.touchMove(trace: trace)}
+            }
+//           } else if trace.state == MTKUtils.MTKTraceState.movingTrace{
+//               print("")
              else if trace.state == MTKUtils.MTKTraceState.endingTrace{
                 graph?.touchUp(trace: trace)
             }
