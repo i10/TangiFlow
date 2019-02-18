@@ -3,8 +3,9 @@ import SpriteKit
 class Node: SKNode {
     var id:String?
     var maxInput:Int = Int.max
-    var maxOutput:Int = 5
+    var maxOutput:Int = 2
     var arcManager:ArcManager?
+    var rotationMode:Bool = false
     override init() {
         super.init()
         
@@ -29,6 +30,16 @@ class Node: SKNode {
         node.position = CGPoint(x: 0, y: 0)
         node.fillColor = NSColor.white
         self.addChild(node)
+    }
+    
+    func getTempArc() -> Arc?{
+        let arcs = self.arcManager!.inputArcs + self.arcManager!.outputArcs
+        for arc in arcs{
+            if arc.tempEdge != nil{
+                return arc
+            }
+        }
+        return nil
     }
     
    

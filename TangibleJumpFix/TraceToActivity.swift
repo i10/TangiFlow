@@ -12,14 +12,16 @@ import SpriteKit
 
 class TraceToActivity{
     static var activityList:[TraceToActivity] = []
-    var id:Int?
+    var id:String?
     var fromPoint:CGPoint?
     var toPoint:CGPoint?
+    var fromAngle:CGFloat?
+    var toAngle:CGFloat?
     var from:Arc?
     var to:Arc?
     var edge:Edge?
     var firstArc:Int = 0
-    init(id:Int,from:Arc?,to:Arc?) {
+    init(id:String,from:Arc?,to:Arc?) {
         self.id = id
         if let from = from {
             self.from = from
@@ -30,10 +32,20 @@ class TraceToActivity{
         }
         TraceToActivity.activityList.append(self)
     }
-    class func getActivity(by id:Int) -> TraceToActivity?{
-        let activities = TraceToActivity.activityList.filter{$0.id == id}
+    class func getActivity(by id:String) -> TraceToActivity?{
+        let activities = TraceToActivity.activityList.filter{$0.id == id || $0.to?.id == id || $0.from?.id == id}
         if activities.isEmpty{return nil}
         return activities[0]
+    }
+    
+    class func getActivity(by edge:Edge) -> TraceToActivity?{
+        let activities = TraceToActivity.activityList.filter{$0.edge?.id == edge.id}
+        if activities.isEmpty{return nil}
+        return activities[0]
+    }
+    
+    class func removeActivity(by id:String){
+        self.activityList = TraceToActivity.activityList.filter{$0.id != id}
     }
     
     

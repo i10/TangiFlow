@@ -20,6 +20,7 @@ class PassiveTangibleEx {
     var BPrev:CGPoint?
     var CPrev:CGPoint?
     var canMove:Bool = false
+    var rotationMode:Bool = false
     
     init(tangible:MTKPassiveTangible) {
         self.tangible = tangible

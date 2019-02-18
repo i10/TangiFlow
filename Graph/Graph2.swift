@@ -27,140 +27,202 @@ class Graph2{
     }
     
     func addNode(node: Node) {
+        node.physicsBody = SKPhysicsBody(circleOfRadius: 100)
+        node.physicsBody?.isDynamic = false
         self.nodeManager.addNode(node: node)
     }
     
-    func touchDown(trace:MTKTrace){
-        if let scene = self.scene{
-            var allNodes = scene.nodes(at: trace.position!).filter{!($0 is MTKPassiveTangible)}
-            if !allNodes.isEmpty && allNodes[0] is Arc{
-                if TraceToActivity.getActivity(by: trace.uuid) == nil {
-                    if (allNodes[0] as! Arc).isInput {
-                        let activity = TraceToActivity(id: trace.uuid, from: nil, to: allNodes[0] as? Arc)
-                        self.redrawArc(arc: activity.to!, with: 1)
-                        
-                       
-                    } else{
-                        let activity = TraceToActivity(id: trace.uuid, from: allNodes[0] as? Arc, to: nil)
-                        self.redrawArc(arc: activity.from!, with: 1)
-                    }
-                }
-            }
-        }
-    }
-    
-    
-    func touchUp(trace:MTKTrace) {
-        if let scene = self.scene as? GameScene{
-            var allNodes = scene.nodes(at: trace.position!).filter{!($0 is MTKPassiveTangible)}
-            
-            if let activity = TraceToActivity.getActivity(by: trace.uuid)  {
-                if  let from = activity.from ,let to =  activity.to {
-                    activity.edge?.redrawEdge(from: from.globalPos!, to: to.globalPos!)
-                    do{
-                        try
-                        self.putEdge(trace: trace)
-                    }catch{
-                        print("I AM HUGE NASTY ERROR HERE")
-                        self.edgeManager.removeEdge(with: activity.edge!.id!)
-                    }
-                    //self.putEdge(trace: trace)
-                    
-                } else {
-                    self.redrawArc(arc: activity.from ?? activity.to, with: -1)
-                    self.edgeManager.removeEdge(with: activity.edge?.id)
-                }
-                
-                TraceToActivity.activityList = TraceToActivity.activityList.filter{$0.id != trace.uuid}
-                
-                
+    func shootRay(activity:TraceToActivity,arc:Arc){
+
+        let rayStart = arc.globalPos!
+        let phi = arc.zRotation - CGFloat.pi/2 + arc.angle!/2
+        let rayEnd = CGPoint(x:rayStart.x + 4000 * cos(phi),
+                             y:rayStart.y + 4000 * sin(phi))
+        var found = false
+        var endPoint = rayEnd
+        scene?.physicsWorld.enumerateBodies(alongRayStart: rayStart, end: rayEnd){
+            (body,point,vector,stop) in
+            if !found{
+                endPoint = point
+                found = true
             }
         }
         
-
+        var edge = Edge(from: rayStart, to: endPoint)
+        edge.zPosition = -2
+        if arc.isInput{
+            activity.toAngle = phi
+        }else{
+            activity.fromAngle = phi
+        }
+        activity.edge = edge
+        arc.tempEdge = edge
+        arc.addEdge(edge: edge)
+        self.edgeManager.addEdge(edge: edge)
     }
     
+    func createActivity(arc:Arc) -> TraceToActivity{
+        if arc.isInput{
+            return TraceToActivity(id:arc.id!,from:nil,to:arc)
+        }
+        return TraceToActivity(id: arc.id!, from: arc, to: nil)
+    }
     
-    func touchMove(trace:MTKTrace){
-        if let scene = self.scene {
-            var allNodes = scene.nodes(at: trace.position!).filter{!($0 is MTKPassiveTangible)}
-            print(TraceToActivity.activityList)
-            if let activity = TraceToActivity.getActivity(by: trace.uuid)  {
-                if allNodes.isEmpty{
-                    if activity.edge == nil{
-                        var edge = Edge(from: activity.from?.globalPos ?? (activity.to?.globalPos)!, to: trace.position!)
-                        activity.edge = edge
-                        self.edgeManager.addEdge(edge: edge)
-                        //     scene.addChild(edge)
-                        activity.fromPoint = activity.from?.globalPos
-                        activity.toPoint = activity.to?.globalPos
-                    }else{
-                        if activity.from != nil && activity.to != nil{
-                            if activity.firstArc == 1{
-                                activity.edge?.redrawEdge(from: activity.from!.globalPos! , to: trace.position!)
-                                scene.addChild(activity.edge!)
-                            }else if activity.firstArc == 2 {
-                                activity.edge?.redrawEdge(from: activity.to!.globalPos! , to: trace.position!)
-                                scene.addChild(activity.edge!)
-                            }
-                        } else{
-                            activity.edge?.redrawEdge(from: activity.to?.globalPos ?? activity.from!.globalPos! , to: trace.position!)
-                            scene.addChild(activity.edge!)
-                        }
+    func aim(edge:Edge,angle:CGFloat,rotationPoint:Arc){
+        if let activity = TraceToActivity.getActivity(by: edge){
+            if rotationPoint.isInput{
+                print("i work")
+                var phi = activity.toAngle ?? CGFloat.pi/2-activity.fromAngle!
+                let rayStart = rotationPoint.globalPos!
+                
+                let rayEnd = CGPoint(x:rayStart.x + 4000 * cos(phi),
+                                     y:rayStart.y + 4000 * sin(phi))
+                var found = false
+                var endPoint = rayEnd
+                scene?.physicsWorld.enumerateBodies(alongRayStart: rayStart, end: rayEnd){
+                    (body,point,vector,stop) in
+                    if !found{
+                        endPoint = point
+                        found = true
                     }
-                } else {
-                    if activity.edge != nil{
-                        activity.edge?.redrawEdge(from: activity.fromPoint ?? activity.toPoint!, to: trace.position!)
-                        scene.addChild(activity.edge!)}
-                    let arcs = allNodes.filter{$0 is Arc}
-                    if !arcs.isEmpty{
-                        let arc = arcs[0] as! Arc
-                        if activity.firstArc == 1 && arc.parent != activity.from?.parent {
-                            activity.to = arc
-                            self.redrawArc(arc: activity.to, with: 1)
-                        }else if activity.firstArc == 2 && arc.parent != activity.to?.parent{
-                            activity.from = arc
-                            self.redrawArc(arc: activity.from, with: 1)
-                        }
-                        
-                    } else{
-                        if activity.firstArc == 1 && activity.to != nil {
-                            self.redrawArc(arc: activity.to, with: -1)
-                            activity.to = nil
-                        }else if activity.firstArc == 2 && activity.from != nil {
-                            self.redrawArc(arc: activity.from, with: -1)
-                            activity.from = nil
-                        }
-                    }
-                    
                 }
+                edge.redrawEdge(from: rayStart, to: endPoint)
+                self.scene?.addChild(edge)
+            }else{
+                print("I WORK @")
+                var phi = activity.fromAngle ?? CGFloat.pi/2-activity.toAngle!
+                let rayStart = rotationPoint.globalPos!
+                
+                let rayEnd = CGPoint(x:rayStart.x + 4000 * cos(phi+angle),
+                                     y:rayStart.y + 4000 * sin(phi+angle))
+                var found = false
+                var endPoint = rayEnd
+                scene?.physicsWorld.enumerateBodies(alongRayStart: rayStart, end: rayEnd){
+                    (body,point,vector,stop) in
+                    if !found{
+                        endPoint = point
+                        found = true
+                    }
+                }
+                edge.redrawEdge(from: rayStart, to: endPoint)
+                self.scene?.addChild(edge)
             }
+            
+            
         }
     }
     
     func redrawArc(arc:Arc?,with:Int){
-                let parent = arc?.parent!
-                arc?.redrawArc(with: with)
-                parent?.addChild(arc!)
-            }
+        let parent = arc?.parent!
+        arc?.redrawArc(with: with)
+        parent?.addChild(arc!)
+    }
     
-    
-    func putEdge(trace:MTKTrace) throws{
+    func putEdge(activity:TraceToActivity) throws{
         if let scene = self.scene as? GameScene{
-            if let activity = TraceToActivity.getActivity(by: trace.uuid)  {
-                if activity.from!.canAdd && activity.to!.canAdd{
-                    activity.from?.addEdge(edge: activity.edge!)
-                    activity.to?.addEdge(edge: activity.edge!)
-                    activity.edge?.to = activity.to!
-                    activity.edge?.from = activity.from!
-                    activity.edge?.zPosition = -2
-                    scene.graph?.edgeManager.addEdge(edge: activity.edge!)
-                } else {
+            var allNodes = scene.nodes(at:activity.edge!.toPoint!).filter{ $0 is Arc}
+//            print("did i worked?")
+//            print(allNodes[0] is Arc)
+            if !allNodes.isEmpty {
+                print("AND I?")
+                var arc = allNodes[0] as! Arc
+                print(activity.to)
+                if arc.isInput && activity.from != nil && arc.canAdd {
+                    print("return 1")
+                    activity.to = arc
+                    arc.addEdge(edge: activity.edge!)
+                    activity.edge?.to = activity.to
+                    activity.edge?.from = activity.from
+                    return
+                } else if !arc.isInput && activity.to != nil && arc.canAdd{
+                    print("return 2")
+                    activity.from = arc
+                    arc.addEdge(edge: activity.edge!)
+                    activity.edge?.to = activity.to
+                    activity.edge?.from = activity.from
+                    return
+                } else{
+                    print("ERROR")
                     throw ArcIsFull.CanNotAddEdge
+                }
+            }
+            throw ArcIsFull.CanNotAddEdge
+        }
+    }
+    
+    func removeEdge(activity:TraceToActivity,arc:Arc){
+        activity.edge?.removeFromParent()
+        self.edgeManager.removeEdge(with: activity.edge?.id)
+        arc.removeEdge(edge: activity.edge!)
+        activity.edge = nil
+        arc.tempEdge = nil
+        self.redrawArc(arc: activity.from!, with: -1)
+    }
+    
+    func touchDown(trace:MTKTrace){
+        if let scene = self.scene as? GameScene{
+            var allNodes = scene.nodes(at: trace.position!).filter{$0 is Arc}
+            if !allNodes.isEmpty{
+                let arc = allNodes[0] as! Arc
+                if let activity = TraceToActivity.getActivity(by: arc.id!){
+                    if self.poppedArcExists(node: arc.parent as! Node){
+                        if (activity.from != nil) != (activity.to != nil ){
+                            var allNodesAtEnd = scene.nodes(at: activity.edge!.toPoint!).filter{$0 is Arc}
+                            if allNodesAtEnd.isEmpty {
+                                self.removeEdge(activity: activity, arc: arc)
+                                self.redrawArc(arc: arc, with: -1)
+                                TraceToActivity.removeActivity(by: activity.id!)
+                            } else{
+                                do{
+                                    try self.putEdge(activity: activity)
+                                    (arc.parent as! Node).rotationMode = false}
+                                catch{
+                                    print("having error")
+                                }
+                                
+                            }
+                        } else if activity.from != nil && activity.to != nil {
+                            if arc.isInput{
+                                (arc.parent as! Node).rotationMode = true
+                                activity.from?.removeEdge(edge: activity.edge!)
+                                activity.from?.tempEdge = nil
+                                activity.from = nil
+                                arc.tempEdge = activity.edge
+                            }else{
+                                (arc.parent as! Node).rotationMode = true
+                                activity.to?.removeEdge(edge: activity.edge!)
+                                activity.to?.tempEdge = nil
+                                activity.to = nil
+                                arc.tempEdge = activity.edge
+                            }
+                            
+                        }
+                    }
+                } else{
+                    let activity:TraceToActivity = self.createActivity(arc: arc)
+                    self.redrawArc(arc: arc, with: 1)
+                    self.shootRay(activity: activity, arc: arc)
+                    (arc.parent as! Node).rotationMode = true
                 }
             }
         }
     }
+    
+
+    
+    func poppedArcExists(node:Node) -> Bool {
+        var arcs = node.arcManager!.inputArcs + node.arcManager!.outputArcs
+        var result = false
+        for arc in arcs{
+            result = result || arc.popped
+        }
+        return result
+    }
+    
+    
+    
+    
+
     
     func newCoord(node:Node, pos:CGPoint){
         let deltaX = pos.x - node.position.x
@@ -193,16 +255,8 @@ class Graph2{
     }
     
     func moveNode(node:Node?,pos:CGPoint){
-//        if self.moveStart == nil {
-//            self.moveStart = Date()
-//        }
         if let nodeToMove = node {
-            
                 self.newCoord(node: nodeToMove, pos: pos)
-//                if self.moveStart != nil {
-//                    self.moveEnd = Date()
-//                    
-//                }
             
         }
     }

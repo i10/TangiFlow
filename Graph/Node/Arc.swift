@@ -24,6 +24,7 @@ class Arc:SKShapeNode{
     var globalPos:CGPoint?
     var id:String?
     var edges:[Edge] = []
+    var tempEdge:Edge?
     var multipleEdges:Bool = false
     var popped:Bool = false
     var canAdd:Bool {
@@ -117,7 +118,7 @@ class Arc:SKShapeNode{
     }
     
     func removeEdge(edge:Edge){
-        
+        self.edges = self.edges.filter{$0.id != edge.id}
     }
     
     func changeArcColor(){

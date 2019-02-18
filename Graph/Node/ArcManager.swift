@@ -39,6 +39,7 @@ class ArcManager{
     
     func drawArcs(){
         for _ in 0..<self.outputArcsAmount{
+            print("hey")
             let section = Arc(angle: CGFloat(self.outputOffset), radius: 110, isInput: false,rotation:CGFloat(rotateAngle))
             let angle = section.angle!/2.0 + self.rotateAngle + section.startAngle
             section.localPos = self.polarToDecart(radius: section.radius!, angle: angle)
