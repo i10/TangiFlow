@@ -68,19 +68,23 @@ class Arc:SKShapeNode{
     }
     
     func redrawArc(with factor:Int){
+        print(self.edges.isEmpty)
+        print("runnnin")
         self.removeFromParent()
         if(factor==1 && !popped){
+            print("popped")
             self.radius = self.radius! + self.segmentRadius
             self.segmentRadius = 2*self.segmentRadius
             self.popped = true
         } else if(factor == -1 && popped && self.edges.isEmpty){
+            print("and popped")
             self.radius = self.radius! - self.segmentRadius/2
             self.segmentRadius = self.segmentRadius/2
             self.popped = false
         }
         
         self.drawArc(angle: self.angle!, radius: self.radius!, isInput: self.isInput, rotation: self.zRotation)
-
+        print("and runnin")
     }
     
     
@@ -117,7 +121,7 @@ class Arc:SKShapeNode{
     }
     
     func removeEdge(edge:Edge){
-        
+        self.edges = self.edges.filter{$0.}
     }
     
     func changeArcColor(){

@@ -32,18 +32,33 @@ class Graph2{
     
     func touchDown(trace:MTKTrace){
         if let scene = self.scene{
-            var allNodes = scene.nodes(at: trace.position!).filter{!($0 is MTKPassiveTangible)}
-            if !allNodes.isEmpty && allNodes[0] is Arc{
-                if TraceToActivity.getActivity(by: trace.uuid) == nil {
+            var allNodes = scene.nodes(at: trace.position!).filter{$0 is Arc}
+            if !allNodes.isEmpty{
+                let arc = allNodes[0] as! Arc
+                if TraceToActivity.getActivity(by: arc.id!) == nil {
                     if (allNodes[0] as! Arc).isInput {
-                        let activity = TraceToActivity(id: trace.uuid, from: nil, to: allNodes[0] as? Arc)
+                        let activity = TraceToActivity(id: arc.id!, from: nil, to: arc)
+                        activity.currentTrace = trace.uuid
+                        activity.edge = Edge(from: CGPoint.zero, to: CGPoint.zero)
+                        activity.edge?.zPosition = -2
+                        self.edgeManager.addEdge(edge: activity.edge!)
                         self.redrawArc(arc: activity.to!, with: 1)
+                        arc.addEdge(edge: activity.edge!)
+                        activity.edge!.to = arc
                         
                        
                     } else{
-                        let activity = TraceToActivity(id: trace.uuid, from: allNodes[0] as? Arc, to: nil)
+                        let activity = TraceToActivity(id: arc.id!, from: allNodes[0] as? Arc, to: nil)
+                        activity.currentTrace = trace.uuid
+                        activity.edge = Edge(from: CGPoint.zero, to: CGPoint.zero)
+                        self.edgeManager.addEdge(edge: activity.edge!)
+                        activity.edge?.zPosition = -2
                         self.redrawArc(arc: activity.from!, with: 1)
+                        arc.addEdge(edge: activity.edge!)
+                        activity.edge!.from = arc
                     }
+                } else{
+                    
                 }
             }
         }
@@ -52,26 +67,37 @@ class Graph2{
     
     func touchUp(trace:MTKTrace) {
         if let scene = self.scene as? GameScene{
-            var allNodes = scene.nodes(at: trace.position!).filter{!($0 is MTKPassiveTangible)}
-            
+            var allNodes = scene.nodes(at: trace.position!).filter{!($0 is MTKPassiveTangible) && !($0 is Edge) && ($0 is Arc)}
+
             if let activity = TraceToActivity.getActivity(by: trace.uuid)  {
-                if  let from = activity.from ,let to =  activity.to {
-                    activity.edge?.redrawEdge(from: from.globalPos!, to: to.globalPos!)
-                    do{
-                        try
-                        self.putEdge(trace: trace)
-                    }catch{
-                        print("I AM HUGE NASTY ERROR HERE")
-                        self.edgeManager.removeEdge(with: activity.edge!.id!)
-                    }
-                    //self.putEdge(trace: trace)
-                    
-                } else {
-                    self.redrawArc(arc: activity.from ?? activity.to, with: -1)
+                if allNodes.isEmpty{
+                    activity.edge?.removeFromParent()
+                    activity.to?.removeEdge(edge: activity.edge!)
+                    activity.from?.removeEdge(edge: activity.edge!)
                     self.edgeManager.removeEdge(with: activity.edge?.id)
+                    activity.edge = nil
+                    print(activity.to)
+                    print(activity.from)
+                    self.redrawArc(arc: activity.to, with: -1)
+                    self.redrawArc(arc: activity.from, with: -1)
+                    TraceToActivity.removeActivity(by:trace.uuid)
+
+                } else{
+                    let arc = allNodes[0] as! Arc
+                    
+                    if let to = activity.to{
+                        if arc.parent != to.parent && (arc.isInput != to.isInput){
+                            activity.from = arc
+                            activity.from?.addEdge(edge: activity.edge!)
+                            activity.edge?.from = arc
+                            activity.edge?.redrawEdge(from: activity.to!.globalPos!, to: activity.from!.globalPos!)
+                            scene.addChild(activity.edge!)
+                        }
+                        
+                    } else if let to = activity.from{
+                        
+                    }
                 }
-                
-                TraceToActivity.activityList = TraceToActivity.activityList.filter{$0.id != trace.uuid}
                 
                 
             }
@@ -84,70 +110,26 @@ class Graph2{
     func touchMove(trace:MTKTrace){
         if let scene = self.scene {
             var allNodes = scene.nodes(at: trace.position!).filter{!($0 is MTKPassiveTangible)}
-            print(TraceToActivity.activityList)
-            if let activity = TraceToActivity.getActivity(by: trace.uuid)  {
-                if allNodes.isEmpty{
-                    if activity.edge == nil{
-                        var edge = Edge(from: activity.from?.globalPos ?? (activity.to?.globalPos)!, to: trace.position!)
-                        activity.edge = edge
-                        self.edgeManager.addEdge(edge: edge)
-                        //     scene.addChild(edge)
-                        activity.fromPoint = activity.from?.globalPos
-                        activity.toPoint = activity.to?.globalPos
-                    }else{
-                        if activity.from != nil && activity.to != nil{
-                            if activity.firstArc == 1{
-                                activity.edge?.redrawEdge(from: activity.from!.globalPos! , to: trace.position!)
-                                scene.addChild(activity.edge!)
-                            }else if activity.firstArc == 2 {
-                                activity.edge?.redrawEdge(from: activity.to!.globalPos! , to: trace.position!)
-                                scene.addChild(activity.edge!)
-                            }
-                        } else{
-                            activity.edge?.redrawEdge(from: activity.to?.globalPos ?? activity.from!.globalPos! , to: trace.position!)
-                            scene.addChild(activity.edge!)
-                        }
-                    }
-                } else {
-                    if activity.edge != nil{
-                        activity.edge?.redrawEdge(from: activity.fromPoint ?? activity.toPoint!, to: trace.position!)
-                        scene.addChild(activity.edge!)}
-                    let arcs = allNodes.filter{$0 is Arc}
-                    if !arcs.isEmpty{
-                        let arc = arcs[0] as! Arc
-                        if activity.firstArc == 1 && arc.parent != activity.from?.parent {
-                            activity.to = arc
-                            self.redrawArc(arc: activity.to, with: 1)
-                        }else if activity.firstArc == 2 && arc.parent != activity.to?.parent{
-                            activity.from = arc
-                            self.redrawArc(arc: activity.from, with: 1)
-                        }
-                        
-                    } else{
-                        if activity.firstArc == 1 && activity.to != nil {
-                            self.redrawArc(arc: activity.to, with: -1)
-                            activity.to = nil
-                        }else if activity.firstArc == 2 && activity.from != nil {
-                            self.redrawArc(arc: activity.from, with: -1)
-                            activity.from = nil
-                        }
-                    }
-                    
-                }
+            
+            if let activity = TraceToActivity.getActivity(by: trace.uuid) {
+                activity.edge?.redrawEdge(from: activity.to!.globalPos!, to: trace.position!)
+                scene.addChild(activity.edge!)
             }
         }
     }
     
     func redrawArc(arc:Arc?,with:Int){
-                let parent = arc?.parent!
-                arc?.redrawArc(with: with)
-                parent?.addChild(arc!)
-            }
+        print("i am called")
+        let parent = arc?.parent!
+        arc?.redrawArc(with: with)
+        parent?.addChild(arc!)
+    }
     
     
     func putEdge(trace:MTKTrace) throws{
         if let scene = self.scene as? GameScene{
-            if let activity = TraceToActivity.getActivity(by: trace.uuid)  {
+            var allNodes = scene.nodes(at: trace.position!).filter{($0 is Arc)}
+            if let activity = TraceToActivity.getActivity(by: (allNodes[0] as! Arc).id!)  {
                 if activity.from!.canAdd && activity.to!.canAdd{
                     activity.from?.addEdge(edge: activity.edge!)
                     activity.to?.addEdge(edge: activity.edge!)

@@ -38,13 +38,13 @@ class GameScene: MTKScene {
         graph = Graph2(scene: self)
         MTKHub.sharedHub.traceDelegate = self
         var node = Node(position: CGPoint(x:1000,y:400))
-        var node1 = Node(position: CGPoint(x:500,y:1000))
-        var node2 = Node(position: CGPoint(x:1000,y:1000))
-        var node3 = Node(position: CGPoint(x:1400,y:1000))
+//        var node1 = Node(position: CGPoint(x:500,y:1000))
+//        var node2 = Node(position: CGPoint(x:1000,y:1000))
+//        var node3 = Node(position: CGPoint(x:1400,y:1000))
         self.graph?.addNode(node: node)
-        self.graph?.addNode(node: node1)
-        self.graph?.addNode(node: node2)
-        self.graph?.addNode(node: node3)
+//        self.graph?.addNode(node: node1)
+//        self.graph?.addNode(node: node2)
+//        self.graph?.addNode(node: node3)
     
         
         //MTKUtils.traceVisualization = true
