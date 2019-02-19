@@ -45,6 +45,7 @@ class Graph2{
                         self.redrawArc(arc: activity.to!, with: 1)
                         arc.addEdge(edge: activity.edge!)
                         activity.edge!.to = arc
+                        activity.fulcrum = arc
                         
                        
                     } else{
@@ -56,9 +57,26 @@ class Graph2{
                         self.redrawArc(arc: activity.from!, with: 1)
                         arc.addEdge(edge: activity.edge!)
                         activity.edge!.from = arc
+                        activity.fulcrum = arc
                     }
                 } else{
-                    
+                    var activity = TraceToActivity.getActivity(by: arc.id!)
+                    activity?.currentTrace = trace.uuid
+                    if arc.isInput{
+                        activity!.to = nil
+                        arc.removeEdge(edge: activity!.edge!)
+                        self.redrawArc(arc: arc, with: -1)
+                        activity?.edge?.redrawEdge(from: trace.position!, to: activity!.from!.globalPos!)
+                        scene.addChild(activity!.edge!)
+                        activity?.fulcrum = activity!.from
+                    }else{
+                        activity!.from = nil
+                        arc.removeEdge(edge: activity!.edge!)
+                        self.redrawArc(arc: arc, with: -1)
+                        activity?.edge?.redrawEdge(from: trace.position!, to: activity!.to!.globalPos!)
+                        scene.addChild(activity!.edge!)
+                        activity?.fulcrum = activity!.to
+                    }
                 }
             }
         }
@@ -92,10 +110,18 @@ class Graph2{
                             activity.edge?.from = arc
                             activity.edge?.redrawEdge(from: activity.to!.globalPos!, to: activity.from!.globalPos!)
                             scene.addChild(activity.edge!)
+                            activity.currentTrace = nil
                         }
                         
-                    } else if let to = activity.from{
-                        
+                    } else if let from = activity.from{
+                        if arc.parent != from.parent && (arc.isInput != from.isInput){
+                            activity.to = arc
+                            activity.to?.addEdge(edge: activity.edge!)
+                            activity.edge?.to = arc
+                            activity.edge?.redrawEdge(from: activity.from!.globalPos!, to: activity.to!.globalPos!)
+                            scene.addChild(activity.edge!)
+                            activity.currentTrace = nil
+                        }
                     }
                 }
                 
@@ -112,7 +138,7 @@ class Graph2{
             var allNodes = scene.nodes(at: trace.position!).filter{!($0 is MTKPassiveTangible)}
             
             if let activity = TraceToActivity.getActivity(by: trace.uuid) {
-                activity.edge?.redrawEdge(from: activity.to!.globalPos!, to: trace.position!)
+                activity.edge?.redrawEdge(from: activity.fulcrum!.globalPos!, to: trace.position!)
                 scene.addChild(activity.edge!)
             }
         }

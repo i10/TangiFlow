@@ -20,7 +20,7 @@ class TraceToActivity{
     var edge:Edge?
     var firstArc:Int = 0
     var currentTrace:Int?
-    
+    var fulcrum:Arc?
     init(id:String,from:Arc?,to:Arc?) {
         self.id = id
         if let from = from {
