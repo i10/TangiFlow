@@ -131,8 +131,7 @@ class GameScene: MTKScene {
         for trace in touchTraces{
             if trace.state == MTKUtils.MTKTraceState.beginningTrace{
                 graph?.touchDown(trace: trace)
-           } else if trace.state == MTKUtils.MTKTraceState.movingTrace{
-                graph?.touchMove(trace: trace)}
+           } 
              else if trace.state == MTKUtils.MTKTraceState.endingTrace{
                 graph?.touchUp(trace: trace)
             }

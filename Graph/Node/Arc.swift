@@ -117,7 +117,7 @@ class Arc:SKShapeNode{
     }
     
     func removeEdge(edge:Edge){
-        
+        self.edges = self.edges.filter{$0.id! != edge.id!}
     }
     
     func changeArcColor(){
