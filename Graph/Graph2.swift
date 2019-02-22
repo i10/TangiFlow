@@ -160,6 +160,7 @@ class Graph2{
     }
     
     func touchDown(trace:MTKTrace){
+        
         if let scene = self.scene as? GameScene{
             var allNodes = scene.nodes(at: trace.position!).filter{$0 is Arc}
             if !allNodes.isEmpty{

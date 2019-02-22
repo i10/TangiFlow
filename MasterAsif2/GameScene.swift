@@ -33,7 +33,7 @@ class GameScene: MTKScene {
     var BPrev:CGPoint?
     var CPrev:CGPoint?
     var rotate = false
-    
+    var traceCall:[Int:Int] = [:]
     var result:CGFloat = 0.0
     override func setupScene() {
         graph = Graph2(scene: self)
@@ -61,6 +61,7 @@ class GameScene: MTKScene {
     }
     
     func preProcessTraceSet(traceSet: Set<MTKTrace>, node: SKNode, timestamp: TimeInterval) -> Set<MTKTrace> {
+       
         var touchTraces:[MTKTrace] = []
         var tangibleTraces:[MTKTrace] = []
         
@@ -136,9 +137,17 @@ class GameScene: MTKScene {
 
         }
         touchTraces = traceSet.filter{!tangibleTraces.contains($0) }
+        
         for trace in touchTraces{
             if trace.state == MTKUtils.MTKTraceState.beginningTrace{
-                graph?.touchDown(trace: trace)
+                self.traceCall[trace.uuid] = 0
+            }
+            else if trace.state == MTKUtils.MTKTraceState.movingTrace{
+                if trace.beginTimestamp!.distance(to: trace.timestamp!) > 4.0 && self.traceCall[trace.uuid] != 1{
+                    graph?.touchDown(trace: trace)
+                    self.traceCall[trace.uuid] = 1
+                    print("worked one time")
+                }
             }
 //           } else if trace.state == MTKUtils.MTKTraceState.movingTrace{
 //               print("")
@@ -153,22 +162,22 @@ class GameScene: MTKScene {
         
         
         
-        for passiveTangible in self.passiveTangibles {
-            //print(passiveTangible.state)
-            //print(traceSet)
-            if passiveTangible.state == .initializedAndRecognized{
-                if let tangible = PassiveTangibleEx.getTangible(by: passiveTangible.identifier){
-                        self.graph?.moveNode(node: tangible.node, pos: passiveTangible.position)
-                }else{
-                    var tangible = PassiveTangibleEx(tangible: passiveTangible)
-                    let node = Node(position: passiveTangible.position)
-                    tangible.node = node
-
-                    self.graph?.addNode(node: node)
-                }
-            }
-
-        }
+//        for passiveTangible in self.passiveTangibles {
+//            //print(passiveTangible.state)
+//            //print(traceSet)
+//            if passiveTangible.state == .initializedAndRecognized{
+//                if let tangible = PassiveTangibleEx.getTangible(by: passiveTangible.identifier){
+//                        self.graph?.moveNode(node: tangible.node, pos: passiveTangible.position)
+//                }else{
+//                    var tangible = PassiveTangibleEx(tangible: passiveTangible)
+//                    let node = Node(position: passiveTangible.position)
+//                    tangible.node = node
+//
+//                    self.graph?.addNode(node: node)
+//                }
+//            }
+//
+//        }
         
         for passiveTangible in self.passiveTangibles{
             if passiveTangible.state == .initializedAndRecognized{
