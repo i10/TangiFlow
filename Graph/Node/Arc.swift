@@ -68,6 +68,7 @@ class Arc:SKShapeNode{
     }
     
     func redrawArc(with factor:Int){
+        var parent = self.parent
         self.removeFromParent()
         if(factor==1 && !popped){
             self.radius = self.radius! + self.segmentRadius
@@ -80,6 +81,7 @@ class Arc:SKShapeNode{
         }
         
         self.drawArc(angle: self.angle!, radius: self.radius!, isInput: self.isInput, rotation: self.zRotation)
+        parent?.addChild(self)
 
     }
     

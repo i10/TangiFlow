@@ -3,7 +3,7 @@ import SpriteKit
 class Node: SKNode {
     var id:String?
     var maxInput:Int = 1
-    var maxOutput:Int = 5
+    var maxOutput:Int = 1
     var arcManager:ArcManager?
     override init() {
         super.init()

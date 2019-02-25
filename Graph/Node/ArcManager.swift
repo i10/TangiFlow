@@ -52,15 +52,15 @@ class ArcManager{
             }
         }
         if(self.rotateAngle==0){
-            self.rotateAngle = self.rotateAngle + CGFloat.pi
+            self.rotateAngle =  CGFloat.pi
         }
         
         self.rotateAngle = self.rotateAngle + self.spacing
         for _ in 0..<self.inputArcsAmount{
             let section = Arc(angle: CGFloat(self.inputOffset), radius: 110, isInput: true, rotation:CGFloat(rotateAngle))
-            let angle = section.angle!/2.0 + self.rotateAngle
+            let angle = section.angle!/2.0 + self.rotateAngle + section.startAngle
             
-            section.localPos = self.polarToDecart(radius: section.radius!, angle: section.angle!)
+            section.localPos = self.polarToDecart(radius: section.radius!, angle: angle)
             section.globalPos = self.localToGlobal(node: self.node!, coords: section.localPos!)
             rotateAngle = rotateAngle + CGFloat(self.inputOffset) + CGFloat(spacing)
             self.node?.addChild(section)

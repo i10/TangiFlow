@@ -48,8 +48,13 @@ class Graph2{
         var edge = Edge(from: from.globalPos!, to: to.globalPos!)
         from.addEdge(edge: edge)
         to.addEdge(edge: edge)
+        from.redrawArc(with: 1)
+        to.redrawArc(with: 1)
+        from.changeArcColor()
+        to.changeArcColor()
         edge.from = from
         edge.to = to
+        edge.zPosition = -2
         self.edgeManager.addEdge(edge: edge)
         return edge
     }
@@ -69,6 +74,10 @@ class Graph2{
         from.removeEdge(edge: edge!)
         to.removeEdge(edge: edge!)
         edge?.removeFromParent()
+        from.redrawArc(with: -1)
+        to.redrawArc(with: -1)
+        from.changeArcColor()
+        to.changeArcColor()
         edge = nil
     }
     func touchDown(trace:MTKTrace){
