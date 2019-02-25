@@ -43,7 +43,9 @@ class Graph2{
                         activity.edge?.zPosition = -2
                         self.edgeManager.addEdge(edge: activity.edge!)
                         self.redrawArc(arc: activity.to!, with: 1)
+                        
                         arc.addEdge(edge: activity.edge!)
+                        activity.to?.changeArcColor()
                         activity.edge!.to = arc
                         activity.fulcrum = arc
                         
@@ -55,7 +57,9 @@ class Graph2{
                         self.edgeManager.addEdge(edge: activity.edge!)
                         activity.edge?.zPosition = -2
                         self.redrawArc(arc: activity.from!, with: 1)
+                        
                         arc.addEdge(edge: activity.edge!)
+                        activity.from?.changeArcColor()
                         activity.edge!.from = arc
                         activity.fulcrum = arc
                     }
@@ -66,6 +70,7 @@ class Graph2{
                         activity!.to = nil
                         arc.removeEdge(edge: activity!.edge!)
                         self.redrawArc(arc: arc, with: -1)
+                        arc.changeArcColor()
                         activity?.edge?.redrawEdge(from: trace.position!, to: activity!.from!.globalPos!)
                         scene.addChild(activity!.edge!)
                         activity?.fulcrum = activity!.from
@@ -73,6 +78,7 @@ class Graph2{
                         activity!.from = nil
                         arc.removeEdge(edge: activity!.edge!)
                         self.redrawArc(arc: arc, with: -1)
+                        arc.changeArcColor()
                         activity?.edge?.redrawEdge(from: trace.position!, to: activity!.to!.globalPos!)
                         scene.addChild(activity!.edge!)
                         activity?.fulcrum = activity!.to
@@ -98,6 +104,8 @@ class Graph2{
                     print(activity.from)
                     self.redrawArc(arc: activity.to, with: -1)
                     self.redrawArc(arc: activity.from, with: -1)
+                    activity.to?.changeArcColor()
+                    activity.from?.changeArcColor()
                     TraceToActivity.removeActivity(by:trace.uuid)
 
                 } else{
@@ -123,6 +131,8 @@ class Graph2{
                             activity.currentTrace = nil
                         }
                     }
+                    arc.changeArcColor()
+                    self.redrawArc(arc: arc, with: 1)
                 }
                 
                 
