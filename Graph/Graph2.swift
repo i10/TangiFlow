@@ -116,6 +116,7 @@ class Graph2{
         let parent = arc?.parent!
         arc?.redrawArc(with: with)
         parent?.addChild(arc!)
+        
     }
     
     func putEdge(activity:TraceToActivity) throws{
@@ -131,8 +132,10 @@ class Graph2{
                     print("return 1")
                     activity.to = arc
                     arc.addEdge(edge: activity.edge!)
+                    arc.changeArcColor()
                     activity.edge?.to = activity.to
                     activity.edge?.from = activity.from
+                    self.redrawArc(arc: activity.to, with: 1)
                     return
                 } else if !arc.isInput && activity.to != nil && arc.canAdd{
                     print("return 2")
@@ -140,11 +143,14 @@ class Graph2{
                     arc.addEdge(edge: activity.edge!)
                     activity.edge?.to = activity.to
                     activity.edge?.from = activity.from
+                    self.redrawArc(arc: activity.from, with: 1)
                     return
                 } else{
                     print("ERROR")
                     throw ArcIsFull.CanNotAddEdge
                 }
+                arc.changeArcColor()
+                
             }
             throw ArcIsFull.CanNotAddEdge
         }
@@ -156,7 +162,7 @@ class Graph2{
         arc.removeEdge(edge: activity.edge!)
         activity.edge = nil
         arc.tempEdge = nil
-        self.redrawArc(arc: activity.from!, with: -1)
+        self.redrawArc(arc: activity.from , with: -1)
     }
     
     func touchDown(trace:MTKTrace){
@@ -172,6 +178,7 @@ class Graph2{
                             if allNodesAtEnd.isEmpty {
                                 self.removeEdge(activity: activity, arc: arc)
                                 self.redrawArc(arc: arc, with: -1)
+                                arc.changeArcColor()
                                 TraceToActivity.removeActivity(by: activity.id!)
                             } else{
                                 do{
@@ -186,12 +193,16 @@ class Graph2{
                             if arc.isInput{
                                 (arc.parent as! Node).rotationMode = true
                                 activity.from?.removeEdge(edge: activity.edge!)
+                                activity.from?.changeArcColor()
+                                self.redrawArc(arc: activity.from, with: -1)
                                 activity.from?.tempEdge = nil
                                 activity.from = nil
                                 arc.tempEdge = activity.edge
                             }else{
                                 (arc.parent as! Node).rotationMode = true
                                 activity.to?.removeEdge(edge: activity.edge!)
+                                activity.to?.changeArcColor()
+                                self.redrawArc(arc: activity.to, with: -1)
                                 activity.to?.tempEdge = nil
                                 activity.to = nil
                                 arc.tempEdge = activity.edge
@@ -202,7 +213,9 @@ class Graph2{
                 } else{
                     let activity:TraceToActivity = self.createActivity(arc: arc)
                     self.redrawArc(arc: arc, with: 1)
+                    arc.changeArcColor()
                     self.shootRay(activity: activity, arc: arc)
+                    arc.changeArcColor()
                     (arc.parent as! Node).rotationMode = true
                 }
             }

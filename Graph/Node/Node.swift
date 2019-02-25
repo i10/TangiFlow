@@ -2,8 +2,8 @@ import Foundation
 import SpriteKit
 class Node: SKNode {
     var id:String?
-    var maxInput:Int = Int.max
-    var maxOutput:Int = 2
+    var maxInput:Int = 1
+    var maxOutput:Int = 1
     var arcManager:ArcManager?
     var rotationMode:Bool = false
     override init() {

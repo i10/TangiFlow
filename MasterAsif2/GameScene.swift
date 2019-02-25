@@ -38,22 +38,15 @@ class GameScene: MTKScene {
     override func setupScene() {
         graph = Graph2(scene: self)
         MTKHub.sharedHub.traceDelegate = self
-        var node = Node(position: CGPoint(x:3000,y:400))
+        var node = Node(position: CGPoint(x:1000,y:300))
         node.physicsBody = SKPhysicsBody(circleOfRadius: 100)
-        var node1 = Node(position: CGPoint(x:3000,y:1000))
-        node1.physicsBody = SKPhysicsBody(circleOfRadius: 100)
-        var node2 = Node(position: CGPoint(x:2500,y:1000))
-        node2.physicsBody = SKPhysicsBody(circleOfRadius: 100)
-        var node3 = Node(position: CGPoint(x:2000,y:1000))
-        node3.physicsBody = SKPhysicsBody(circleOfRadius: 100)
+       
+        
         self.graph?.addNode(node: node)
-        self.graph?.addNode(node: node1)
-        self.graph?.addNode(node: node2)
-        self.graph?.addNode(node: node3)
+        
         node.physicsBody?.isDynamic = false
-        node1.physicsBody?.isDynamic = false
-        node2.physicsBody?.isDynamic = false
-        node3.physicsBody?.isDynamic = false
+        
+        
         
         //MTKUtils.traceVisualization = true
 
@@ -143,7 +136,7 @@ class GameScene: MTKScene {
                 self.traceCall[trace.uuid] = 0
             }
             else if trace.state == MTKUtils.MTKTraceState.movingTrace{
-                if trace.beginTimestamp!.distance(to: trace.timestamp!) > 4.0 && self.traceCall[trace.uuid] != 1{
+                if trace.beginTimestamp!.distance(to: trace.timestamp!) > 2.0 && self.traceCall[trace.uuid] != 1{
                     graph?.touchDown(trace: trace)
                     self.traceCall[trace.uuid] = 1
                     print("worked one time")
