@@ -11,8 +11,10 @@ class Node: SKNode {
         self.id = UUID().uuidString
     }
     
-    convenience init(position:CGPoint) {
+    convenience init(position:CGPoint,inp:Int,out:Int) {
         self.init()
+        self.maxInput = inp
+        self.maxOutput = out
         self.position = position
         self.arcManager = ArcManager(node:self)
         self.arcManager?.drawArcs()
