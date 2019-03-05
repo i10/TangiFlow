@@ -48,7 +48,7 @@ class Graph2{
                         activity.to?.changeArcColor()
                         activity.edge!.to = arc
                         activity.fulcrum = arc
-                        
+                        print("put edge 1")
                        
                     } else{
                         let activity = TraceToActivity(id: arc.id!, from: allNodes[0] as? Arc, to: nil)
@@ -62,6 +62,7 @@ class Graph2{
                         activity.from?.changeArcColor()
                         activity.edge!.from = arc
                         activity.fulcrum = arc
+                        print("put edge 2")
                     }
                 } else{
                     var activity = TraceToActivity.getActivity(by: arc.id!)
@@ -107,6 +108,7 @@ class Graph2{
                     activity.to?.changeArcColor()
                     activity.from?.changeArcColor()
                     TraceToActivity.removeActivity(by:trace.uuid)
+                    print("I have ")
 
                 } else{
                     let arc = allNodes[0] as! Arc
@@ -155,7 +157,7 @@ class Graph2{
     }
     
     func redrawArc(arc:Arc?,with:Int){
-        print("i am called")
+//        print("i am called")
         let parent = arc?.parent!
         arc?.redrawArc(with: with)
         parent?.addChild(arc!)
