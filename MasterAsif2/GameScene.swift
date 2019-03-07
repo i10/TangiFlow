@@ -38,18 +38,37 @@ class GameScene: MTKScene {
     override func setupScene() {
         graph = Graph2(scene: self)
         MTKHub.sharedHub.traceDelegate = self
+        var offsetx = 100
+        var offsety = 100
         
-        var node2 = Node(position: CGPoint(x:1000,y:300))
+        var node1 = Node(position: CGPoint(x:500+offsetx,y:650+offsety),inp:0,out:2)
+        node1.physicsBody = SKPhysicsBody(circleOfRadius: 100)
+        
+        var node2 = Node(position: CGPoint(x:1000+offsetx,y:500+offsety),inp:1,out:1)
         node2.physicsBody = SKPhysicsBody(circleOfRadius: 100)
-        var node3 = Node(position: CGPoint(x:500,y:300))
+        
+        var node3 = Node(position: CGPoint(x:1000+offsetx,y:800+offsety),inp:1,out:1)
         node3.physicsBody = SKPhysicsBody(circleOfRadius: 100)
         
+        var node4 = Node(position: CGPoint(x:1600+offsetx,y:500+offsety),inp:1,out:0)
+        node4.physicsBody = SKPhysicsBody(circleOfRadius: 100)
+        
+        var node5 = Node(position: CGPoint(x:1600+offsetx,y:800+offsety),inp:1,out:0)
+        node5.physicsBody = SKPhysicsBody(circleOfRadius: 100)
+        
+        self.graph?.addNode(node: node1)
         self.graph?.addNode(node: node2)
         self.graph?.addNode(node: node3)
+        self.graph?.addNode(node: node4)
+        self.graph?.addNode(node: node5)
         
+        node1.physicsBody?.isDynamic = false
         node2.physicsBody?.isDynamic = false
         node3.physicsBody?.isDynamic = false
-        
+        node4.physicsBody?.isDynamic = false
+        node5.physicsBody?.isDynamic = false
+        node4.terminal = true
+        node5.terminal = true
         //MTKUtils.traceVisualization = true
         
         
@@ -184,9 +203,28 @@ class GameScene: MTKScene {
     
     override func update(_ currentTime: TimeInterval) {
         super.update(currentTime)
+        var nodes = self.children.filter{$0 is Node}
+        nodes = nodes.filter{($0 as! Node).terminal}
+        for item in nodes{
+          print(crawl(node: item as! Node))
+        }
+        print("=============================")
         
         
+    }
+    
+    
+    func crawl(node:Node,my_list:[Node]=[])->[Node]{
+        var my_list_copy = my_list
         
+        my_list_copy.append(node)
+        for item in node.arcManager!.inputArcs{
+            if !item.edges.isEmpty{
+                return crawl(node:(item.edges[0].from?.parent as! Node),my_list: my_list_copy)
+            }
+    
+        }
+        return my_list_copy
     }
 }
 

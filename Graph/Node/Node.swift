@@ -5,6 +5,7 @@ class Node: SKNode {
     var maxInput:Int = 1
     var maxOutput:Int = 1
     var arcManager:ArcManager?
+    var terminal = false
     override init() {
         super.init()
         
