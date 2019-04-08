@@ -1,0 +1,50 @@
+{
+    "PT-127.99.88" : {
+        "alias" : "",
+        "function" : "func1",
+        "arguments" : {
+            "main_args" : [
+                
+            ],
+            "controled_args" : [
+                
+            ]
+        }
+    },
+    "PT-118.122.125" : {
+        "alias" : "",
+        "function" : "terminal_func2",
+        "arguments" : {
+            "main_args" : [
+                "argument1"
+            ],
+            "controled_args" : [
+                
+            ]
+        }
+    },
+    "PT-127.99.89" : {
+        "alias" : "",
+        "function" : "func3",
+        "arguments" : {
+            "main_args" : [
+                "argument1"
+            ],
+            "controled_args" : [
+                
+            ]
+        }
+    },
+    "PT-127.99.90" : {
+        "alias" : "",
+        "function" : "func4",
+        "arguments" : {
+            "main_args" : [
+                "argument1"
+            ],
+            "controled_args" : [
+                
+            ]
+        }
+    }
+}
