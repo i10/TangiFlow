@@ -9,7 +9,7 @@
 import Foundation
 import SpriteKit
 class ArcManager{
-    var counter = 0
+    var inputArcNames:[String] = []
     var inputArcs:[Arc] = []
     var outputArcs:[Arc] = []
     var node:Node?
@@ -22,7 +22,7 @@ class ArcManager{
     var inputArcsAmount:Int = 1
     var currentArc:Arc?
     
-    init(node:Node){
+    init(node:Node,tangibleDict:Any){
         self.node = node
         if self.node?.maxInput != Int.max{
             self.inputArcsAmount = (self.node?.maxInput)!
@@ -40,15 +40,19 @@ class ArcManager{
     func drawArcs(){
         for _ in 0..<self.outputArcsAmount{
             let section = Arc(angle: CGFloat(self.outputOffset), radius: 110, isInput: false,rotation:CGFloat(rotateAngle))
-            let angle = section.angle!/2.0 + self.rotateAngle + section.startAngle
-            section.localPos = self.polarToDecart(radius: section.radius!, angle: angle)
-            section.globalPos = self.localToGlobal(node: self.node!, coords: section.localPos!)
-            self.rotateAngle = self.rotateAngle + CGFloat(self.outputOffset) + CGFloat(spacing)
-            self.node?.addChild(section)
-            self.outputArcs.append(section)
-            
-            if(self.node?.maxOutput == Int.max){
-                section.multipleEdges = true
+            section.parentNode = node
+            if !node!.funcName.contains("terminal"){
+                let angle = section.angle!/2.0 + self.rotateAngle + section.startAngle
+                section.localPos = self.polarToDecart(radius: section.radius!, angle: angle)
+                section.globalPos = self.localToGlobal(node: self.node!, coords: section.localPos!)
+                self.rotateAngle = self.rotateAngle + CGFloat(self.outputOffset) + CGFloat(spacing)
+                self.node?.addChild(section)
+                self.outputArcs.append(section)
+                
+                if(self.node?.maxOutput == Int.max){
+                    section.multipleEdges = true
+                }
+                
             }
         }
         if(self.rotateAngle==0){
@@ -56,9 +60,11 @@ class ArcManager{
         }
         
         self.rotateAngle = self.rotateAngle + self.spacing
-        for _ in 0..<self.inputArcsAmount{
+        for index in 0..<self.inputArcsAmount{
             let section = Arc(angle: CGFloat(self.inputOffset), radius: 110, isInput: true, rotation:CGFloat(rotateAngle))
-            print(rotateAngle)
+            section.name = self.inputArcNames[index]
+            section.parentNode = node
+            
             let angle = section.angle!/2.0 + self.rotateAngle + section.startAngle
             
             section.localPos = self.polarToDecart(radius: section.radius!, angle: angle)
@@ -69,27 +75,23 @@ class ArcManager{
             if(self.node?.maxInput == Int.max){
                 section.multipleEdges = true
             }
+            
+            //section.drawLabel(name: section.name ?? "")
+            let label:SKLabelNode = SKLabelNode()
+            label.position = self.polarToDecart(radius: section.radius!+90, angle: angle+0.1)
+            label.zRotation = angle + CGFloat.pi
+            label.zPosition = 4
+            label.fontSize = 30
+            //        label.zRotation = 3*CGFloat.pi/2 + self.angle!
+            label.text = section.name
+            self.node?.addChild(label)
         }
     }
-    
-    func getArc(with id:String)->Arc?{
-        let arcs = self.inputArcs + self.outputArcs
-        if !arcs.isEmpty{
-            return arcs.filter {$0.id == id}[0]
-        }
-        return nil
-    }
-    
-    func getArc(with coord:CGPoint)->Arc{
-        return Arc()
-    }
-    
     
     func polarToDecart(radius:CGFloat,angle:CGFloat)->CGPoint{
         let x = radius*cos(angle)
         let y = radius*sin(angle)
         return CGPoint(x: x, y: y)
-        
     }
     
     func localToGlobal(node:SKNode,coords:CGPoint) -> CGPoint{
@@ -97,45 +99,4 @@ class ArcManager{
         let y = node.position.y + coords.y
         return CGPoint(x:x,y:y)
     }
-    
-    func popArc(at position:CGPoint){
-        if !(self.scene?.nodes(at: position).isEmpty)!{
-            if let a = self.scene?.nodes(at: position)[0] as? Arc{
-                var parent = a.parent
-                var currentParent = self.currentArc?.parent
-                if self.currentArc != nil{
-                    if a.id != self.currentArc?.id{
-                        self.currentArc?.redrawArc(with: -1)
-                        currentParent?.addChild(self.currentArc!)
-                        a.redrawArc(with: 1)
-                        parent?.addChild(a)
-                        self.currentArc = a
-                    }
-                }else {
-                    self.currentArc = a
-                    a.redrawArc(with: 1)
-                    parent?.addChild(a)
-                }
-            }
-        }else {
-            let parent = self.currentArc?.parent
-            self.currentArc?.redrawArc(with: -1)
-            parent?.addChild(self.currentArc!)
-            self.currentArc = nil
-        }
-        
-        
-        
-        
-    }
-    
-    func getArc(at position:CGPoint)->Arc?{
-        if !(self.scene?.nodes(at: position).isEmpty)!{
-            if let a = self.scene?.nodes(at: position)[0] as? Arc{
-                return a
-            }
-        }
-        return nil
-    }
-    
 }

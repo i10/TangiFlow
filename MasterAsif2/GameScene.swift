@@ -35,42 +35,88 @@ class GameScene: MTKScene {
     var rotate = false
     var traceCall:[Int:Int] = [:]
     var result:CGFloat = 0.0
+    var projectManager:ProjectFilesManager?
+    override func didMove(to view: SKView) {
+        //view.translateOrigin(to: CGPoint(x:view.frame.width/2,y:view.frame.height/2))
+        //        var textFieldFrame = CGRect(origin: .zero, size: CGSize(width: 200, height: 30))
+        //        var textField = NSTextField(frame: textFieldFrame)
+        //        textField.setFrameOrigin(CGPoint(x:40,y:40))
+        //        textField.backgroundColor = NSColor.white
+        //        textField.placeholderString = "hello world"
+        //        view.addSubview(textField)
+        let barra = SKShapeNode(rectOf: CGSize(width: 70, height: 70))
+        barra.name = "bar"
+        barra.fillColor = SKColor.white
+        barra.position = CGPoint(x:0,y:0)
+        
+        self.addChild(barra)
+        graph = Graph2(scene: self)
+        self.projectManager = ProjectFilesManager()
+        self.projectManager?.openJson()
+        // MTKHub.sharedHub.traceDelegate = self
+        let offsetx =   CGPoint(x:2500,y:540)
+        let offsetz =   CGPoint(x:2000,y:540)
+        let offsety =  CGPoint(x:1000,y:540)
+        let offsetd =  CGPoint(x:1500,y:540)
+        let id1 = "PT-118.122.125"
+        let id2 = "PT-127.99.88"
+        let id3 = "PT-127.99.89"
+        let id4 = "PT-127.99.90"
+        let projectJson = self.projectManager?.projectFileJson
+        // print(projectJson![id1]!["arguments"])
+        if let tangibleData1 = projectJson?[id1]{
+            if let args = ((tangibleData1 as! [String:Any])["arguments"]) as? [String:[String]]{
+                let node1 = Node(id: id1,
+                                 position: offsetx,
+                                 inp:args["main_args"]!.count,
+                                 out:1,
+                                 tangibleDict:projectJson![id1]!,
+                                 view:view)
+                self.graph?.addNode(node: node1)
+            }
+        }
+        
+        if let tangibleData2 = projectJson?[id2]{
+            if let args = ((tangibleData2 as! [String:Any])["arguments"]) as? [String:[String]]{
+                let node2 = Node(id: id2,
+                                 position: offsety,
+                                 inp:args["main_args"]!.count,
+                                 out:1,
+                                 tangibleDict:projectJson![id2]!,
+                                 view:view)
+                self.graph?.addNode(node: node2)
+            }
+        }
+        
+        if let tangibleData3 = projectJson?[id3]{
+            if let args = ((tangibleData3 as! [String:Any])["arguments"]) as? [String:[String]]{
+                let node3 = Node(id: id3,
+                                 position: offsetz,
+                                 inp:args["main_args"]!.count,
+                                 out:1,
+                                 tangibleDict:projectJson![id3]!,
+                                 view:view)
+                self.graph?.addNode(node: node3)
+            }
+        }
+        
+        if let tangibleData4 = projectJson?[id4]{
+            if let args = ((tangibleData4 as! [String:Any])["arguments"]) as? [String:[String]]{
+                let node4 = Node(id: id4,
+                                 position: offsetd,
+                                 inp:args["main_args"]!.count,
+                                 out:1,
+                                 tangibleDict:projectJson![id4]!,
+                                 view:view)
+                self.graph?.addNode(node: node4)
+            }
+        }
+    }
+    
     override func setupScene() {
         graph = Graph2(scene: self)
         MTKHub.sharedHub.traceDelegate = self
-        var offsetx = 100
-        var offsety = 100
-        
-        var node1 = Node(position: CGPoint(x:500+offsetx,y:650+offsety),inp:0,out:2)
-        node1.physicsBody = SKPhysicsBody(circleOfRadius: 100)
-        
-        var node2 = Node(position: CGPoint(x:1000+offsetx,y:500+offsety),inp:1,out:1)
-        node2.physicsBody = SKPhysicsBody(circleOfRadius: 100)
-        
-        var node3 = Node(position: CGPoint(x:1000+offsetx,y:800+offsety),inp:1,out:1)
-        node3.physicsBody = SKPhysicsBody(circleOfRadius: 100)
-        
-        var node4 = Node(position: CGPoint(x:1600+offsetx,y:500+offsety),inp:1,out:0)
-        node4.physicsBody = SKPhysicsBody(circleOfRadius: 100)
-        
-        var node5 = Node(position: CGPoint(x:1600+offsetx,y:800+offsety),inp:1,out:0)
-        node5.physicsBody = SKPhysicsBody(circleOfRadius: 100)
-        
-        self.graph?.addNode(node: node1)
-        self.graph?.addNode(node: node2)
-        self.graph?.addNode(node: node3)
-        self.graph?.addNode(node: node4)
-        self.graph?.addNode(node: node5)
-        
-        node1.physicsBody?.isDynamic = false
-        node2.physicsBody?.isDynamic = false
-        node3.physicsBody?.isDynamic = false
-        node4.physicsBody?.isDynamic = false
-        node5.physicsBody?.isDynamic = false
-        node4.terminal = true
-        node5.terminal = true
-        //MTKUtils.traceVisualization = true
-        
+       
         
     }
     
@@ -214,10 +260,10 @@ class GameScene: MTKScene {
     }
     
     
-    func crawl(node:Node,my_list:[Node]=[])->[Node]{
+    func crawl(node:Node,my_list:[String]=[])->[String]{
         var my_list_copy = my_list
         
-        my_list_copy.append(node)
+        my_list_copy.append(node.id!)
         for item in node.arcManager!.inputArcs{
             if !item.edges.isEmpty{
                 return crawl(node:(item.edges[0].from?.parent as! Node),my_list: my_list_copy)

@@ -8,6 +8,7 @@
 
 import Foundation
 import SwiftyJSON
+
 class ScriptRunner{
     //self.scriptLabel = path
     func script(nodes:[Node]){

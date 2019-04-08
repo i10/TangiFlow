@@ -10,6 +10,8 @@ import Foundation
 import SpriteKit
 
 class Arc:SKShapeNode{
+    var parentNode:Node?
+    var arcName:String = ""
     var pathToDraw:CGMutablePath = CGMutablePath()
     var startAngle:CGFloat = CGFloat(3.0 * Double.pi/2)
     var isInput:Bool = false
@@ -68,7 +70,8 @@ class Arc:SKShapeNode{
     }
     
     func redrawArc(with factor:Int){
-       
+        print(self.name)
+        let parent = self.parent
         self.removeFromParent()
         if(factor==1 && !popped){
             
@@ -76,14 +79,14 @@ class Arc:SKShapeNode{
             self.segmentRadius = 2*self.segmentRadius
             self.popped = true
         } else if(factor == -1 && popped && self.edges.isEmpty){
-
+            
             self.radius = self.radius! - self.segmentRadius/2
             self.segmentRadius = self.segmentRadius/2
             self.popped = false
         }
         
         self.drawArc(angle: self.angle!, radius: self.radius!, isInput: self.isInput, rotation: self.zRotation)
-
+        parent?.addChild(self)
     }
     
     
@@ -93,28 +96,30 @@ class Arc:SKShapeNode{
         self.pathToDraw.addLine(to: CGPoint(x:0,y:-radius+self.segmentRadius))
         
         self.pathToDraw.addArc(center: CGPoint.zero,
-                          radius: radius-self.segmentRadius,
-                          startAngle: startAngle,
-                          endAngle: startAngle + angle,
-                          clockwise: false)
+                               radius: radius-self.segmentRadius,
+                               startAngle: startAngle,
+                               endAngle: startAngle + angle,
+                               clockwise: false)
         self.pathToDraw.addLine(to: CGPoint(x:radius*cos(startAngle+angle),y:radius*sin(startAngle+angle)))
         self.pathToDraw.addArc(center: CGPoint.zero,
-                          radius: radius,
-                          startAngle: startAngle + angle,
-                          endAngle: startAngle,
-                          clockwise: true)
+                               radius: radius,
+                               startAngle: startAngle + angle,
+                               endAngle: startAngle,
+                               clockwise: true)
         self.path = self.pathToDraw
     }
     
     func addEdge(edge:Edge){
-        if self.multipleEdges  {
-            self.edges.append(edge)
-        }else{
-            if self.edges.count == 0 {
+        if !self.edges.contains(edge){
+            if self.multipleEdges  {
                 self.edges.append(edge)
             }else{
-                print("I AM HUGE NASTY EXCEPTION")
-                NSException(name:NSExceptionName(rawValue: "CanNotPutEdge"), reason:"Arc can not accept more edge", userInfo:nil).raise()
+                if self.edges.count == 0 {
+                    self.edges.append(edge)
+                }else{
+                    //print("I AM HUGE NASTY EXCEPTION")
+                    NSException(name:NSExceptionName(rawValue: "CanNotPutEdge"), reason:"Arc can not accept more edge", userInfo:nil).raise()
+                }
             }
         }
     }
@@ -132,4 +137,14 @@ class Arc:SKShapeNode{
             self.fillColor = NSColor.green
         }
     }
+    
+    //    func drawLabel(name:String){
+    //        let label:SKLabelNode = SKLabelNode()
+    //        label.fontColor = NSColor.red
+    //        label.zPosition = 4
+    //        label.position.x = self.localPos!.x - 20
+    //        label.position.y = self.localPos!.y - 20
+    //        label.text = name
+    //        self.addChild(label)
+    //    }
 }
