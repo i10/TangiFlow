@@ -22,25 +22,38 @@ class Edge:SKShapeNode{
     
     convenience init(from:CGPoint,to:CGPoint) {
         self.init()
-        self.path = pathToDraw
-        self.fillColor = NSColor.white
-        self.strokeColor = NSColor.white
-        self.lineWidth = 2
-        self.pathToDraw.move(to: from)
-        self.pathToDraw.addLine(to: to)
-        self.path = self.pathToDraw
-        //self.from = from
-        //self.to = to
+        self.drawLineBasic(from: from, to: to)
+        //        self.path = pathToDraw
+        //        self.fillColor = NSColor.white
+        //        self.strokeColor = NSColor.white
+        //        self.lineWidth = 2
+        //        self.pathToDraw.move(to: from)
+        //        self.pathToDraw.addLine(to: to)
+        //        self.path = self.pathToDraw
         self.id = UUID().uuidString
-        self.fromPoint = from
-        self.toPoint = to
+        //        self.fromPoint = from
+        //        self.toPoint = to
     }
     
     
     func redrawEdge(from:CGPoint,to:CGPoint){
+        let parent = self.parent
         self.removeFromParent()
         self.pathToDraw  = CGMutablePath()
-        //myLine = SKShapeNode(path:pathToDraw!)
+        //        self.path = pathToDraw
+        //        self.fillColor = NSColor.white
+        //        self.strokeColor = NSColor.white
+        //        self.lineWidth = 2
+        //        self.pathToDraw.move(to: from)
+        //        self.pathToDraw.addLine(to: to)
+        //        self.path = self.pathToDraw
+        //        self.fromPoint = from
+        //        self.toPoint = to
+        self.drawLineBasic(from: from, to: to)
+        parent?.addChild(self)
+    }
+    
+    func drawLineBasic(from:CGPoint,to:CGPoint){
         self.path = pathToDraw
         self.fillColor = NSColor.white
         self.strokeColor = NSColor.white
@@ -50,13 +63,10 @@ class Edge:SKShapeNode{
         self.path = self.pathToDraw
         self.fromPoint = from
         self.toPoint = to
-        //            pathToDraw?.move(to: start!)
-        //            pathToDraw?.addLine(to: event.location(in: self))
-        //            myLine?.path = pathToDraw
-        //            myLine?.strokeColor = NSColor.red
-        
     }
+    
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 }
+
