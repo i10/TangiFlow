@@ -9,7 +9,7 @@
 import Foundation
 import SpriteKit
 class NodeTitleView:SKNode{
-    var controlledArgs:[String] = ["controlled_arg1","controlled_arg2"]
+    var controlledArgs:[String] = []
     var title:String = "I am title"
     
     override init() {

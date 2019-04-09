@@ -58,7 +58,7 @@ class Graph2{
                     //remove nodeid from list
                     let activity = TraceToActivity.getActivity(by: arc)
                     let to = activity?.to
-                    let from = activity?.from
+                    _ = activity?.from
                     //from?.parentNode?.outArgs[from!.name!] =  nil
                     to?.parentNode?.inArgs[to!.name!] = nil
                     activity?.currentTrace = trace.uuid
@@ -115,7 +115,7 @@ class Graph2{
     
     func touchMove(trace:MTKTrace){
         if let scene = self.scene {
-            var allNodes = scene.nodes(at: trace.position!)
+            _ = scene.nodes(at: trace.position!)
             if let activity = TraceToActivity.getActivity(by: trace.uuid) {
                 print("REDRAW")
                 activity.edge?.redrawEdge(from: activity.fulcrum!.globalPos!, to: trace.position!)

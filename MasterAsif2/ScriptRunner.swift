@@ -21,11 +21,13 @@ class ScriptRunner{
 //            } else{
 //
 //            }
+            print("dead parrot")
+            print(json)
             
             self.extractJson(nodes: nodes, path: json)
             let task = Process()
             task.launchPath = "/usr/bin/env"
-            task.arguments = ["/Users/asifmayilli/PycharmProjects/dataflow/main.py",json,proj]
+            task.arguments = ["/Users/ppi/Documents/Code/MasterAsifPythonBackEnd/main.py",json,proj]
             task.launch()
             task.waitUntilExit()
         }

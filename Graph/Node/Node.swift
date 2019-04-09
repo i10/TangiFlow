@@ -25,7 +25,7 @@ class Node: SKNode {
         if let funcname = (tangibleDict as? [String:Any]){
             //print(funcname)
             self.funcName = funcname["function"] as! String
-            self.controledArgNames = funcname["controled_args"] as? [String] ?? ["arg1","arg2","arg3"]
+            self.controledArgNames = funcname["controled_args"] as? [String] ?? []
             var multiplier:CGFloat = 3.0
             for item in self.controledArgNames{
                 //print("I")
@@ -33,12 +33,20 @@ class Node: SKNode {
                 //self.scene?.view.ad
                 //view.translateOrigin(to: CGPoint(x:view.frame.width/2,y:view.frame.height/2))
                 //self.scene?.view?.translateOrigin(to: )
-                var textFieldFrame = CGRect(origin: CGPoint(x:self.position.x+20,y:self.position.y + 60.0 + multiplier*40.0), size: CGSize(width: 80, height: 30))
+                var textFieldFrame = CGRect(origin: CGPoint(x:self.position.x+20,y:self.position.y + 60.0 + multiplier*40.0), size: CGSize(width: 160, height: 60))
                 var textField = NSTextField(frame: textFieldFrame)
+                
+                
+
+                
+                
+                
+                
                 self.controledArgsTextField.append(textField)
+                //textField.isEnabled = 
                 textField.id = item
                 //print(self.position)
-                textField.setFrameOrigin(CGPoint(x:self.position.x+20,y:self.position.y + 60.0 + multiplier*30.0))
+                textField.setFrameOrigin(CGPoint(x:self.position.x+20,y:self.position.y + 60.0 + multiplier*60.0))
                 multiplier-=1.0
                 textField.backgroundColor = NSColor.white
                 textField.placeholderString = "hello world"
@@ -62,6 +70,8 @@ class Node: SKNode {
         self.arcManager?.drawArcs()
         self.drawBase()
     }
+    
+
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -92,3 +102,6 @@ extension NSTextField{
         }
     }
 }
+
+
+

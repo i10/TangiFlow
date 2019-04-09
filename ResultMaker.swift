@@ -11,7 +11,7 @@ import SpriteKit
 class ResultMaker{
     
     func getResults(nodes:[Node]){
-        var path = "/Users/asifmayilli/PycharmProjects/dataflow/Files/Result"
+        var path = "/Users/ppi/Documents/Code/MasterAsifPythonBackEnd/Files/Result"
         let fm = FileManager.default
         do {
             let items = try fm.contentsOfDirectory(atPath: path)

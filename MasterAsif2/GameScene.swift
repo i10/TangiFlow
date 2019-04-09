@@ -36,7 +36,11 @@ class GameScene: MTKScene {
     var traceCall:[Int:Int] = [:]
     var result:CGFloat = 0.0
     var projectManager:ProjectFilesManager?
+    var activeTextField:NSTextField?
     override func didMove(to view: SKView) {
+        let fileManager = FileManager.default
+        let currentPath = fileManager.currentDirectoryPath
+        print("Current path: \(currentPath)")
         //view.translateOrigin(to: CGPoint(x:view.frame.width/2,y:view.frame.height/2))
         //        var textFieldFrame = CGRect(origin: .zero, size: CGSize(width: 200, height: 30))
         //        var textField = NSTextField(frame: textFieldFrame)
@@ -248,20 +252,58 @@ class GameScene: MTKScene {
                 self.graph?.touchMove(trace: trace)
             }else{
                 self.graph?.touchUp(trace: trace)
-            }
+                var nodes = self.nodes(at: trace.position!)
+                if !nodes.isEmpty && nodes[0].name == "bar"{
+                    //print("ok")
+                    let scr = ScriptRunner()
+                    scr.script(nodes: self.graph?.nodeManager.nodeList ?? [])
+                    let resultMaker = ResultMaker()
+                    resultMaker.getResults(nodes:self.graph?.nodeManager.nodeList ?? [])
+                    
+                }
                 
-                
+                let allNodes = self.graph!.nodeManager.nodeList
+                var textFields:[NSTextField] = []
+                for node in allNodes{
+                    textFields += textFields + node.controledArgsTextField
+                }
+                for textField in textFields{
+                    if textField.frame.origin.x < trace.position!.x && trace.position!.x < textField.frame.origin.x + 160 &&
+                        textField.frame.origin.y < trace.position!.y && trace.position!.y < textField.frame.origin.y + 60{
+//                        print(textFererwerewrerewrwerwerwerwerwerwewererewield)
+                        textField.isEnabled = true
+                        textField.isEditable = true
+                        textField.becomeFirstResponder()
+                        textField.stringValue = "i am the pressed"
+                        print(textField.stringValue)
+                        self.activeTextField = textField
                     }
+                }
+                //print(tf)
+            }
+                self.nodes(at: trace.position!)
+                
+        }
         
         return traceSet
     }
     
+//    override func mouseDown(with event: NSEvent) {
+//        print("hey")
+//    }
     
     override func update(_ currentTime: TimeInterval) {
         super.update(currentTime)
-        
+        if let at = self.activeTextField{
+            print(at.stringValue)
+        }
+        //self.keyDown(with: )
         
     }
+    override func keyDown(with event: NSEvent) {
+        print(event.keyCode)
+    }
+    
     
 }
 
