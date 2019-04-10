@@ -25,7 +25,7 @@ class Node: SKNode {
         if let funcname = (tangibleDict as? [String:Any]){
             //print(funcname)
             self.funcName = funcname["function"] as! String
-            self.controledArgNames = funcname["controled_args"] as? [String] ?? []
+            self.controledArgNames = funcname["controled_args"] as? [String] ?? ["arg1","arg2"]
             var multiplier:CGFloat = 3.0
             for item in self.controledArgNames{
                 //print("I")

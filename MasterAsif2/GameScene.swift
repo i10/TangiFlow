@@ -37,6 +37,7 @@ class GameScene: MTKScene {
     var result:CGFloat = 0.0
     var projectManager:ProjectFilesManager?
     var activeTextField:NSTextField?
+    var keyboard:Keyboard = Keyboard()
     override func didMove(to view: SKView) {
         let fileManager = FileManager.default
         let currentPath = fileManager.currentDirectoryPath
@@ -120,6 +121,7 @@ class GameScene: MTKScene {
     override func setupScene() {
         graph = Graph2(scene: self)
         MTKHub.sharedHub.traceDelegate = self
+        
        
         
     }
@@ -271,12 +273,17 @@ class GameScene: MTKScene {
                     if textField.frame.origin.x < trace.position!.x && trace.position!.x < textField.frame.origin.x + 160 &&
                         textField.frame.origin.y < trace.position!.y && trace.position!.y < textField.frame.origin.y + 60{
 //                        print(textFererwerewrerewrwerwerwerwerwerwewererewield)
+                        self.keyboard.activeTextInput = textField
                         textField.isEnabled = true
                         textField.isEditable = true
                         textField.becomeFirstResponder()
-                        textField.stringValue = "i am the pressed"
+                        textField.stringValue = ""
                         print(textField.stringValue)
-                        self.activeTextField = textField
+                        self.keyboard.position = CGPoint(x: 500, y: 500)
+                        if self.keyboard.parent == nil {
+                            self.addChild(self.keyboard)
+                            self.keyboard.drawKeys()}
+                            self.activeTextField = textField
                     }
                 }
                 //print(tf)
@@ -301,7 +308,12 @@ class GameScene: MTKScene {
         
     }
     override func keyDown(with event: NSEvent) {
+        
         print(event.keyCode)
+    }
+    
+    override func mouseUp(with event: NSEvent) {
+        print("hello hello")
     }
     
     
