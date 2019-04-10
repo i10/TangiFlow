@@ -279,7 +279,7 @@ class GameScene: MTKScene {
                         textField.becomeFirstResponder()
                         textField.stringValue = ""
                         print(textField.stringValue)
-                        self.keyboard.position = CGPoint(x: 500, y: 500)
+                        self.keyboard.position = CGPoint(x: 3000, y: 500)
                         if self.keyboard.parent == nil {
                             self.addChild(self.keyboard)
                             self.keyboard.drawKeys()}
