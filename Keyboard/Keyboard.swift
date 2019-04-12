@@ -49,6 +49,7 @@ class Keyboard:SKNode,MTKButtonDelegate{
         case "#+=":
             self.drawSpecialKeys2()
         case "ABC":
+            self.capsLock = false
             self.drawKeys()
         default:
             if self.capsLock{
