@@ -70,7 +70,7 @@ class Arc:SKShapeNode{
     }
     
     func redrawArc(with factor:Int){
-        print(self.name)
+       // print(self.name)
         let parent = self.parent
         self.removeFromParent()
         if(factor==1 && !popped){

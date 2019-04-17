@@ -31,7 +31,7 @@ class Keyboard:SKNode,MTKButtonDelegate{
     }
     
     @objc func buttonTapped(button: MTKButton) {
-        print(button.titleLabel?.text)
+        //print(button.titleLabel?.text)
         switch button.titleLabel?.text {
         case "Space":
             self.activeTextInput!.stringValue = self.activeTextInput!.stringValue + " "

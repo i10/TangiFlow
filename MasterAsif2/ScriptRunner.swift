@@ -23,7 +23,7 @@ class ScriptRunner{
 //            }
             print("dead parrot")
             print(json)
-            
+            self.getContent()
             self.extractJson(nodes: nodes, path: json)
             let task = Process()
             task.launchPath = "/usr/bin/env"
@@ -33,10 +33,25 @@ class ScriptRunner{
         }
     }
     
+    func getContent(){
+        let fileManager = FileManager.default
+        let documentsURL = fileManager.urls(for: .documentDirectory, in: .userDomainMask)[0]
+        do {
+            let fileURLs = try fileManager.contentsOfDirectory(at: URL(fileURLWithPath: "/Users/ppi/Documents/Code/MasterAsifPythonBackEnd/Files/Result"), includingPropertiesForKeys: nil)
+            // process files
+            for file in fileURLs{
+                try fileManager.removeItem(at: file)
+            }
+        } catch {
+            print("Error while enumerating files \(documentsURL.path): \(error.localizedDescription)")
+        }
+    }
+    
     func extractJson(nodes:[Node],path:String){
        
         var graphStruct:[String:[String]] = [:]
         var controledArgsDict:[String:[String]] = [:]
+        var projData:[String:Any] = [:]
         for node in nodes{
             var args:[String] = []
             //print(node.inputArcNames)
@@ -52,7 +67,7 @@ class ScriptRunner{
             var controledArgs:[String] = []
             for item in node.controledArgNames{
                 for item1 in node.controledArgsTextField{
-                    if item == item1.id{
+                    if item == item1.placeholderString{
                         if !item1.stringValue.isEmpty{
                             controledArgs.append(item1.stringValue)
                             
@@ -62,16 +77,21 @@ class ScriptRunner{
                
             }
             controledArgsDict[node.id!] = controledArgs
+            if let imgData = node.sourceData as? ImageTypeResultNode{
+                projData["imageurl"] = imgData.url
+            }
             
         }
         print(controledArgsDict)
         //self.revertGraph(graph: graphStruct)
         let manager = FileManager()
-        var projData:[String:Any] = [:]
+        
         projData["graph"] = revertGraph(graph: graphStruct)
         projData["graph_reverse"] = graphStruct
         projData["type"] = "arithmetic"
         projData["controled_args"] = controledArgsDict
+        
+        
         print(projData)
         let json = JSON(projData)
 

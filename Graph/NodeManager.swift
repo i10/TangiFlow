@@ -12,6 +12,7 @@ import SpriteKit
 
 
 class NodeManager{
+    var copies:[String:Int] = [:]
     var counter = 0
     var nodeList:[Node] = []
     var selectedNode:Node?
@@ -22,6 +23,16 @@ class NodeManager{
 
     
     func addNode(node:Node){
+        if self.copies.keys.contains(node.id!){
+            self.copies[node.id!] =  self.copies[node.id!]! + 1
+            
+            
+            node.label?.text = "\(node.id!) \(self.copies[node.id!]!) \(node.funcName)"
+            node.id = "\(node.id!) \(self.copies[node.id!]!)"
+        }else{
+            self.copies[node.id!] = 0
+        }
+        
         self.nodeList.append(node)
         node.arcManager?.scene = self.scene
         self.scene?.addChild(node)

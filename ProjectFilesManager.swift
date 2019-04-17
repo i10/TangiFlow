@@ -13,6 +13,7 @@ class ProjectFilesManager{
     
     func openJson(){
         if let jsonPath = Bundle.main.path(forResource: projectFile, ofType: "json") {
+            //print(jsonPath)
             do {
                 
                 let data = try Data(contentsOf: URL(fileURLWithPath: jsonPath), options: .mappedIfSafe)

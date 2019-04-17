@@ -23,16 +23,7 @@ class Edge:SKShapeNode{
     convenience init(from:CGPoint,to:CGPoint) {
         self.init()
         self.drawLineBasic(from: from, to: to)
-        //        self.path = pathToDraw
-        //        self.fillColor = NSColor.white
-        //        self.strokeColor = NSColor.white
-        //        self.lineWidth = 2
-        //        self.pathToDraw.move(to: from)
-        //        self.pathToDraw.addLine(to: to)
-        //        self.path = self.pathToDraw
         self.id = UUID().uuidString
-        //        self.fromPoint = from
-        //        self.toPoint = to
     }
     
     
@@ -40,15 +31,6 @@ class Edge:SKShapeNode{
         let parent = self.parent
         self.removeFromParent()
         self.pathToDraw  = CGMutablePath()
-        //        self.path = pathToDraw
-        //        self.fillColor = NSColor.white
-        //        self.strokeColor = NSColor.white
-        //        self.lineWidth = 2
-        //        self.pathToDraw.move(to: from)
-        //        self.pathToDraw.addLine(to: to)
-        //        self.path = self.pathToDraw
-        //        self.fromPoint = from
-        //        self.toPoint = to
         self.drawLineBasic(from: from, to: to)
         parent?.addChild(self)
     }

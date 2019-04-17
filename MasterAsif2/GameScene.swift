@@ -42,18 +42,10 @@ class GameScene: MTKScene {
         let fileManager = FileManager.default
         let currentPath = fileManager.currentDirectoryPath
         print("Current path: \(currentPath)")
-        //view.translateOrigin(to: CGPoint(x:view.frame.width/2,y:view.frame.height/2))
-        //        var textFieldFrame = CGRect(origin: .zero, size: CGSize(width: 200, height: 30))
-        //        var textField = NSTextField(frame: textFieldFrame)
-        //        textField.setFrameOrigin(CGPoint(x:40,y:40))
-        //        textField.backgroundColor = NSColor.white
-        //        textField.placeholderString = "hello world"
-        //        view.addSubview(textField)
         let barra = SKShapeNode(rectOf: CGSize(width: 70, height: 70))
         barra.name = "bar"
         barra.fillColor = SKColor.white
         barra.position = CGPoint(x:0,y:0)
-        
         self.addChild(barra)
         graph = Graph2(scene: self)
         self.projectManager = ProjectFilesManager()
@@ -68,56 +60,57 @@ class GameScene: MTKScene {
         let id3 = "PT-127.99.89"
         let id4 = "PT-127.99.90"
         let projectJson = self.projectManager?.projectFileJson
+        var node1:Node?
+        var node2:Node?
+        var node3:Node?
+        
+        
+//        var mtkFileManager:MTKFileManager = MTKFileManager()
+//        mtkFileManager.position = CGPoint(x: 400, y: 400)
+//        self.addChild(mtkFileManager)
         // print(projectJson![id1]!["arguments"])
         if let tangibleData1 = projectJson?[id1]{
-            if let args = ((tangibleData1 as! [String:Any])["arguments"]) as? [String:[String]]{
-                let node1 = Node(id: id1,
-                                 position: offsetx,
-                                 inp:args["main_args"]!.count,
-                                 out:1,
-                                 tangibleDict:projectJson![id1]!,
-                                 view:view)
-                self.graph?.addNode(node: node1)
-            }
+            
+                node1 = Node(id: id1,
+                             position: offsetz,
+                             out:1,
+                             tangibleDict:projectJson![id1]!,
+                             view:view)
+                
+                self.graph?.addNode(node: node1!)
+            
         }
         
         if let tangibleData2 = projectJson?[id2]{
-            if let args = ((tangibleData2 as! [String:Any])["arguments"]) as? [String:[String]]{
-                let node2 = Node(id: id2,
-                                 position: offsety,
-                                 inp:args["main_args"]!.count,
-                                 out:1,
-                                 tangibleDict:projectJson![id2]!,
-                                 view:view)
-                self.graph?.addNode(node: node2)
-            }
+            
+                node2 = Node(id: id2,
+                             position: offsetd,
+                             out:1,
+                             tangibleDict:projectJson![id2]!,
+                             view:view)
+                //node2?.addChild(source)
+                self.graph?.addNode(node: node2!)
+            
         }
         
         if let tangibleData3 = projectJson?[id3]{
-            if let args = ((tangibleData3 as! [String:Any])["arguments"]) as? [String:[String]]{
-                let node3 = Node(id: id3,
-                                 position: offsetz,
-                                 inp:args["main_args"]!.count,
-                                 out:1,
-                                 tangibleDict:projectJson![id3]!,
-                                 view:view)
-                self.graph?.addNode(node: node3)
-            }
+           
+                node3 = Node(id: id3,
+                             position: offsety,
+                             out:1,
+                             tangibleDict:projectJson![id3]!,
+                             view:view)
+                self.graph?.addNode(node: node3!)
+            
         }
         
-        if let tangibleData4 = projectJson?[id4]{
-            if let args = ((tangibleData4 as! [String:Any])["arguments"]) as? [String:[String]]{
-                let node4 = Node(id: id4,
-                                 position: offsetd,
-                                 inp:args["main_args"]!.count,
-                                 out:1,
-                                 tangibleDict:projectJson![id4]!,
-                                 view:view)
-                self.graph?.addNode(node: node4)
-            }
-        }
+        
+        
+        var sideMenu = SideMenu(json: projectJson ?? [:],view:view,scene:self)
+        self.addChild(sideMenu)
+        
+        
     }
-    
     override func setupScene() {
         graph = Graph2(scene: self)
         MTKHub.sharedHub.traceDelegate = self
@@ -259,8 +252,14 @@ class GameScene: MTKScene {
                     //print("ok")
                     let scr = ScriptRunner()
                     scr.script(nodes: self.graph?.nodeManager.nodeList ?? [])
-                    let resultMaker = ResultMaker()
-                    resultMaker.getResults(nodes:self.graph?.nodeManager.nodeList ?? [])
+                    let resultMaker = ResultVisualization()
+                    resultMaker.getResults(graph:self.graph!)
+//                    let dialogue = NSOpenPanel()
+//                    dialogue.canChooseFiles = true
+//                    dialogue.showsResizeIndicator = true
+//                    if (dialogue.runModal() == NSApplication.ModalResponse.OK){
+//                        print("MODAL")
+//                    }
                     
                 }
                 

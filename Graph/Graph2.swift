@@ -38,49 +38,75 @@ class Graph2{
         activity.edge?.from = from
         activity.fulcrum = arc
     }
-    
+    func inCircle(center:CGPoint?,point:CGPoint?,radius:CGFloat?)->Bool{
+        if let center = center,let point = point,let radius = radius{
+            let x2 = (center.x - point.x)*(center.x - point.x)
+            let y2 = (center.y - point.y)*(center.y - point.y)
+            return x2 + y2  < radius*radius
+        }
+        return false
+    }
     func touchDown(trace:MTKTrace){
+    
         if let scene = self.scene{
-            var allNodes = scene.nodes(at:trace.position!).filter{$0 is Arc}
+            var allNodes = scene.nodes(at:trace.position!).filter{$0 is Node}
+            
+            var node:Node? = nil
             if !allNodes.isEmpty{
-                let arc = allNodes[0] as! Arc
-                if TraceToActivity.getActivity(by: arc) == nil {
-                    let to:Arc? = arc.isInput ? arc:nil
-                    let from:Arc? = arc.isInput ? nil:arc
-                    let activity = TraceToActivity( from:from,to:to)
-                    self.setActivity(activity: activity, trace: trace, to: to,from:from,arc:arc)
-                    self.edgeManager.addEdge(edge: activity.edge!)
-                    arc.redrawArc(with: 1)
-                    arc.addEdge(edge: activity.edge!)
-                    //                    activity.edge?.redrawEdge(from: from, to: to)
-                    arc.changeArcColor()
-                } else{
-                    //remove nodeid from list
-                    let activity = TraceToActivity.getActivity(by: arc)
-                    let to = activity?.to
-                    _ = activity?.from
-                    //from?.parentNode?.outArgs[from!.name!] =  nil
-                    to?.parentNode?.inArgs[to!.name!] = nil
-                    activity?.currentTrace = trace.uuid
-                    if arc.isInput{
-                        activity!.to = nil
-                        activity?.fulcrum = activity!.from
-                    }else{
-                        activity!.from = nil
-                        activity?.fulcrum = activity!.to
-                    }
-                    arc.removeEdge(edge: activity!.edge!)
-                    arc.redrawArc(with: -1)
-                    arc.changeArcColor()
-                    activity?.edge?.redrawEdge(from: trace.position!, to: activity!.fulcrum!.globalPos!)
+                node = allNodes[0] as? Node
+            }
+            if !self.inCircle(center: node?.position, point: trace.position!, radius: 80.0){
+                //print("I AM TOUCHED")
+                self.arcTouchDown(trace: trace,scene:scene)
+                
+            } else{
+                let activity = TraceToNode(node: node ?? nil, trace: trace)
+            }
+            // self.nodeTouchDown(event:event,scene: scene)
+        }
+    }
+    
+    func arcTouchDown(trace:MTKTrace,scene:SKScene){
+        //var allNodes =
+        var allArcs = scene.nodes(at:trace.position!).filter{$0 is Arc}
+        if !allArcs.isEmpty{
+            let arc = allArcs[0] as! Arc
+            if TraceToActivity.getActivity(by: arc) == nil {
+                let to:Arc? = arc.isInput ? arc:nil
+                let from:Arc? = arc.isInput ? nil:arc
+                let activity = TraceToActivity( from:from,to:to)
+                self.setActivity(activity: activity, trace: trace, to: to,from:from,arc:arc)
+                self.edgeManager.addEdge(edge: activity.edge!)
+                arc.redrawArc(with: 1)
+                arc.addEdge(edge: activity.edge!)
+                //                    activity.edge?.redrawEdge(from: from, to: to)
+                arc.changeArcColor()
+            } else{
+                //remove nodeid from list
+                let activity = TraceToActivity.getActivity(by: arc)
+                let to = activity?.to
+                let from = activity?.from
+                //from?.parentNode?.outArgs[from!.name!] =  nil
+                to?.parentNode?.inArgs[to!.name!] = nil
+                activity?.currentTrace = trace.uuid
+                if arc.isInput{
+                    activity!.to = nil
+                    activity?.fulcrum = activity!.from
+                }else{
+                    activity!.from = nil
+                    activity?.fulcrum = activity!.to
                 }
+                arc.removeEdge(edge: activity!.edge!)
+                arc.redrawArc(with: -1)
+                arc.changeArcColor()
+                activity?.edge?.redrawEdge(from: trace.position!, to: activity!.fulcrum!.globalPos!)
             }
         }
     }
     
     
-    
     func touchUp(trace:MTKTrace) {
+        TraceToNode.removeActivity(id: trace.uuid)
         if let scene = self.scene as? GameScene{
             var allNodes = scene.nodes(at: trace.position!).filter{!($0 is Edge) && ($0 is Arc)}
             
@@ -106,6 +132,11 @@ class Graph2{
                         activity.currentTrace = nil
                         arc.changeArcColor()
                         arc.redrawArc(with: 1)
+                    }else {
+                        self.edgeManager.removeEdge(with: activity.edge?.id)
+                        TraceToActivity.removeActivity( activity:activity)
+                        arc.redrawArc(with: -1)
+                        arc.changeArcColor()
                     }
                 }
             }
@@ -115,21 +146,23 @@ class Graph2{
     
     func touchMove(trace:MTKTrace){
         if let scene = self.scene {
-            _ = scene.nodes(at: trace.position!)
-            if let activity = TraceToActivity.getActivity(by: trace.uuid) {
-                print("REDRAW")
-                activity.edge?.redrawEdge(from: activity.fulcrum!.globalPos!, to: trace.position!)
+            var allNodes = scene.nodes(at:trace.position!).filter{$0 is Node}
+            var position:CGPoint? = nil
+            if !allNodes.isEmpty{
+                position = allNodes[0].position
+            }
+            
+            if let activity = TraceToNode.getActivity(by: trace.uuid){
+                self.moveNode(node: activity.node, trace: trace)
+            }
+            if !self.inCircle(center: position, point: trace.position, radius: 80.0){
+                if let activity = TraceToActivity.getActivity(by: trace.uuid) {
+                    activity.edge?.redrawEdge(from: activity.fulcrum!.globalPos!, to: trace.position!)
+                }
             }
         }
     }
-//    
-//    func redrawArc(arc:Arc?,with:Int){
-////        print("i am called")
-//        let parent = arc?.parent!
-//        arc?.redrawArc(with: with)
-//        parent?.addChild(arc!)
-//    }
-    
+
     
     func putEdge(trace:MTKTrace) throws{
         if let scene = self.scene as? GameScene{
@@ -149,15 +182,33 @@ class Graph2{
         }
     }
     
-    func newCoord(node:Node, pos:CGPoint){
-        let deltaX = pos.x - node.position.x
-        let deltaY = pos.y - node.position.y
-        if (abs(deltaX) > 2 || abs(deltaY) > 2) {
-            node.position.x = node.position.x + deltaX
-            node.position.y = node.position.y + deltaY
-            self.moveArcs(node: node, deltaX: deltaX, deltaY: deltaY)
+    func newCoord(node:Node, trace:MTKTrace){
+        if let activity = TraceToNode.getActivity(by: trace.uuid){
+            let deltaX = activity.oldX - activity.trace!.position!.x
+            let deltaY = activity.oldY - activity.trace!.position!.y
+            activity.oldX = trace.position!.x
+            activity.oldY = trace.position!.y
+            activity.trace = trace
+            if (abs(deltaX) > 2 || abs(deltaY) > 2) {
+                node.position.x = node.position.x - deltaX
+                node.position.y = node.position.y - deltaY
+                self.moveArcs(node: node, deltaX: -deltaX, deltaY: -deltaY)
+                self.moveTextFields(node: node, deltaX: -deltaX, deltaY: -deltaY)
+            }
+            
+            
         }
+
         
+        
+        
+    }
+    
+    func moveTextFields(node:Node,deltaX:CGFloat,deltaY:CGFloat){
+        for item in node.controledArgsTextField{
+            let point = CGPoint(x: item.frame.origin.x+deltaX, y: item.frame.origin.y+deltaY)
+            item.frame.origin = point
+        }
     }
     
     func moveArcs(node:Node,deltaX:CGFloat,deltaY:CGFloat){
@@ -176,10 +227,10 @@ class Graph2{
         }
     }
     
-    func moveNode(node:Node?,pos:CGPoint){
+    func moveNode(node:Node?,trace:MTKTrace){
         
         if let nodeToMove = node {
-            self.newCoord(node: nodeToMove, pos: pos)
+            self.newCoord(node: nodeToMove,trace: trace)
         }
     }
 

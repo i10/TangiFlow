@@ -4,11 +4,12 @@
         "function" : "func1",
         "arguments" : {
             "main_args" : [
-                
+
             ],
             "controled_args" : [
-                
-            ]
+
+            ],
+            "button":{"arg":"button_get_image","title":"get_image"}
         }
     },
     "PT-118.122.125" : {
@@ -19,7 +20,7 @@
                 "argument1"
             ],
             "controled_args" : [
-                
+                "controled_value"
             ]
         }
     },
@@ -31,7 +32,7 @@
                 "argument1"
             ],
             "controled_args" : [
-                
+                "controled_argument"
             ]
         }
     },
@@ -43,7 +44,7 @@
                 "argument1"
             ],
             "controled_args" : [
-                
+
             ]
         }
     }
