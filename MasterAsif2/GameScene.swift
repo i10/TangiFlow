@@ -39,6 +39,7 @@ class GameScene: MTKScene {
     var activeTextField:NSTextField?
     var keyboard:Keyboard = Keyboard()
     override func didMove(to view: SKView) {
+        self.view?.showsFPS = true
         let fileManager = FileManager.default
         let currentPath = fileManager.currentDirectoryPath
         print("Current path: \(currentPath)")
