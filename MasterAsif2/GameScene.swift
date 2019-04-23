@@ -66,9 +66,9 @@ class GameScene: MTKScene {
         var node3:Node?
         
         
-        var mtkFileManager:MTKFileManager = MTKFileManager()
-        mtkFileManager.position = CGPoint(x: 600, y: 600)
-        self.addChild(mtkFileManager)
+//        var mtkFileManager:MTKFileManager = MTKFileManager()
+//        mtkFileManager.position = CGPoint(x: 600, y: 600)
+//        self.addChild(mtkFileManager)
         // print(projectJson![id1]!["arguments"])
         if let tangibleData1 = projectJson?[id1]{
             
@@ -250,19 +250,19 @@ class GameScene: MTKScene {
                 self.graph?.touchUp(trace: trace)
                 var nodes = self.nodes(at: trace.position!)
                 if !nodes.isEmpty && nodes[0].name == "bar"{
-                    let node =  NodeManager.getNode(with: "PT-127.99.89")
-                    node?.arcManager?.addOutputArc()
+//                    let node =  NodeManager.getNode(with: "PT-127.99.89")
+//                    node?.arcManager?.addOutputArc()
                     //print("ok")
-//                    let scr = ScriptRunner()
-//                    scr.script()
-//                    let resultMaker = ResultVisualization()
-//                    resultMaker.getResults()
-////                    let dialogue = NSOpenPanel()
-////                    dialogue.canChooseFiles = true
-////                    dialogue.showsResizeIndicator = true
-////                    if (dialogue.runModal() == NSApplication.ModalResponse.OK){
-////                        print("MODAL")
-////                    }
+                    let scr = ScriptRunner()
+                    scr.script()
+                    let resultMaker = ResultVisualization()
+                    resultMaker.getResults()
+//                    let dialogue = NSOpenPanel()
+//                    dialogue.canChooseFiles = true
+//                    dialogue.showsResizeIndicator = true
+//                    if (dialogue.runModal() == NSApplication.ModalResponse.OK){
+//                        print("MODAL")
+//                    }
                     
                 }
                 

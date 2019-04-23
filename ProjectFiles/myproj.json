@@ -1,4 +1,4 @@
-{
+{"config":{"type":"image","tool_type":"pil"},
     "PT-127.99.88" : {
         "alias" : "",
         "function" : "func1",
@@ -20,7 +20,7 @@
                 "argument1"
             ],
             "controled_args" : [
-                "controled_value"
+                "controled_factor"
             ]
         }
     },
@@ -32,7 +32,7 @@
                 "argument1"
             ],
             "controled_args" : [
-                "controled_argument"
+                "controled_factor"
             ]
         }
     },

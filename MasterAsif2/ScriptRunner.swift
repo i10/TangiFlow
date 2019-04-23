@@ -27,6 +27,7 @@ class ScriptRunner{
         var projData:[String:Any] = [:]
         var argData:[String:Any] = [:]
         for node in NodeManager.nodeList{
+            
             var allArgs:[String:[String:String]] = ["main_args":[:],"controled_args":[:],"data_args":[:]]
             allArgs["main_args"] = node.inArgs
             var args:[String] = []
@@ -40,6 +41,12 @@ class ScriptRunner{
                 if !item.stringValue.isEmpty{
                     allArgs["controled_args"]![item.placeholderString!] = item.stringValue
                 }
+            }
+            if let button = node.button{
+                print("I AM THE NAME")
+                print(button.name)
+                allArgs["data_args"] = [button.name!:node.sourceUrl]
+                
             }
             argData[node.id!] = allArgs
         }

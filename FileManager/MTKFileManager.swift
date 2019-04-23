@@ -3,7 +3,7 @@ import SpriteKit
 import MultiTouchKitSwift
 class MTKFileManager:SKNode,MTKButtonDelegate{
     var buttons:[MTKButton] = []
-    
+    var node:Node?
     override init() {
         super.init()
         var frame = SKShapeNode(rectOf: CGSize(width: 900, height: 900))
@@ -34,15 +34,19 @@ class MTKFileManager:SKNode,MTKButtonDelegate{
                     if imageFile.size.width > imageFile.size.height {
                         print("2")
                         var button = MTKButton(size: CGSize(width: 250, height: 250*factor), image: images[index].absoluteString)
+                        button.name = images[index].path
                         self.addChild(button)
                         button.position = CGPoint(x: x, y: y)
+                        button.add(target: self, action: #selector(self.tap(button:)))
                         
                         
                     } else {
                         print("3")
                         var button = MTKButton(size: CGSize(width: 250/factor, height: 250), image: images[index].absoluteString)
+                        button.name = images[index].path
                         self.addChild(button)
                         button.position = CGPoint(x: x, y: y)
+                        button.add(target: self, action: #selector(self.tap(button:)))
                         
                         
                     }
@@ -50,8 +54,10 @@ class MTKFileManager:SKNode,MTKButtonDelegate{
                 }else{
                     print("4")
                     var button = MTKButton(size: CGSize(width: 200, height: 200), image: images[index].path)
+                    button.name = images[index].path
                     self.addChild(button)
                     button.position = CGPoint(x: x, y: y)
+                    button.add(target: self, action: #selector(self.tap(button:)))
                     
                     }
                 
@@ -62,7 +68,15 @@ class MTKFileManager:SKNode,MTKButtonDelegate{
     
     
     @objc func tap(button:MTKButton){
-        print("i am pressed")
+        print("I AM WORKIN")
+        print(button.name)
+        self.node?.sourceData?.removeFromParent()
+        self.node?.sourceData = ImageTypeResultNode(url:button.name!)
+        (self.node?.sourceData as! ImageTypeResultNode).url = button.name!
+        self.node?.sourceData?.position = CGPoint(x: -300, y: 0)
+        self.node?.addChild(self.node!.sourceData!)
+        self.node!.sourceUrl = button.name!
+        self.removeFromParent()
     }
     
    

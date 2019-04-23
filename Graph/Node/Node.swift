@@ -16,6 +16,7 @@ class Node: SKNode,MTKButtonDelegate {
     var funcName:String = ""
 //    var label:SKLabelNode?
     var sourceData:SKNode?
+    var sourceUrl:String = ""
     override init() {
         super.init()
         
@@ -23,24 +24,10 @@ class Node: SKNode,MTKButtonDelegate {
     }
     
     @objc fileprivate func buttonPressed(button: MTKButton) {
-        let dialogue = NSOpenPanel()
-        dialogue.canChooseFiles = true
-        dialogue.showsResizeIndicator = true
-        dialogue.allowedFileTypes = ["jpg","png","bmp","tiff","jpeg","tff","gif"]
-        if (dialogue.runModal() == NSApplication.ModalResponse.OK){
-            if let url = dialogue.url{
-                print("dd")
-                print(url.absoluteString)
-                
-                self.sourceData?.removeFromParent()
-                self.sourceData = ImageTypeResultNode(url:url)
-                (self.sourceData as! ImageTypeResultNode).url = url.absoluteString
-                self.sourceData?.position = CGPoint(x: -300, y: 0)
-                self.addChild(self.sourceData!)
-            }else{
-                
-            }
-        }
+        var filePicker = MTKFileManager()
+        filePicker.node = self
+        filePicker.position = CGPoint(x: 600, y: 600)
+        self.scene?.addChild(filePicker)
     }
     
     convenience init(id:String,position:CGPoint,out:Int,tangibleDict:Any,view:SKView) {
@@ -53,7 +40,11 @@ class Node: SKNode,MTKButtonDelegate {
         if let funcname = (tangibleDict as? [String:Any]){
             self.maxInput = ((funcname["arguments"] as! [String:Any])["main_args"] as? [String])?.count ?? 0
             if let buttonTitle = (funcname["arguments"] as! [String:Any])["button"] as? [String:String]{
+                print("I AM THE TITLE")
+                print(buttonTitle)
+                
                 self.button = MTKButton(size: CGSize(width: 180, height: 50), label: buttonTitle["title"] ?? "" )
+                self.button?.name = buttonTitle["arg"]!
                 self.button?.position = CGPoint(x: 0, y: -150)
                 self.addChild(button!)
                 self.button?.add(target: self, action: #selector(self.buttonPressed(button:)))
