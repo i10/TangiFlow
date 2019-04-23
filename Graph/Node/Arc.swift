@@ -11,14 +11,11 @@ import SpriteKit
 
 class Arc:SKShapeNode{
     var parentNode:Node?
-    var arcName:String = ""
     var pathToDraw:CGMutablePath = CGMutablePath()
     var startAngle:CGFloat = CGFloat(3.0 * Double.pi/2)
     var isInput:Bool = false
-    let angleFactor:[Bool:CGFloat] = [true:-1.0,false:1.0]
-    let colors:[Bool:NSColor] = [true:.green,false:.red]
-    var isAvailable:Bool = true
-    var width:CGFloat = 1
+    let colors:[Bool:NSColor] = [true:NSColor(calibratedRed: 111.0/255.0, green: 195.0/255.0, blue: 223.0/255.0, alpha: 1.0),
+                                 false:NSColor(calibratedRed: 255.0/255.0, green: 230.0/255.0, blue: 77.0/255.0, alpha: 1.0)]
     var segmentRadius:CGFloat = 20
     var angle:CGFloat?
     var radius:CGFloat?
@@ -26,17 +23,17 @@ class Arc:SKShapeNode{
     var globalPos:CGPoint?
     var id:String?
     var edges:[Edge] = []
-    var multipleEdges:Bool = false
+    var rotationAngle:CGFloat?
     var popped:Bool = false
     var canAdd:Bool {
         get{
-            if multipleEdges {
-                return true
-                
-            }else if edges.isEmpty{
-                return true
-            }
-            return false
+            return edges.isEmpty
+        }
+    }
+    
+    var polarAngle:CGFloat{
+        get {
+            return self.angle!/2.0 + self.zRotation + self.startAngle
         }
     }
     
@@ -45,7 +42,7 @@ class Arc:SKShapeNode{
         
     }
     
-    init(angle:CGFloat,radius:CGFloat,isInput:Bool,rotation:CGFloat){
+    init(angle:CGFloat,radius:CGFloat,isInput:Bool,rotation:CGFloat=0,name:String="",parentNode:Node){
         super.init()
         self.id = UUID().uuidString
         self.angle = angle
@@ -53,24 +50,22 @@ class Arc:SKShapeNode{
         self.isInput = isInput
         self.drawArc(angle: angle, radius: radius, isInput: isInput, rotation: rotation)
         self.position = CGPoint(x: 0, y: 0)
-        self.strokeColor = colors[self.isAvailable]!
-        self.fillColor = colors[self.isAvailable]!
-        self.lineWidth = self.width
+        self.strokeColor = colors[self.canAdd]!
+        self.fillColor = colors[self.canAdd]!
+        self.lineWidth = 1
         self.zRotation = rotation
         self.zPosition = -1
+        self.name = name
+        self.parentNode = parentNode
+        self.setLocation()
     }
     
-    convenience init(position:CGPoint,angle:CGFloat,radius:CGFloat,isInput:Bool,rotation:CGFloat){
-        self.init(angle:angle,radius:radius,isInput:isInput,rotation:rotation)
-        self.globalPos = position
-    }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
     func redrawArc(with factor:Int){
-       // print(self.name)
         let parent = self.parent
         self.removeFromParent()
         if(factor==1 && !popped){
@@ -87,6 +82,17 @@ class Arc:SKShapeNode{
         
         self.drawArc(angle: self.angle!, radius: self.radius!, isInput: self.isInput, rotation: self.zRotation)
         parent?.addChild(self)
+    }
+    
+    func redrawArc(with angle:CGFloat){
+        self.removeFromParent()
+        self.angle = angle
+        self.drawArc(angle: angle, radius: self.radius!, isInput: self.isInput, rotation: self.zRotation)
+        self.parentNode?.addChild(self)
+        self.setLocation()
+        for item in self.edges{
+            item.redrawEdge(from: item.from!.globalPos!, to: item.to!.globalPos!)
+        }
     }
     
     
@@ -111,15 +117,10 @@ class Arc:SKShapeNode{
     
     func addEdge(edge:Edge){
         if !self.edges.contains(edge){
-            if self.multipleEdges  {
+            if self.edges.count == 0 {
                 self.edges.append(edge)
             }else{
-                if self.edges.count == 0 {
-                    self.edges.append(edge)
-                }else{
-                    //print("I AM HUGE NASTY EXCEPTION")
-                    NSException(name:NSExceptionName(rawValue: "CanNotPutEdge"), reason:"Arc can not accept more edge", userInfo:nil).raise()
-                }
+                NSException(name:NSExceptionName(rawValue: "CanNotPutEdge"), reason:"Arc can not accept more edge", userInfo:nil).raise()
             }
         }
     }
@@ -129,22 +130,23 @@ class Arc:SKShapeNode{
     }
     
     func changeArcColor(){
-        if (!self.edges.isEmpty && !self.multipleEdges){
-            self.strokeColor = NSColor.red
-            self.fillColor = NSColor.red
-        }else if(self.edges.isEmpty){
-            self.strokeColor = NSColor.green
-            self.fillColor = NSColor.green
-        }
+        self.strokeColor = self.colors[self.canAdd]!
+        self.fillColor = self.colors[self.canAdd]!
     }
     
-    //    func drawLabel(name:String){
-    //        let label:SKLabelNode = SKLabelNode()
-    //        label.fontColor = NSColor.red
-    //        label.zPosition = 4
-    //        label.position.x = self.localPos!.x - 20
-    //        label.position.y = self.localPos!.y - 20
-    //        label.text = name
-    //        self.addChild(label)
-    //    }
+    
+    func setLocation(){
+        self.localPos = CoordinateConverter.polarToDecart(radius: self.radius!, angle: self.polarAngle)
+        self.globalPos = CoordinateConverter.localToGlobal(node: self.parentNode!, coords: self.localPos!)
+    }
+    
+    func drawLabel(angle:CGFloat){
+        let label:SKLabelNode = SKLabelNode()
+        label.position = CoordinateConverter.polarToDecart(radius: self.radius!+40, angle: angle+0.1)
+        label.zRotation = angle + CGFloat.pi
+        label.zPosition = 4
+        label.fontSize = 15
+        label.text = self.name
+        self.parentNode?.addChild(label)
+    }
 }

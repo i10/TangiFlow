@@ -14,7 +14,7 @@ class Node: SKNode,MTKButtonDelegate {
     var inArgs:[String:String] = [:]
     var outArgs:[String:String] = [:]
     var funcName:String = ""
-    var label:SKLabelNode?
+//    var label:SKLabelNode?
     var sourceData:SKNode?
     override init() {
         super.init()
@@ -44,16 +44,14 @@ class Node: SKNode,MTKButtonDelegate {
     }
     
     convenience init(id:String,position:CGPoint,out:Int,tangibleDict:Any,view:SKView) {
+        
         self.init()
-        //print(tangibleDict)
+        
         self.position = position
+        self.id = id
+        self.maxOutput = out
         if let funcname = (tangibleDict as? [String:Any]){
-            //print(funcname)
-            self.funcName = funcname["function"] as! String
-            //print(funcname)
-            //var arguments = funcname["arguments"] as! [String:[String:[String]]]
-            //print(arguments)
-            self.controledArgNames = (funcname["arguments"] as! [String:Any])["controled_args"] as? [String] ?? []
+            self.maxInput = ((funcname["arguments"] as! [String:Any])["main_args"] as? [String])?.count ?? 0
             if let buttonTitle = (funcname["arguments"] as! [String:Any])["button"] as? [String:String]{
                 self.button = MTKButton(size: CGSize(width: 180, height: 50), label: buttonTitle["title"] ?? "" )
                 self.button?.position = CGPoint(x: 0, y: -150)
@@ -61,32 +59,11 @@ class Node: SKNode,MTKButtonDelegate {
                 self.button?.add(target: self, action: #selector(self.buttonPressed(button:)))
             }
             
-            var multiplier:CGFloat = 3.0
-            for item in self.controledArgNames{
-
-                var textFieldFrame = CGRect(origin: CGPoint(x:self.position.x+20,y:self.position.y + 60.0 + multiplier*40.0), size: CGSize(width: 160, height: 60))
-                var textField = NSTextField(frame: textFieldFrame)
-                self.controledArgsTextField.append(textField)
-                //textField.isEnabled = 
-                //textField.id = item
-                //print(self.position)
-                textField.setFrameOrigin(CGPoint(x:self.position.x+20,y:self.position.y + 60.0 + multiplier*60.0))
-                multiplier-=1.0
-                textField.backgroundColor = NSColor.white
-                textField.placeholderString = item
-                view.addSubview(textField)
-                //view.addSubview(textField)
-            }
-            self.label = SKLabelNode(text: id + " " + (funcname["function"] as! String))//SKLabelNode(text: funcname["function"] as? String)
-            self.label!.fontSize = 24
-            self.addChild(self.label!)
-            self.label!.position = CGPoint(x:0,y:180)
-            self.id = id
-            self.maxInput = ((funcname["arguments"] as! [String:Any])["main_args"] as? [String])?.count ?? 0
-            self.maxOutput = out
+            self.funcName = funcname["function"] as! String
+            self.controledArgNames = (funcname["arguments"] as! [String:Any])["controled_args"]! as? [String] ?? []
+            self.drawTextFields(view: view)
+            self.drawTitleLabel(text: funcname["function"] as! String)
         }
-        
-        
         self.arcManager = ArcManager(node:self,tangibleDict:tangibleDict)
         if let args = ((tangibleDict as! [String:Any])["arguments"]) as? [String:[String]]{
             self.arcManager?.inputArcNames = args["main_args"] ?? []
@@ -94,6 +71,7 @@ class Node: SKNode,MTKButtonDelegate {
         }
         self.arcManager?.drawArcs()
         self.drawBase()
+       
     }
     
 
@@ -109,6 +87,28 @@ class Node: SKNode,MTKButtonDelegate {
         self.addChild(node)
     }
     
+    func drawTitleLabel(text:String){
+        let label = SKLabelNode(text: self.id! + " " + text)//SKLabelNode(text: funcname["function"] as? String)
+        label.fontSize = 18
+        self.addChild(label)
+        label.position = CGPoint(x:0,y:120)
+    }
+    
+    func drawTextFields(view:SKView){
+        
+        var multiplier:CGFloat = 3.0
+        for item in self.controledArgNames{
+            let textFieldFrame = CGRect(origin: CGPoint(x:0,y:0), size: CGSize(width: 160, height: 60))
+            let textField = NSTextField(frame: textFieldFrame)
+            textField.backgroundColor = NSColor.red
+            self.controledArgsTextField.append(textField)
+            textField.setFrameOrigin(CGPoint(x:self.position.x+20,y:self.position.y + 60 + multiplier*60.0))
+            multiplier-=1.0
+            textField.backgroundColor = NSColor.white
+            textField.placeholderString = item
+            view.addSubview(textField)
+        }
+    }
     
     
 }

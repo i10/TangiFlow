@@ -12,62 +12,24 @@ import SpriteKit
 
 
 class NodeManager{
-    var copies:[String:Int] = [:]
-    var counter = 0
-    var nodeList:[Node] = []
-    var selectedNode:Node?
-    var movingMode:Bool = false
-    var selectedArc:Arc?
+    static var nodeList:[Node] = []
     var scene:SKScene?
-    var curEdge:Edge?
-
     
     func addNode(node:Node){
-        if self.copies.keys.contains(node.id!){
-            self.copies[node.id!] =  self.copies[node.id!]! + 1
-            
-            
-            node.label?.text = "\(node.id!) \(self.copies[node.id!]!) \(node.funcName)"
-            node.id = "\(node.id!) \(self.copies[node.id!]!)"
-        }else{
-            self.copies[node.id!] = 0
-        }
-        
-        self.nodeList.append(node)
-        node.arcManager?.scene = self.scene
+        NodeManager.nodeList.append(node)
         self.scene?.addChild(node)
     }
     
-    func removeNode(from pos:CGPoint){
-        let node = getNode(at: pos)
-        node?.removeFromParent()
-        self.nodeList = self.nodeList.filter {$0.id != node?.id}
-    }
-    
-    func getNode(with id:String) -> Node?{
+    class func getNode(with id:String) -> Node?{
         if !self.nodeList.isEmpty{
             return self.nodeList.filter {$0.id == id}[0]
-            
         }
         return nil
     }
     
     func removeNode(with id:String){
-        let node = getNode(with: id)
+        let node = NodeManager.getNode(with: id)
         node?.removeFromParent()
-        self.nodeList = self.nodeList.filter {$0.id != node?.id}
+        NodeManager.nodeList = NodeManager.nodeList.filter {$0.id != node?.id}
     }
-    
-    func getNode(at pos:CGPoint)->Node?{
-        if let scene = self.scene {
-            for item in scene.nodes(at:pos){
-                if item.parent is Node {
-                        let node =  item.parent as! Node
-                        return node
-                }
-            }
-        }
-        return nil
-    }
-    
 }

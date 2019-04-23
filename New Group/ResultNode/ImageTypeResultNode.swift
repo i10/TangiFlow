@@ -20,12 +20,6 @@ class ImageTypeResultNode:SKSpriteNode{
     
     convenience init(data:Dictionary<String, AnyObject>){
         self.init()
-//        backgroundColor = SKColor.white
-//        // 3
-//        let image = UIImage(named: "player")
-//        let texture = SKTexture(image: image!)
-//        player = SKSpriteNode(texture: texture)
-//        player.position = CGPoint(x: size.width * 0.1, y: size.height * 0.5)
         self.url = data["img"] as! String
         let image = NSImage(byReferencing: URL(fileURLWithPath: self.url))
         self.texture = SKTexture(image: image)
@@ -49,12 +43,6 @@ class ImageTypeResultNode:SKSpriteNode{
     
     convenience init(url:String){
         self.init()
-        //        backgroundColor = SKColor.white
-        //        // 3
-        //        let image = UIImage(named: "player")
-        //        let texture = SKTexture(image: image!)
-        //        player = SKSpriteNode(texture: texture)
-        //        player.position = CGPoint(x: size.width * 0.1, y: size.height * 0.5)
         self.url = url
         let image = NSImage(byReferencing: URL(fileURLWithPath: self.url))
         self.texture = SKTexture(image: image)
@@ -98,12 +86,6 @@ class ImageTypeResultNode:SKSpriteNode{
         }else{
             self.size = CGSize(width: image.size.width, height: image.size.height)
         }
-//        if image.size.width > 500 || image.size.height > 500{
-//
-//            self.size = CGSize(width: image.size.width/2, height: image.size.height/2)
-//        } else {
-//            self.size = CGSize(width: image.size.width, height: image.size.height)
-//        }
         
     }
     

@@ -64,8 +64,8 @@ class SideMenu:SKNode,MTKButtonDelegate{
             button.titleLabel?.text = ">"
             self.run(action)
         } else {
-            let node = Node(id: button.titleLabel!.text!, position: CGPoint(x: 500, y: 500), out: 1, tangibleDict: self.tangibleData[button.titleLabel!.text!]!, view: self.view!)
-            (self.scene as! GameScene).graph?.addNode(node: node)
+//            let node = Node(id: button.titleLabel!.text!, position: CGPoint(x: 500, y: 500), out: 1, tangibleDict: self.tangibleData[button.titleLabel!.text!]!, view: self.view!)
+//            (self.scene as! GameScene).graph?.addNode(node: node)
         }
     }
     

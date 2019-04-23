@@ -17,16 +17,19 @@ class GenericTypeResultNode:SKShapeNode{
     }
     
     convenience init(data:String){
-        self.init(rectOf: CGSize(width: 80, height: 80))
+        self.init(rectOf: CGSize(width: 200, height: 200))
         self.position = CGPoint(x:80,y:0)
         self.fillColor = SKColor.red
         let titleLabel = SKLabelNode(text:"RESULT")
         titleLabel.fontSize = 20
         self.addChild(titleLabel)
         titleLabel.position = CGPoint(x:0,y:self.frame.height/2 - titleLabel.frame.height - 5)
-        let resultLabel = SKLabelNode(text:String(data))//SKLabelNode(text: funcname["function"] as? String)
+        let resultLabel = SKLabelNode(text:String(data))
         resultLabel.fontSize = 20
-            //node.addChild(label)
+        resultLabel.numberOfLines = 2
+        resultLabel.lineBreakMode = .byWordWrapping
+        resultLabel.fontSize = 20
+        resultLabel.preferredMaxLayoutWidth = 200
         resultLabel.position = CGPoint(x:0,y:0-titleLabel.frame.height)
         self.addChild(resultLabel)
 
