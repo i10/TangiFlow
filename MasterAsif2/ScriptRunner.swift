@@ -16,7 +16,7 @@ class ScriptRunner{
         task.launchPath = "/usr/bin/env"
         task.arguments = [FileHandler.shared.mainScriptpath,
                           FileHandler.shared.graphDataPath,
-                          FileHandler.shared.projectDataPath]
+                          FileHandler.shared.copyProj]
         task.launch()
         task.waitUntilExit()
     }

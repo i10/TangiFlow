@@ -9,7 +9,7 @@
             "controled_args" : [
 
             ],
-            "button":{"arg":"button_get_image","title":"get_image"}
+            "button":{"arg":"button_get_image","title":"Open Image"}
         }
     },
     "PT-118.122.125" : {

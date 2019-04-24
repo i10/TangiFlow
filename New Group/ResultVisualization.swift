@@ -43,8 +43,10 @@ class ResultVisualization{
                 } else {
                     resultNode = GenericTypeResultNode(data: data["data"] as! String)
                 }
-                if let result = resultNode{
+                if let result = resultNode, nil == node.button{
+                    
                     ResultVisualization.globalResultNodes.append(result)
+                    result.position = CGPoint(x: 260, y: 260)
                     node.addChild(result)
                 }
             }

@@ -14,9 +14,10 @@ class Node: SKNode,MTKButtonDelegate {
     var inArgs:[String:String] = [:]
     var outArgs:[String:String] = [:]
     var funcName:String = ""
-//    var label:SKLabelNode?
+    var label:SKLabelNode?
     var sourceData:SKNode?
     var sourceUrl:String = ""
+    var tangibleDict:[String:Any] = [:]
     override init() {
         super.init()
         
@@ -35,9 +36,11 @@ class Node: SKNode,MTKButtonDelegate {
         self.init()
         
         self.position = position
+        
         self.id = id
         self.maxOutput = out
         if let funcname = (tangibleDict as? [String:Any]){
+            self.tangibleDict = funcname
             self.maxInput = ((funcname["arguments"] as! [String:Any])["main_args"] as? [String])?.count ?? 0
             if let buttonTitle = (funcname["arguments"] as! [String:Any])["button"] as? [String:String]{
                 print("I AM THE TITLE")
@@ -79,10 +82,10 @@ class Node: SKNode,MTKButtonDelegate {
     }
     
     func drawTitleLabel(text:String){
-        let label = SKLabelNode(text: self.id! + " " + text)//SKLabelNode(text: funcname["function"] as? String)
-        label.fontSize = 18
-        self.addChild(label)
-        label.position = CGPoint(x:0,y:120)
+        self.label = SKLabelNode(text: self.id! + " " + text)//SKLabelNode(text: funcname["function"] as? String)
+        label?.fontSize = 18
+        self.addChild(label!)
+        label?.position = CGPoint(x:0,y:120)
     }
     
     func drawTextFields(view:SKView){
@@ -93,7 +96,7 @@ class Node: SKNode,MTKButtonDelegate {
             let textField = NSTextField(frame: textFieldFrame)
             textField.backgroundColor = NSColor.red
             self.controledArgsTextField.append(textField)
-            textField.setFrameOrigin(CGPoint(x:self.position.x+20,y:self.position.y + 60 + multiplier*60.0))
+            textField.setFrameOrigin(CGPoint(x:self.position.x-80,y:self.position.y + 60 + multiplier*60.0))
             multiplier-=1.0
             textField.backgroundColor = NSColor.white
             textField.placeholderString = item
