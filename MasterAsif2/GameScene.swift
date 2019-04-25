@@ -37,9 +37,10 @@ class GameScene: MTKScene {
     var result:CGFloat = 0.0
     var projectManager:ProjectFilesManager?
     var activeTextField:NSTextField?
-    var keyboard:Keyboard = Keyboard()
+    var keyboard:Numpad = Numpad()
     override func didMove(to view: SKView) {
         self.view?.showsFPS = true
+        self.view?.ignoresSiblingOrder = true
         let fileManager = FileManager.default
         let currentPath = fileManager.currentDirectoryPath
         print("Current path: \(currentPath)")
@@ -279,9 +280,9 @@ class GameScene: MTKScene {
                         textField.isEnabled = true
                         textField.isEditable = true
                         textField.becomeFirstResponder()
-                        textField.stringValue = ""
-                        print(textField.stringValue)
-                        self.keyboard.position = CGPoint(x: 1000, y: 300)
+                        //textField.stringValue = ""
+                       // print(textField.stringValue)
+                        self.keyboard.position = CGPoint(x: textField.frame.origin.x+290, y: textField.frame.origin.y)
                         if self.keyboard.parent == nil {
                             self.addChild(self.keyboard)
                             self.keyboard.drawKeys()}
@@ -303,9 +304,7 @@ class GameScene: MTKScene {
     
     override func update(_ currentTime: TimeInterval) {
         super.update(currentTime)
-        if let at = self.activeTextField{
-            print(at.stringValue)
-        }
+       
         //self.keyDown(with: )
         
     }

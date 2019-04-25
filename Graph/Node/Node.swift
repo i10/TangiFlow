@@ -18,6 +18,7 @@ class Node: SKNode,MTKButtonDelegate {
     var sourceData:SKNode?
     var sourceUrl:String = ""
     var tangibleDict:[String:Any] = [:]
+    var alias:String = ""
     override init() {
         super.init()
         
@@ -31,11 +32,19 @@ class Node: SKNode,MTKButtonDelegate {
         self.scene?.addChild(filePicker)
     }
     
+    
+    @objc func addButtonPressed(button:MTKButton){
+        self.arcManager?.addOutputArc()
+    }
+    
     convenience init(id:String,position:CGPoint,out:Int,tangibleDict:Any,view:SKView) {
         
         self.init()
         
         self.position = position
+        
+        
+       
         
         self.id = id
         self.maxOutput = out
@@ -46,17 +55,28 @@ class Node: SKNode,MTKButtonDelegate {
                 print("I AM THE TITLE")
                 print(buttonTitle)
                 
-                self.button = MTKButton(size: CGSize(width: 180, height: 50), label: buttonTitle["title"] ?? "" )
+                self.button = MTKButton(size: CGSize(width: 50, height: 50), image:"/Users/ppi/Desktop/open.png" )
                 self.button?.name = buttonTitle["arg"]!
-                self.button?.position = CGPoint(x: 0, y: -150)
+                self.button?.position = CGPoint(x: -50, y: -150)
                 self.addChild(button!)
                 self.button?.add(target: self, action: #selector(self.buttonPressed(button:)))
             }
             
             self.funcName = funcname["function"] as! String
+            if !self.funcName.contains("terminal"){
+                var addButton = MTKButton(size: CGSize(width: 50, height: 50), image:"/Users/ppi/Desktop/plus.png")
+                if self.button != nil {
+                    addButton.position = CGPoint(x: 50, y: -150)}
+                else {
+                    addButton.position = CGPoint(x: 0, y: -150)
+                }
+                self.addChild(addButton)
+                addButton.add(target: self, action: #selector(self.addButtonPressed(button:)))
+            }
             self.controledArgNames = (funcname["arguments"] as! [String:Any])["controled_args"]! as? [String] ?? []
             self.drawTextFields(view: view)
-            self.drawTitleLabel(text: funcname["function"] as! String)
+            self.alias = funcname["alias"] as! String
+            self.drawTitleLabel(text: funcname["alias"] as! String)
         }
         self.arcManager = ArcManager(node:self,tangibleDict:tangibleDict)
         if let args = ((tangibleDict as! [String:Any])["arguments"]) as? [String:[String]]{
@@ -82,10 +102,10 @@ class Node: SKNode,MTKButtonDelegate {
     }
     
     func drawTitleLabel(text:String){
-        self.label = SKLabelNode(text: self.id! + " " + text)//SKLabelNode(text: funcname["function"] as? String)
-        label?.fontSize = 18
+        self.label = SKLabelNode(text:text)//SKLabelNode(text: funcname["function"] as? String)
+        label?.fontSize = 30
         self.addChild(label!)
-        label?.position = CGPoint(x:0,y:120)
+        label?.position = CGPoint(x:0,y:160)
     }
     
     func drawTextFields(view:SKView){
