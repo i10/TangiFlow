@@ -8,6 +8,7 @@
 
 import Foundation
 import SpriteKit
+import SwiftyJSON
 class ArcManager{
     var inputArcNames:[String] = []
     var inputArcs:[Arc] = []
@@ -24,7 +25,7 @@ class ArcManager{
         get { return (CGFloat.pi - CGFloat((self.outputArcsAmount+1))*self.spacing)/CGFloat(self.outputArcsAmount) }
     }
     
-    init(node:Node,tangibleDict:Any){
+    init(node:Node,json:JSON){
         self.node = node
         self.inputArcsAmount = (self.node?.maxInput)!
         self.outputArcsAmount = (self.node?.maxOutput)!
@@ -42,10 +43,11 @@ class ArcManager{
                               radius: 110,
                               isInput: true,
                               rotation:CGFloat(rotateAngle),
-                              name:self.inputArcNames[index],
+                              name:Array(self.node?.mainArgDicts.keys ?? [:].keys)[index],
                               parentNode:self.node!)
             self.node?.addChild(section)
             self.inputArcs.append(section)
+            section.alias = self.node?.mainArgDicts[section.name!]?.stringValue ?? ""
             section.drawLabel( angle: section.polarAngle)
         }
         
@@ -54,7 +56,7 @@ class ArcManager{
     
     func drawOutputArcs(){
         for index in 0..<self.outputArcsAmount{
-            if !node!.funcName.contains("terminal"){
+            //if !node!.funcName.contains("terminal"){
                 let rotateAngle =  ( CGFloat(self.outputOffset) + CGFloat(spacing))*CGFloat(index)
                 let section = Arc(angle: CGFloat(self.outputOffset),
                                   radius: 110, isInput: false,
@@ -62,7 +64,7 @@ class ArcManager{
                                   parentNode: self.node!)
                 self.node?.addChild(section)
                 self.outputArcs.append(section)
-            }
+           // }
         }
         
     }

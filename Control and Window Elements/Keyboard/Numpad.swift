@@ -44,7 +44,7 @@ class Numpad:SKNode, MTKButtonDelegate{
             self.addChild(button)
             self.keys.append(button)
         }
-        var returnButton = MTKButton(size: CGSize(width: 210, height: 70), label: "RETURN")
+        var returnButton = MTKButton(size: CGSize(width: 210, height: 70), label: "CONFIRM")
         self.addChild(returnButton)
         returnButton.add(target: self, action: #selector(self.tapButton(button:)))
         returnButton.position = CGPoint(x: 0, y: -150)
@@ -52,10 +52,10 @@ class Numpad:SKNode, MTKButtonDelegate{
     
     @objc func tapButton(button:MTKButton){
         switch button.titleLabel?.text {
-            case "del":
+            case "←":
                 var last = self.activeTextInput!.stringValue.count-1
                 self.activeTextInput!.stringValue = String(self.activeTextInput!.stringValue.dropLast())
-            case "RETURN":
+            case "CONFIRM":
                 self.activeTextInput = nil
                 self.removeFromParent()
             default:

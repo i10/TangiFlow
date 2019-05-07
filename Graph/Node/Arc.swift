@@ -25,6 +25,7 @@ class Arc:SKShapeNode{
     var edges:[Edge] = []
     var rotationAngle:CGFloat?
     var popped:Bool = false
+    var alias:String = ""
     var canAdd:Bool {
         get{
             return edges.isEmpty
@@ -142,11 +143,21 @@ class Arc:SKShapeNode{
     
     func drawLabel(angle:CGFloat){
         let label:SKLabelNode = SKLabelNode()
-        label.position = CoordinateConverter.polarToDecart(radius: self.radius!+40, angle: angle+0.1)
+        
         label.zRotation = angle + CGFloat.pi
         label.zPosition = 4
-        label.fontSize = 15
-        label.text = self.name
+        label.fontSize = 20
+        label.horizontalAlignmentMode = .right
+        label.text = self.alias
+        print("I AM WIDTH")
+        print(label.frame.width)
+        label.position = CoordinateConverter.polarToDecart(radius: self.radius! + 20, angle: angle+0.1)
+        var backgroundNode:SKShapeNode = SKShapeNode(rectOf: CGSize(width: label.frame.width+20, height:40) )
+        backgroundNode.fillColor = NSColor(calibratedRed: 111.0/255.0, green: 195.0/255.0, blue: 223.0/255.0, alpha: 0.5)
+        backgroundNode.position.y = 5
+        backgroundNode.position.x = -label.frame.width/2
+        
+        label.addChild(backgroundNode)
         self.parentNode?.addChild(label)
     }
 }

@@ -52,64 +52,13 @@ class GameScene: MTKScene {
         graph = Graph2(scene: self)
         self.projectManager = ProjectFilesManager()
         self.projectManager?.openJson()
-        // MTKHub.sharedHub.traceDelegate = self
-        let offsetx =   CGPoint(x:2500,y:540)
-        let offsetz =   CGPoint(x:2000,y:540)
-        let offsety =  CGPoint(x:1000,y:540)
-        let offsetd =  CGPoint(x:1500,y:540)
-        let id1 = "PT-118.122.125"
-        let id2 = "PT-127.99.88"
-        let id3 = "PT-127.99.89"
-        let id4 = "PT-127.99.90"
         let projectJson = self.projectManager?.projectFileJson
-        var node1:Node?
-        var node2:Node?
-        var node3:Node?
-        
-        
-//        var mtkFileManager:MTKFileManager = MTKFileManager()
-//        mtkFileManager.position = CGPoint(x: 600, y: 600)
-//        self.addChild(mtkFileManager)
-        // print(projectJson![id1]!["arguments"])
-        if let tangibleData1 = projectJson?[id1]{
-            
-                node1 = Node(id: id1,
-                             position: offsetz,
-                             out:1,
-                             tangibleDict:projectJson![id1]!,
-                             view:view)
-                
-                self.graph?.addNode(node: node1!)
-            
-        }
-        
-        if let tangibleData2 = projectJson?[id2]{
-            
-                node2 = Node(id: id2,
-                             position: offsetd,
-                             out:1,
-                             tangibleDict:projectJson![id2]!,
-                             view:view)
-                //node2?.addChild(source)
-                self.graph?.addNode(node: node2!)
-            
-        }
-        
-        if let tangibleData3 = projectJson?[id3]{
-           
-                node3 = Node(id: id3,
-                             position: offsety,
-                             out:1,
-                             tangibleDict:projectJson![id3]!,
-                             view:view)
-                self.graph?.addNode(node: node3!)
-            
-        }
-        
-        
-        
         var sideMenu = SideMenu(json: projectJson ?? [:],view:view,scene:self)
         self.addChild(sideMenu)
+        
+        var slider = Slider()
+        slider.position = CGPoint(x: 3000, y: 500)
+        self.addChild(slider)
         
         
     }
@@ -268,9 +217,12 @@ class GameScene: MTKScene {
                 }
                 
                 let allNodes = NodeManager.nodeList
-                var textFields:[NSTextField] = []
+                var textFields:[CustomTextFields] = []
                 for node in allNodes{
-                    textFields += textFields + node.controledArgsTextField
+                    if let controlElements = node.controlElements {
+                        textFields += textFields + controlElements.textFields
+                    }
+                    
                 }
                 for textField in textFields{
                     if textField.frame.origin.x < trace.position!.x && trace.position!.x < textField.frame.origin.x + 160 &&
@@ -284,9 +236,12 @@ class GameScene: MTKScene {
                        // print(textField.stringValue)
                         self.keyboard.position = CGPoint(x: textField.frame.origin.x+290, y: textField.frame.origin.y)
                         if self.keyboard.parent == nil {
-                            self.addChild(self.keyboard)
-                            self.keyboard.drawKeys()}
-                            self.activeTextField = textField
+                            textField.parent?.keyboard.removeFromParent()
+                            textField.parent?.addChild(textField.parent!.keyboard)
+                            textField.parent!.keyboard.drawKeys()
+                            textField.parent?.keyboard.position = CGPoint(x: 300, y: 0)
+                            }
+                        textField.parent!.keyboard.activeTextInput = textField
                     }
                 }
                 //print(tf)

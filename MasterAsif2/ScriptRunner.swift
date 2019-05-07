@@ -23,48 +23,56 @@ class ScriptRunner{
     
     
     func extractJson(path:String){
-        var graphStruct:[String:[String]] = [:]
-        var projData:[String:Any] = [:]
-        var argData:[String:Any] = [:]
+        var graphStruct:JSON = [:]
+        var projData:JSON = [:]
+        var argData:JSON = [:]
         for node in NodeManager.nodeList{
             
-            var allArgs:[String:[String:String]] = ["main_args":[:],"controled_args":[:],"data_args":[:]]
-            allArgs["main_args"] = node.inArgs
+            var allArgs:JSON = [:]
+            allArgs["main_args"] = JSON(node.inArgs)
+            allArgs["controled_args"] =  (node.controlElements?.retrieveJSON()) ?? [:]
             var args:[String] = []
             for item in node.inputArcNames{
                 if let i = node.inArgs[item]{
                     args.append(i)
                 }
             }
-            graphStruct[node.id!] = args
-            for item in node.controledArgsTextField{
-                if !item.stringValue.isEmpty{
-                    allArgs["controled_args"]![item.placeholderString!] = item.stringValue
-                }
-            }
-            if let button = node.button{
-                print("I AM THE NAME")
-                print(button.name)
-                allArgs["data_args"] = [button.name!:node.sourceUrl]
-                
-            }
+            graphStruct[node.id!] = JSON(args)
+//            for item in node.controledArgsTextField{
+//                if !item.stringValue.isEmpty{
+//                //    allArgs["controled_args"]![item.id!] = item.stringValue
+//                }
+//            }
+//            if let button = node.button{
+//                print("I AM THE NAME")
+//                print(button.name)
+//                allArgs["data_args"] = [button.name!:node.sourceUrl]
+//
+//            }
             argData[node.id!] = allArgs
         }
         projData["arg_data"] = argData
-        projData["graph"] = revertGraph(graph: graphStruct)
+        projData["graph"] = JSON(revertGraph(graph: graphStruct))
         projData["graph_reverse"] = graphStruct
         projData["type"] = "image"
         FileHandler.shared.writeJsonContent(data: projData, to: path)
     }
     
     
-    func revertGraph(graph:[String:[String]])->[String:[String]]{
-        var result:[String:[String]] = [:]
-        for key in graph.keys{
-            if result[key] == nil {result[key]=[]}
-            for innerkey in graph.keys{
-                if graph[innerkey]?.contains(key) ?? false{
-                    result[key]?.append(innerkey)
+    func revertGraph(graph:JSON)->JSON{
+        var result:JSON = [:]
+        for key in graph.dictionary!.keys{
+            if !result[key].exists() {
+                print("HELLO!")
+                result[key]=[]
+                
+                
+            }
+            for innerkey in graph.dictionary!.keys{
+                if graph[innerkey].arrayValue.contains(JSON(key)) {
+                    print("HELLO")
+                    result[key].arrayObject?.append(innerkey)
+                    //result[key].append(innerkey)
                 }
             }
         }

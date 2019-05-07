@@ -19,12 +19,12 @@ class ImageTypeResultNode:SKSpriteNode{
         super.init(texture:texture,color:color,size:size)
     }
     
-    convenience init(data:Dictionary<String, AnyObject>){
+    convenience init(data:JSON){
         self.init()
-        self.url = data["img"] as! String
+        self.url = data["img"].stringValue
         let image = NSImage(byReferencing: URL(fileURLWithPath: self.url))
         self.texture = SKTexture(image: image)
-        self.position = CGPoint(x: 80, y: 80)
+        self.position = CGPoint(x: 0, y: -320)
         var factor = image.size.height/image.size.width
         
         

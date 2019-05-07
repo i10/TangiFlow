@@ -9,13 +9,13 @@
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Graph/Node/Node.swift"
-            timestampString = "577894318.644055"
+            filePath = "Graph/Node/ControlElements.swift"
+            timestampString = "578932580.359567"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "57"
-            endingLineNumber = "57"
-            landmarkName = "init(id:position:out:tangibleDict:view:)"
+            startingLineNumber = "87"
+            endingLineNumber = "87"
+            landmarkName = "positionControls()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

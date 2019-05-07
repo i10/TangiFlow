@@ -25,13 +25,18 @@ class NodeManager{
             node.id = "\(node.id!)_copy\(self.copies[node.id!]!)"
             
             if var contentOfProj = FileHandler.shared.getJsonContent(of: FileHandler.shared.projectDataPath){
-                contentOfProj[node.id!] = node.tangibleDict as AnyObject
-                print(contentOfProj)
+                contentOfProj[node.id!] = node.json!
+               
                 FileHandler.shared.writeJsonContent(data: contentOfProj, to: FileHandler.shared.copyProj)
             }
             
         }else{
             self.copies[node.id!] = 0
+            if var contentOfProj = FileHandler.shared.getJsonContent(of: FileHandler.shared.projectDataPath){
+                contentOfProj[node.id!] = node.json!
+               
+                FileHandler.shared.writeJsonContent(data: contentOfProj, to: FileHandler.shared.copyProj)
+            }
         }
         
         NodeManager.nodeList.append(node)

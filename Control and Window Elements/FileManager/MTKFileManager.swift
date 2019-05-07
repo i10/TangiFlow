@@ -6,7 +6,7 @@ class MTKFileManager:SKNode,MTKButtonDelegate{
     var node:Node?
     override init() {
         super.init()
-        var frame = SKShapeNode(rectOf: CGSize(width: 900, height: 900))
+        var frame = SKShapeNode(rectOf: CGSize(width: 900, height: 500))
         frame.fillColor = NSColor.white
         self.addChild(frame)
 //        var button = MTKButton(size: CGSize(width: 300, height: 300), image: "/Users/ppi/Desktop/lambo.jpg")
@@ -16,24 +16,24 @@ class MTKFileManager:SKNode,MTKButtonDelegate{
         
         let images = FileHandler.shared.getContent(of: FileHandler.shared.imageSource)
         for index in 0 ..< images.count{
-            print("IMAGR")
+            
             var i = index - 1
             var x = -300 + (i%3)*300
-            var y = 300 - (i/3)*300
+            var y = 140 - (i/3)*280
             var buttonHeight = 0
             var buttonWidth = 0
-            let imageFile = NSImage(byReferencing: URL(fileURLWithPath: images[index].absoluteString))
+            let imageFile = NSImage(byReferencing: URL(fileURLWithPath: images[index].path))
             
             self.position = CGPoint.zero
             var factor = imageFile.size.height/imageFile.size.width
             
             
             if images[index].path != "/Users/ppi/Desktop/ImageSource/.DS_Store"{
-                if imageFile.size.width > 250 || imageFile.size.height > 250{
-                    print("1")
+                if imageFile.size.width > 200 || imageFile.size.height > 200{
+                    
                     if imageFile.size.width > imageFile.size.height {
-                        print("2")
-                        var button = MTKButton(size: CGSize(width: 250, height: 250*factor), image: images[index].absoluteString)
+                        
+                        var button = MTKButton(size: CGSize(width: 200, height: 200*factor), image: images[index].path)
                         button.name = images[index].path
                         self.addChild(button)
                         button.position = CGPoint(x: x, y: y)
@@ -41,8 +41,8 @@ class MTKFileManager:SKNode,MTKButtonDelegate{
                         
                         
                     } else {
-                        print("3")
-                        var button = MTKButton(size: CGSize(width: 250/factor, height: 250), image: images[index].absoluteString)
+                        
+                        var button = MTKButton(size: CGSize(width: 200/factor, height: 200), image: images[index].path)
                         button.name = images[index].path
                         self.addChild(button)
                         button.position = CGPoint(x: x, y: y)
@@ -52,7 +52,7 @@ class MTKFileManager:SKNode,MTKButtonDelegate{
                     }
                     
                 }else{
-                    print("4")
+                   
                     var button = MTKButton(size: CGSize(width: 200, height: 200), image: images[index].path)
                     button.name = images[index].path
                     self.addChild(button)
@@ -68,8 +68,7 @@ class MTKFileManager:SKNode,MTKButtonDelegate{
     
     
     @objc func tap(button:MTKButton){
-        print("I AM WORKIN")
-        print(button.name)
+        
         self.node?.sourceData?.removeFromParent()
         self.node?.sourceData = ImageTypeResultNode(url:button.name!)
         (self.node?.sourceData as! ImageTypeResultNode).url = button.name!

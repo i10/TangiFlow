@@ -1,11 +1,15 @@
 import Foundation
 import SpriteKit
 import MultiTouchKitSwift
+import SwiftyJSON
 class Node: SKNode,MTKButtonDelegate {
+    var controlElements:ControlElements?
+    
+    var view:SKView?
     var button:MTKButton?
     var inputArcNames:[String] = []
     var controledArgNames:[String] = []
-    var controledArgsTextField:[NSTextField] = []
+    var controledArgsTextField:[CustomTextFields] = []
     var id:String?
     var maxInput:Int = 1
     var maxOutput:Int = 1
@@ -17,8 +21,13 @@ class Node: SKNode,MTKButtonDelegate {
     var label:SKLabelNode?
     var sourceData:SKNode?
     var sourceUrl:String = ""
-    var tangibleDict:[String:Any] = [:]
+    var json:JSON?
     var alias:String = ""
+    var mainArgDicts:[String:JSON] = [:]
+    var controledArgDicts:[String:String] = [:]
+    var filePicker:MTKFileManager = MTKFileManager()
+    var keyboard:Numpad = Numpad()
+    
     override init() {
         super.init()
         
@@ -26,10 +35,10 @@ class Node: SKNode,MTKButtonDelegate {
     }
     
     @objc fileprivate func buttonPressed(button: MTKButton) {
-        var filePicker = MTKFileManager()
-        filePicker.node = self
-        filePicker.position = CGPoint(x: 600, y: 600)
-        self.scene?.addChild(filePicker)
+        self.filePicker.removeFromParent()
+        self.filePicker.node = self
+        filePicker.position = CGPoint(x: -500, y: 0)
+        self.addChild(filePicker)
     }
     
     
@@ -37,51 +46,28 @@ class Node: SKNode,MTKButtonDelegate {
         self.arcManager?.addOutputArc()
     }
     
-    convenience init(id:String,position:CGPoint,out:Int,tangibleDict:Any,view:SKView) {
-        
+    convenience init(id:String,position:CGPoint,json:JSON,view:SKView) {
         self.init()
-        
+        self.view = view
         self.position = position
-        
-        
-       
-        
         self.id = id
-        self.maxOutput = out
-        if let funcname = (tangibleDict as? [String:Any]){
-            self.tangibleDict = funcname
-            self.maxInput = ((funcname["arguments"] as! [String:Any])["main_args"] as? [String])?.count ?? 0
-            if let buttonTitle = (funcname["arguments"] as! [String:Any])["button"] as? [String:String]{
-                print("I AM THE TITLE")
-                print(buttonTitle)
-                
-                self.button = MTKButton(size: CGSize(width: 50, height: 50), image:"/Users/ppi/Desktop/open.png" )
-                self.button?.name = buttonTitle["arg"]!
-                self.button?.position = CGPoint(x: -50, y: -150)
-                self.addChild(button!)
-                self.button?.add(target: self, action: #selector(self.buttonPressed(button:)))
-            }
-            
-            self.funcName = funcname["function"] as! String
-            if !self.funcName.contains("terminal"){
-                var addButton = MTKButton(size: CGSize(width: 50, height: 50), image:"/Users/ppi/Desktop/plus.png")
-                if self.button != nil {
-                    addButton.position = CGPoint(x: 50, y: -150)}
-                else {
-                    addButton.position = CGPoint(x: 0, y: -150)
-                }
-                self.addChild(addButton)
-                addButton.add(target: self, action: #selector(self.addButtonPressed(button:)))
-            }
-            self.controledArgNames = (funcname["arguments"] as! [String:Any])["controled_args"]! as? [String] ?? []
-            self.drawTextFields(view: view)
-            self.alias = funcname["alias"] as! String
-            self.drawTitleLabel(text: funcname["alias"] as! String)
+        self.json = json
+        if json["arguments"]["controled_args"].count != 0 {
+            self.controlElements = ControlElements(json: json["arguments"]["controled_args"],node:self)
         }
-        self.arcManager = ArcManager(node:self,tangibleDict:tangibleDict)
-        if let args = ((tangibleDict as! [String:Any])["arguments"]) as? [String:[String]]{
-            self.arcManager?.inputArcNames = args["main_args"] ?? []
-            self.inputArcNames = args["main_args"] ?? []
+        self.mainArgDicts = json["arguments"]["main_args"].dictionaryValue
+        self.maxInput = Array(json["arguments"]["main_args"].dictionaryValue.keys).count
+        self.funcName = json["function"].stringValue
+        self.alias = json["alias"].stringValue
+        self.drawTitleLabel(text: json["alias"].stringValue)
+        var addButton = MTKButton(size: CGSize(width: 50, height: 50), image:"/Users/ppi/Desktop/plus.png")
+        addButton.position = CGPoint(x: 0, y: -150)
+        self.addChild(addButton)
+        addButton.add(target: self, action: #selector(self.addButtonPressed(button:)))
+        self.arcManager = ArcManager(node:self,json:json)
+        if let args = json["arguments"].dictionary{
+            self.arcManager?.inputArcNames = Array((args["main_args"]?.dictionaryValue.keys)!)
+            self.inputArcNames = Array((args["main_args"]?.dictionaryValue.keys)!)
         }
         self.arcManager?.drawArcs()
         self.drawBase()
@@ -107,24 +93,6 @@ class Node: SKNode,MTKButtonDelegate {
         self.addChild(label!)
         label?.position = CGPoint(x:0,y:160)
     }
-    
-    func drawTextFields(view:SKView){
-        
-        var multiplier:CGFloat = 3.0
-        for item in self.controledArgNames{
-            let textFieldFrame = CGRect(origin: CGPoint(x:0,y:0), size: CGSize(width: 160, height: 60))
-            let textField = NSTextField(frame: textFieldFrame)
-            textField.backgroundColor = NSColor.red
-            self.controledArgsTextField.append(textField)
-            textField.setFrameOrigin(CGPoint(x:self.position.x-80,y:self.position.y + 60 + multiplier*60.0))
-            multiplier-=1.0
-            textField.backgroundColor = NSColor.white
-            textField.placeholderString = item
-            view.addSubview(textField)
-        }
-    }
-    
-    
 }
 
 

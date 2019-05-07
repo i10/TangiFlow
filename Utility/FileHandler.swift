@@ -48,19 +48,21 @@ class FileHandler{
         }catch{ print("Error while deleting file: \(error.localizedDescription)") }
     }
     
-    func getJsonContent(of path:String) -> Dictionary<String, AnyObject>?{
+    func getJsonContent(of path:String) -> JSON?{
         do{
             let data = try Data(contentsOf: URL(fileURLWithPath: path), options: .mappedIfSafe)
-            let jsonResult = try JSONSerialization.jsonObject(with: data, options: .mutableLeaves)
-            if let jsonResult = jsonResult as? Dictionary<String, AnyObject> {
-                return jsonResult
-            }
+            let json = try JSON(data:data)
+            return json
+//            let jsonResult = try JSONSerialization.jsonObject(with: data, options: .mutableLeaves)
+//            if let jsonResult = jsonResult as? Dictionary<String, AnyObject> {
+//                return jsonResult
+//            }
         }catch{print("Error while getting json: \(error.localizedDescription)")}
         return nil
     }
-    func writeJsonContent(data:[String:Any],to path:String){
-        let json = JSON(data)
-        let str = json.description
+    func writeJsonContent(data:JSON,to path:String){
+       // let json = JSON(data)
+        let str = data.description
         let dataToWrite = str.data(using: String.Encoding.utf8)!
         if let file = FileHandle(forWritingAtPath:path) {
             file.truncateFile(atOffset: 0)

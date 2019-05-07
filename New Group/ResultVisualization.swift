@@ -29,24 +29,24 @@ class ResultVisualization{
     }
     
     
-    func addResultNodes(item:URL,data:Dictionary<String, AnyObject>){
+    func addResultNodes(item:URL,data:JSON){
         let lastIndex = item.lastPathComponent.lastIndex(of: ".")
         if let node = NodeManager.getNode(with: String(item.lastPathComponent[..<lastIndex!])){
             var resultNode:SKNode?
-            if let error = data["error"] as? Int {
+            if let error = data["error"].int {
                 if  error == 0 {
-                    if data["type"] as! String == "image"{
+                    if data["type"].stringValue == "image"{
                         resultNode = ImageTypeResultNode(data: data)
-                    }else if data["type"] as! String == "generic"{
-                        resultNode = GenericTypeResultNode(data:data["data"] as! String)
+                    }else if data["type"].stringValue == "generic"{
+                        resultNode = GenericTypeResultNode(data:data["data"].stringValue)
                     }
                 } else {
-                    resultNode = GenericTypeResultNode(data: data["data"] as! String)
+                    resultNode = GenericTypeResultNode(data: data["data"].stringValue)
                 }
-                if let result = resultNode, nil == node.button{
-                    
+                if let result = resultNode, nil == node.controlElements?.button{
+
                     ResultVisualization.globalResultNodes.append(result)
-                    result.position = CGPoint(x: 260, y: 260)
+                    result.position = CGPoint(x: 0, y: -320)
                     node.addChild(result)
                 }
             }

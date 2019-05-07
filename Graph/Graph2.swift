@@ -46,7 +46,12 @@ class Graph2{
     
         if let scene = self.scene{
             var allNodes = scene.nodes(at:trace.position!).filter{$0 is Node}
-            
+            var sliderButton = scene.nodes(at: trace.position!).filter{$0.name == "sliderButton"}
+            print(sliderButton)
+            if !sliderButton.isEmpty{
+                let activity = SliderActivity(trace: trace, slider: sliderButton[0].parent?.parent as! Slider)
+                return
+            }
             var node:Node? = nil
             if !allNodes.isEmpty{
                 node = allNodes[0] as? Node
@@ -102,6 +107,11 @@ class Graph2{
         guard let scene = self.scene as? GameScene else {return}
         guard let activity = TraceToActivity.getActivity(by: trace.uuid) else{return}
         var allNodes = scene.nodes(at: trace.position!).filter{!($0 is Edge) && ($0 is Arc)}
+        var sliderButton = scene.nodes(at: trace.position!).filter{$0.name == "sliderButton"}
+        if !sliderButton.isEmpty{
+            SliderActivity.removeActivity(id: trace.uuid)
+            return
+        }
         if allNodes.isEmpty{
             self.edgeManager.removeEdge(with: activity.edge?.id)
             TraceToActivity.removeActivity( activity:activity)
@@ -134,6 +144,28 @@ class Graph2{
     func touchMove(trace:MTKTrace){
         guard let scene = self.scene else {return}
         var allNodes = scene.nodes(at:trace.position!).filter{$0 is Node}
+        var sliderButton = scene.nodes(at: trace.position!).filter{$0.name == "sliderButton"}
+        if !sliderButton.isEmpty{
+            if let activity = SliderActivity.getActivity(by: trace.uuid){
+                let deltaX = activity.oldX - activity.trace!.position!.x
+                let deltaY = activity.oldY - activity.trace!.position!.y
+                activity.oldX = activity.trace!.position!.x
+                activity.oldY = activity.trace!.position!.y
+                activity.trace = trace
+                if (abs(deltaX) > 0 ) {
+                    if sliderButton[0].position.x - deltaX > -80 && sliderButton[0].position.x - deltaX < 80{
+                        sliderButton[0].position.x = sliderButton[0].position.x - deltaX
+                        (sliderButton[0].parent?.parent as! Slider).countValue()
+                        
+                    }
+                    
+                    //sliderButton[0].position.y = sliderButton[0].position.y - deltaY
+                    //self.moveArcs(node: node, deltaX: -deltaX, deltaY: -deltaY)
+                    //self.moveTextFields(node: node, deltaX: -deltaX, deltaY: -deltaY)
+                }
+            }
+            return
+        }
         var position:CGPoint? = nil
         if !allNodes.isEmpty{
             position = allNodes[0].position
@@ -181,10 +213,13 @@ class Graph2{
     }
     
     func moveTextFields(node:Node,deltaX:CGFloat,deltaY:CGFloat){
-        for item in node.controledArgsTextField{
-            let point = CGPoint(x: item.frame.origin.x+deltaX, y: item.frame.origin.y+deltaY)
-            item.frame.origin = point
+        if let controlElements = node.controlElements {
+            for item in (controlElements.textFields){
+                let point = CGPoint(x: item.frame.origin.x+deltaX, y: item.frame.origin.y+deltaY)
+                item.frame.origin = point
+            }
         }
+
     }
     
     func moveArcs(node:Node,deltaX:CGFloat,deltaY:CGFloat){
