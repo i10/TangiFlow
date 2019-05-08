@@ -26,7 +26,8 @@ class SliderActivity{
     }
     
     
-    class func getActivity(by id:Int) -> SliderActivity?{
+    class func getActivity(by id:Int?) -> SliderActivity?{
+        guard let id = id else {return nil}
         let activities = SliderActivity.sliderList.filter{$0.trace?.uuid == id}
         if activities.isEmpty{return nil}
         return activities[0]

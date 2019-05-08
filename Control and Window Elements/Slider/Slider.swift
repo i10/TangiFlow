@@ -44,6 +44,7 @@ class Slider: SKNode {
         }
         print(self.values)
         print(self.pixelValues)
+        self.currentValue = "\(self.min)"
         
     }
     

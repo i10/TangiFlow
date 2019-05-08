@@ -16,7 +16,7 @@ class Arc:SKShapeNode{
     var isInput:Bool = false
     let colors:[Bool:NSColor] = [true:NSColor(calibratedRed: 111.0/255.0, green: 195.0/255.0, blue: 223.0/255.0, alpha: 1.0),
                                  false:NSColor(calibratedRed: 255.0/255.0, green: 230.0/255.0, blue: 77.0/255.0, alpha: 1.0)]
-    var segmentRadius:CGFloat = 20
+    var segmentRadius:CGFloat = 30
     var angle:CGFloat?
     var radius:CGFloat?
     var localPos:CGPoint?
@@ -71,13 +71,13 @@ class Arc:SKShapeNode{
         self.removeFromParent()
         if(factor==1 && !popped){
             
-            self.radius = self.radius! + self.segmentRadius
-            self.segmentRadius = 2*self.segmentRadius
+            self.radius = self.radius! + self.segmentRadius*0.5
+            self.segmentRadius = 1.5*self.segmentRadius
             self.popped = true
         } else if(factor == -1 && popped && self.edges.isEmpty){
             
-            self.radius = self.radius! - self.segmentRadius/2
-            self.segmentRadius = self.segmentRadius/2
+            self.radius = self.radius! - (self.segmentRadius/1.5)*0.5
+            self.segmentRadius = self.segmentRadius/1.5
             self.popped = false
         }
         
@@ -126,8 +126,10 @@ class Arc:SKShapeNode{
         }
     }
     
-    func removeEdge(edge:Edge){
+    func removeEdge(edge:Edge?){
+        guard let edge = edge else {return}
         self.edges = self.edges.filter{$0.id != edge.id}
+        self.changeArcColor()
     }
     
     func changeArcColor(){
@@ -151,7 +153,7 @@ class Arc:SKShapeNode{
         label.text = self.alias
         print("I AM WIDTH")
         print(label.frame.width)
-        label.position = CoordinateConverter.polarToDecart(radius: self.radius! + 20, angle: angle+0.1)
+        label.position = CoordinateConverter.polarToDecart(radius: self.radius! + 40, angle: angle+0.1)
         var backgroundNode:SKShapeNode = SKShapeNode(rectOf: CGSize(width: label.frame.width+20, height:40) )
         backgroundNode.fillColor = NSColor(calibratedRed: 111.0/255.0, green: 195.0/255.0, blue: 223.0/255.0, alpha: 0.5)
         backgroundNode.position.y = 5

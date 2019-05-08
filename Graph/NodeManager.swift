@@ -56,8 +56,16 @@ class NodeManager{
         return nil
     }
     
-    func removeNode(with id:String){
+    class func removeNode(with id:String){
         let node = NodeManager.getNode(with: id)
+        if let input = node?.arcManager?.inputArcs, let output = node?.arcManager?.outputArcs{
+            for arc in input+output{
+                if !arc.edges.isEmpty{
+                    EdgeManager.removeEdge(with: arc.edges[0].id)
+                }
+            }
+        }
+       // for arc in node?.arcManager?.inputArcs + node?.arcManager?.outputArcs{}
         node?.removeFromParent()
         NodeManager.nodeList = NodeManager.nodeList.filter {$0.id != node?.id}
     }

@@ -25,6 +25,11 @@ class ControlElements{
                 let textField = CustomTextFields(frame: textFieldFrame, id: control)
                 textField.parent = node
                 textField.type = "number"
+                textField.alignment = .right
+               // textField.font?.se
+                //textField.font?.
+                textField.font = NSFont(name: "Arial", size: 25)
+                
                 textField.backgroundColor = NSColor.red
                 self.textFields.append(textField)
                 //textField.setFrameOrigin(CGPoint(x:self.position.x-80,y:self.position.y + 60 + multiplier*60.0))
@@ -57,9 +62,9 @@ class ControlElements{
                 self.parent?.addChild(slider)
                
             case "button":
-                self.button = MTKButton(size: CGSize(width: 50, height: 50), image:"/Users/ppi/Desktop/open.png" )
+                self.button = MTKButton(size: CGSize(width: 40, height: 40), image:"open.png" )
                 self.button?.name = control
-                self.button?.position = CGPoint(x: -50, y: -150)
+                self.button?.position = CGPoint(x: -70, y: 0)
                 parent!.addChild(button!)
                 self.button?.add(target: self, action: #selector(self.buttonPressed(button:)))
             default:
@@ -74,7 +79,7 @@ class ControlElements{
     @objc fileprivate func buttonPressed(button: MTKButton) {
         self.filePicker.removeFromParent()
         self.filePicker.node = self.parent
-        filePicker.position = CGPoint(x: -500, y: 0)
+        filePicker.position = CGPoint(x: -600, y: 0)
         self.parent!.addChild(filePicker)
     }
     

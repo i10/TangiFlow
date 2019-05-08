@@ -28,7 +28,7 @@ class SideMenu:SKNode,MTKButtonDelegate{
         //self.addChild(openButton)
       //  openButton.position = CGPoint(x: 208, y: 30)
         
-        frame.fillColor = NSColor.white
+        frame.fillColor = NSColor.gray
         self.position = CGPoint(x: 180, y: 500)
         self.addChild(frame)
     }
@@ -54,6 +54,12 @@ class SideMenu:SKNode,MTKButtonDelegate{
         self.addChild(forvardButton)
         self.addChild(backButton)
         self.drawMenu()
+        
+        
+        
+        var label = SKLabelNode(text: "Choose Function")
+        label.position = CGPoint(x: 0, y: 320)
+        self.addChild(label)
         
         
     }

@@ -113,7 +113,7 @@ class Graph2{
             return
         }
         if allNodes.isEmpty{
-            self.edgeManager.removeEdge(with: activity.edge?.id)
+            EdgeManager.removeEdge(with: activity.edge?.id)
             TraceToActivity.removeActivity( activity:activity)
         } else{
             let arc = allNodes[0] as! Arc
@@ -132,7 +132,7 @@ class Graph2{
                 arc.changeArcColor()
                 arc.redrawArc(with: 1)
             } else {
-                self.edgeManager.removeEdge(with: activity.edge?.id)
+                EdgeManager.removeEdge(with: activity.edge?.id)
                 TraceToActivity.removeActivity( activity:activity)
                 arc.redrawArc(with: -1)
                 arc.changeArcColor()

@@ -59,17 +59,18 @@ class Numpad:SKNode, MTKButtonDelegate{
                 self.activeTextInput = nil
                 self.removeFromParent()
             default:
-                let a = self.activeTextInput!.stringValue
-                let b =  button.titleLabel!.text!
-                
-                let c = a + b
-                let d: Float? = Float(c) ?? nil
-                if d != nil {
-                    self.activeTextInput!.stringValue = self.activeTextInput!.stringValue + button.titleLabel!.text!
-                } else {
-                    print("provide proper float value")
-                }
-                
+                if (self.activeTextInput?.stringValue.count)! < 10 { 
+                    let a = self.activeTextInput!.stringValue
+                    let b =  button.titleLabel!.text!
+                    
+                    let c = a + b
+                    let d: Float? = Float(c) ?? nil
+                    if d != nil {
+                        self.activeTextInput!.stringValue = self.activeTextInput!.stringValue + button.titleLabel!.text!
+                    } else {
+                        print("provide proper float value")
+                    }
+            }
         }
     }
 }

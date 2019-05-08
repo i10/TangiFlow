@@ -34,20 +34,19 @@ class Node: SKNode,MTKButtonDelegate {
         //self.id = UUID().uuidString
     }
     
-    @objc fileprivate func buttonPressed(button: MTKButton) {
-        self.filePicker.removeFromParent()
-        self.filePicker.node = self
-        filePicker.position = CGPoint(x: -500, y: 0)
-        self.addChild(filePicker)
+   
+    
+    @objc fileprivate func delete(button: MTKButton){
+        NodeManager.removeNode(with: self.id!)
     }
     
-    
-    @objc func addButtonPressed(button:MTKButton){
+    @objc func add(button:MTKButton){
         self.arcManager?.addOutputArc()
     }
     
     convenience init(id:String,position:CGPoint,json:JSON,view:SKView) {
         self.init()
+        self.zPosition = 5
         self.view = view
         self.position = position
         self.id = id
@@ -60,10 +59,14 @@ class Node: SKNode,MTKButtonDelegate {
         self.funcName = json["function"].stringValue
         self.alias = json["alias"].stringValue
         self.drawTitleLabel(text: json["alias"].stringValue)
-        var addButton = MTKButton(size: CGSize(width: 50, height: 50), image:"/Users/ppi/Desktop/plus.png")
-        addButton.position = CGPoint(x: 0, y: -150)
+        var addButton = MTKButton(size: CGSize(width: 40, height: 40), image:"branch.png")
+        var deleteButton = MTKButton(size: CGSize(width: 40, height: 40), image:"delete.png")
+        deleteButton.position = CGPoint(x: 0, y: -70)
+        addButton.position = CGPoint(x: 70, y: 0)
+        self.addChild(deleteButton)
         self.addChild(addButton)
-        addButton.add(target: self, action: #selector(self.addButtonPressed(button:)))
+        addButton.add(target: self, action: #selector(self.add(button:)))
+        deleteButton.add(target: self, action: #selector(self.delete(button:)))
         self.arcManager = ArcManager(node:self,json:json)
         if let args = json["arguments"].dictionary{
             self.arcManager?.inputArcNames = Array((args["main_args"]?.dictionaryValue.keys)!)
@@ -81,7 +84,7 @@ class Node: SKNode,MTKButtonDelegate {
     }
     
     func drawBase(){
-        let node = SKShapeNode(circleOfRadius: 80)
+        let node = SKShapeNode(circleOfRadius: 100)
         node.position = CGPoint(x: 0, y: 0)
         node.fillColor = NSColor.white
         self.addChild(node)

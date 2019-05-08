@@ -39,7 +39,8 @@ class TraceToActivity{
         return activities[0]
     }
     
-    class func getActivity(by arc:Arc) -> TraceToActivity?{
+    class func getActivity(by arc:Arc?) -> TraceToActivity?{
+        guard let arc = arc else {return nil}
         let activities = TraceToActivity.activityList.filter{$0.from == arc || $0.to == arc}
         if activities.isEmpty{return nil}
         return activities[0]
@@ -51,18 +52,19 @@ class TraceToActivity{
         return activities[0]
     }
     
-    class func removeActivity(activity:TraceToActivity){
-        activity.edge?.removeFromParent()
-        activity.to?.removeEdge(edge: activity.edge!)
-        activity.from?.removeEdge(edge: activity.edge!)
-        // self.edgeManager.removeEdge(with: activity.edge?.id)
-        activity.edge = nil
-        activity.to?.redrawArc(with: -1)
-        activity.from?.redrawArc(with: -1)
-        activity.to?.changeArcColor()
-        activity.from?.changeArcColor()
-        TraceToActivity.activityList = TraceToActivity.activityList.filter{$0.id != activity.id}
-        
+    class func removeActivity(activity:TraceToActivity?){
+        if let activity = activity{
+            activity.edge?.removeFromParent()
+            activity.to?.removeEdge(edge: activity.edge)
+            activity.from?.removeEdge(edge: activity.edge)
+            // self.edgeManager.removeEdge(with: activity.edge?.id)
+            activity.edge = nil
+            activity.to?.redrawArc(with: -1)
+            activity.from?.redrawArc(with: -1)
+            activity.to?.changeArcColor()
+            activity.from?.changeArcColor()
+            TraceToActivity.activityList = TraceToActivity.activityList.filter{$0.id != activity.id}
+        }
     }
     
 }

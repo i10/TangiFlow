@@ -40,7 +40,7 @@ class ArcManager{
         for index in 0..<self.inputArcsAmount{
             let rotateAngle = CGFloat.pi + ( CGFloat(self.inputOffset) + CGFloat(spacing))*CGFloat(index)
             let section = Arc(angle: CGFloat(self.inputOffset),
-                              radius: 110,
+                              radius: 140,
                               isInput: true,
                               rotation:CGFloat(rotateAngle),
                               name:Array(self.node?.mainArgDicts.keys ?? [:].keys)[index],
@@ -59,7 +59,7 @@ class ArcManager{
             //if !node!.funcName.contains("terminal"){
                 let rotateAngle =  ( CGFloat(self.outputOffset) + CGFloat(spacing))*CGFloat(index)
                 let section = Arc(angle: CGFloat(self.outputOffset),
-                                  radius: 110, isInput: false,
+                                  radius: 140, isInput: false,
                                   rotation: CGFloat(rotateAngle),
                                   parentNode: self.node!)
                 self.node?.addChild(section)
@@ -72,7 +72,7 @@ class ArcManager{
     
     func addOutputArc(){
         self.outputArcsAmount += 1
-        let section = Arc(angle: CGFloat(self.outputOffset), radius: 110, isInput: false, parentNode: self.node!)
+        let section = Arc(angle: CGFloat(self.outputOffset), radius: 140, isInput: false, parentNode: self.node!)
         self.outputArcs.append(section)
         for index in 0..<self.outputArcs.count{
             self.outputArcs[index].zRotation = ( CGFloat(self.outputOffset) + CGFloat(spacing))*CGFloat(index)

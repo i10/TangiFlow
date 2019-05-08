@@ -6,8 +6,15 @@ class MTKFileManager:SKNode,MTKButtonDelegate{
     var node:Node?
     override init() {
         super.init()
+        self.zPosition = 10
         var frame = SKShapeNode(rectOf: CGSize(width: 900, height: 500))
-        frame.fillColor = NSColor.white
+        frame.fillColor = SKColor.gray
+        var close = MTKButton(size: CGSize(width: 100, height: 40), label: "Close")
+        close.add(target: self, action: #selector(self.close(button:)))
+        close.position = CGPoint(x: 400, y: -230)
+        close.zPosition = 11
+        self.addChild(close)
+    
         self.addChild(frame)
 //        var button = MTKButton(size: CGSize(width: 300, height: 300), image: "/Users/ppi/Desktop/lambo.jpg")
 //        button.position = CGPoint.zero
@@ -78,6 +85,10 @@ class MTKFileManager:SKNode,MTKButtonDelegate{
         self.removeFromParent()
     }
     
+    
+    @objc func close(button:MTKButton){
+        self.removeFromParent()
+    }
    
     required init?(coder aDecoder: NSCoder) {
         fatalError("decoder init is not implemented")
