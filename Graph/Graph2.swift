@@ -38,7 +38,7 @@ class Graph2{
         if let center = center,let point = point,let radius = radius{
             let x2 = (center.x - point.x)*(center.x - point.x)
             let y2 = (center.y - point.y)*(center.y - point.y)
-            return x2 + y2  < radius*radius
+            return x2 + y2  <= radius*radius
         }
         return false
     }
@@ -53,10 +53,16 @@ class Graph2{
                 return
             }
             var node:Node? = nil
-            if !allNodes.isEmpty{
-                node = allNodes[0] as? Node
+//            if !allNodes.isEmpty{
+//                node = allNodes[0] as? Node
+//            }
+            
+            for item in allNodes{
+                if self.inCircle(center: item.position, point: trace.position, radius: 100.0){
+                    node = item as? Node
+                }
             }
-            if !self.inCircle(center: node?.position, point: trace.position!, radius: 80.0){
+            if node == nil{
                 //print("I AM TOUCHED")
                 self.arcTouchDown(trace: trace,scene:scene)
                 
@@ -96,7 +102,7 @@ class Graph2{
                 arc.removeEdge(edge: activity!.edge!)
                 arc.redrawArc(with: -1)
                 arc.changeArcColor()
-                activity?.edge?.redrawEdge(from: trace.position!, to: activity!.fulcrum!.globalPos!)
+                activity?.edge?.redrawEdge(from: trace.position, to: activity?.fulcrum?.globalPos ?? nil)
             }
         }
     }
@@ -144,18 +150,18 @@ class Graph2{
     func touchMove(trace:MTKTrace){
         guard let scene = self.scene else {return}
         var allNodes = scene.nodes(at:trace.position!).filter{$0 is Node}
-        var sliderButton = scene.nodes(at: trace.position!).filter{$0.name == "sliderButton"}
-        if !sliderButton.isEmpty{
+        
+        //if !sliderButton.isEmpty{
             if let activity = SliderActivity.getActivity(by: trace.uuid){
                 let deltaX = activity.oldX - activity.trace!.position!.x
-                let deltaY = activity.oldY - activity.trace!.position!.y
+               
                 activity.oldX = activity.trace!.position!.x
                 activity.oldY = activity.trace!.position!.y
                 activity.trace = trace
                 if (abs(deltaX) > 0 ) {
-                    if sliderButton[0].position.x - deltaX > -80 && sliderButton[0].position.x - deltaX < 80{
-                        sliderButton[0].position.x = sliderButton[0].position.x - deltaX
-                        (sliderButton[0].parent?.parent as! Slider).countValue()
+                    if activity.slider!.button.position.x - deltaX > -80 && activity.slider!.button.position.x - deltaX < 80{
+                        activity.slider!.button.position.x = activity.slider!.button.position.x - deltaX
+                        (activity.slider as! Slider).countValue()
                         
                     }
                     
@@ -163,9 +169,10 @@ class Graph2{
                     //self.moveArcs(node: node, deltaX: -deltaX, deltaY: -deltaY)
                     //self.moveTextFields(node: node, deltaX: -deltaX, deltaY: -deltaY)
                 }
+                return
             }
-            return
-        }
+          //  return
+        //}
         var position:CGPoint? = nil
         if !allNodes.isEmpty{
             position = allNodes[0].position
@@ -175,7 +182,7 @@ class Graph2{
         }
         if !self.inCircle(center: position, point: trace.position, radius: 80.0){
             if let activity = TraceToActivity.getActivity(by: trace.uuid) {
-                activity.edge?.redrawEdge(from: activity.fulcrum!.globalPos!, to: trace.position!)
+                activity.edge?.redrawEdge(from: activity.fulcrum?.globalPos, to: trace.position)
             }
         }
     }

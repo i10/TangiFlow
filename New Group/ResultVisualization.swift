@@ -46,7 +46,7 @@ class ResultVisualization{
                 if let result = resultNode, nil == node.controlElements?.button{
 
                     ResultVisualization.globalResultNodes.append(result)
-                    result.position = CGPoint(x: 0, y: -320)
+                    result.position = CGPoint(x: 0, y: -350)
                     node.addChild(result)
                 }
             }

@@ -27,12 +27,14 @@ class Edge:SKShapeNode{
     }
     
     
-    func redrawEdge(from:CGPoint,to:CGPoint){
-        let parent = self.parent
-        self.removeFromParent()
-        self.pathToDraw  = CGMutablePath()
-        self.drawLineBasic(from: from, to: to)
-        parent?.addChild(self)
+    func redrawEdge(from:CGPoint?,to:CGPoint?){
+        if let from = from, let to = to{
+            let parent = self.parent
+            self.removeFromParent()
+            self.pathToDraw  = CGMutablePath()
+            self.drawLineBasic(from: from, to: to)
+            parent?.addChild(self)
+        }
     }
     
     func drawLineBasic(from:CGPoint,to:CGPoint){

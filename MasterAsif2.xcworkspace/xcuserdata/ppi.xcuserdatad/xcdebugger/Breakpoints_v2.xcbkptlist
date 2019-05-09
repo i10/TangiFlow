@@ -41,14 +41,62 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Graph/EdgeManager.swift"
-            timestampString = "579015239.515434"
+            filePath = "Graph/Graph2.swift"
+            timestampString = "579092083.590431"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "37"
-            endingLineNumber = "37"
-            landmarkName = "removeEdge(with:)"
+            startingLineNumber = "47"
+            endingLineNumber = "47"
+            landmarkName = "touchDown(trace:)"
             landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Graph/Graph2.swift"
+            timestampString = "579092083.590488"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "48"
+            endingLineNumber = "48"
+            landmarkName = "touchDown(trace:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "MasterAsif2.Graph2.touchDown(trace: MultiTouchKitSwift.MTKTrace) -&gt; ()"
+                  moduleName = "MasterAsif2"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/ppi/Documents/Code/MasterAsif/Graph/Graph2.swift"
+                  timestampString = "579090331.555485"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "48"
+                  endingLineNumber = "48"
+                  offsetFromSymbolStart = "198">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (__C.SKNode) -&gt; Swift.Bool in MasterAsif2.Graph2.touchDown(trace: MultiTouchKitSwift.MTKTrace) -&gt; ()"
+                  moduleName = "MasterAsif2"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/ppi/Documents/Code/MasterAsif/Graph/Graph2.swift"
+                  timestampString = "579090331.556944"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "48"
+                  endingLineNumber = "48"
+                  offsetFromSymbolStart = "20">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

@@ -14,8 +14,10 @@ class Arc:SKShapeNode{
     var pathToDraw:CGMutablePath = CGMutablePath()
     var startAngle:CGFloat = CGFloat(3.0 * Double.pi/2)
     var isInput:Bool = false
-    let colors:[Bool:NSColor] = [true:NSColor(calibratedRed: 111.0/255.0, green: 195.0/255.0, blue: 223.0/255.0, alpha: 1.0),
-                                 false:NSColor(calibratedRed: 255.0/255.0, green: 230.0/255.0, blue: 77.0/255.0, alpha: 1.0)]
+    let inColors:[Bool:NSColor] = [true:NSColor(calibratedRed: 111.0/255.0, green: 195.0/255.0, blue: 223.0/255.0, alpha: 1.0),
+                                 false:NSColor(calibratedRed: 223.0/255.0, green: 116.0/255.0, blue: 12.0/255.0, alpha: 1.0)]
+    
+    let outColors:[Bool:NSColor] = [true:NSColor(calibratedRed: 230.0/255.0, green: 255.0/255.0, blue: 255.0/255.0, alpha: 1.0),false:NSColor(calibratedRed: 255.0/255.0, green: 230.0/255.0, blue: 77.0/255.0, alpha: 1.0)]
     var segmentRadius:CGFloat = 30
     var angle:CGFloat?
     var radius:CGFloat?
@@ -51,8 +53,14 @@ class Arc:SKShapeNode{
         self.isInput = isInput
         self.drawArc(angle: angle, radius: radius, isInput: isInput, rotation: rotation)
         self.position = CGPoint(x: 0, y: 0)
-        self.strokeColor = colors[self.canAdd]!
-        self.fillColor = colors[self.canAdd]!
+        if isInput{
+            self.strokeColor = inColors[self.canAdd]!
+            self.fillColor = inColors[self.canAdd]!
+        } else {
+            self.strokeColor = outColors[self.canAdd]!
+            self.fillColor = outColors[self.canAdd]!
+        }
+        
         self.lineWidth = 1
         self.zRotation = rotation
         self.zPosition = -1
@@ -133,8 +141,14 @@ class Arc:SKShapeNode{
     }
     
     func changeArcColor(){
-        self.strokeColor = self.colors[self.canAdd]!
-        self.fillColor = self.colors[self.canAdd]!
+        if isInput{
+            self.strokeColor = self.inColors[self.canAdd]!
+            self.fillColor = self.inColors[self.canAdd]!
+        }else{
+            self.strokeColor = self.outColors[self.canAdd]!
+            self.fillColor = self.outColors[self.canAdd]!
+        }
+        
     }
     
     
