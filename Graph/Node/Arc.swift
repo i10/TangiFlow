@@ -8,17 +8,18 @@
 
 import Foundation
 import SpriteKit
-
+import MultiTouchKitSwift
 class Arc:SKShapeNode{
+    var closeButton:MTKButton? = nil
     var parentNode:Node?
     var pathToDraw:CGMutablePath = CGMutablePath()
     var startAngle:CGFloat = CGFloat(3.0 * Double.pi/2)
     var isInput:Bool = false
     let inColors:[Bool:NSColor] = [true:NSColor(calibratedRed: 111.0/255.0, green: 195.0/255.0, blue: 223.0/255.0, alpha: 1.0),
-                                 false:NSColor(calibratedRed: 223.0/255.0, green: 116.0/255.0, blue: 12.0/255.0, alpha: 1.0)]
+                                 false:NSColor(calibratedRed: 144/255.0, green: 238.0/255.0, blue: 144/255.0, alpha: 1.0)]
     
-    let outColors:[Bool:NSColor] = [true:NSColor(calibratedRed: 230.0/255.0, green: 255.0/255.0, blue: 255.0/255.0, alpha: 1.0),false:NSColor(calibratedRed: 255.0/255.0, green: 230.0/255.0, blue: 77.0/255.0, alpha: 1.0)]
-    var segmentRadius:CGFloat = 30
+    let outColors:[Bool:NSColor] = [true:NSColor(calibratedRed: 111.0/255.0, green: 195.0/255.0, blue: 223.0/255.0, alpha: 1.0),false:NSColor(calibratedRed: 144/255.0, green: 238/255.0, blue: 144/255.0, alpha: 1.0)]
+    var segmentRadius:CGFloat = 20
     var angle:CGFloat?
     var radius:CGFloat?
     var localPos:CGPoint?
@@ -46,7 +47,9 @@ class Arc:SKShapeNode{
     }
     
     init(angle:CGFloat,radius:CGFloat,isInput:Bool,rotation:CGFloat=0,name:String="",parentNode:Node){
+        
         super.init()
+        
         self.id = UUID().uuidString
         self.angle = angle
         self.radius = radius
@@ -54,7 +57,8 @@ class Arc:SKShapeNode{
         self.drawArc(angle: angle, radius: radius, isInput: isInput, rotation: rotation)
         self.position = CGPoint(x: 0, y: 0)
         if isInput{
-            self.strokeColor = inColors[self.canAdd]!
+            self.lineWidth = 4
+            self.strokeColor = .black
             self.fillColor = inColors[self.canAdd]!
         } else {
             self.strokeColor = outColors[self.canAdd]!
@@ -67,6 +71,12 @@ class Arc:SKShapeNode{
         self.name = name
         self.parentNode = parentNode
         self.setLocation()
+        
+//        var close = MTKButton(size: CGSize(width: 10, height: 10), image: "close")
+//        close.position = CoordinateConverter.polarToDecart(radius: self.radius! + 40, angle: self.polarAngle)
+//        close.zPosition = 20
+//        //close.position = CGPoint(x: 150, y: 0)
+//        self.parentNode?.addChild(close)
     }
     
     
@@ -142,7 +152,9 @@ class Arc:SKShapeNode{
     
     func changeArcColor(){
         if isInput{
-            self.strokeColor = self.inColors[self.canAdd]!
+            
+            self.strokeColor = .black
+            self.fillColor = inColors[self.canAdd]!
             self.fillColor = self.inColors[self.canAdd]!
         }else{
             self.strokeColor = self.outColors[self.canAdd]!
@@ -175,5 +187,19 @@ class Arc:SKShapeNode{
         
         label.addChild(backgroundNode)
         self.parentNode?.addChild(label)
+    }
+    
+    
+    func drawX(angle:CGFloat,button:MTKButton){
+       // var close = MTKButton(size: CGSize(width: 20, height: 20), image: "close")
+        self.closeButton?.removeFromParent()
+        self.closeButton = nil
+        self.closeButton = button
+        
+        self.closeButton?.position = CoordinateConverter.polarToDecart(radius: self.radius! + 30, angle: angle)
+        
+        self.closeButton?.name = self.id
+        //close.position = CGPoint(x: 150, y: 0)
+        self.parentNode?.addChild(closeButton!)
     }
 }

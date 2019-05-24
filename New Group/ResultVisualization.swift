@@ -33,8 +33,8 @@ class ResultVisualization{
         let lastIndex = item.lastPathComponent.lastIndex(of: ".")
         if let node = NodeManager.getNode(with: String(item.lastPathComponent[..<lastIndex!])){
             var resultNode:SKNode?
-            if let error = data["error"].int {
-                if  error == 0 {
+            let error = data["error"].boolValue //{
+                if  !error {
                     if data["type"].stringValue == "image"{
                         resultNode = ImageTypeResultNode(data: data)
                     }else if data["type"].stringValue == "generic"{
@@ -49,7 +49,7 @@ class ResultVisualization{
                     result.position = CGPoint(x: 0, y: -350)
                     node.addChild(result)
                 }
-            }
+            //}
         }
     }
     

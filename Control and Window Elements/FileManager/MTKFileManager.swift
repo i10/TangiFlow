@@ -79,7 +79,7 @@ class MTKFileManager:SKNode,MTKButtonDelegate{
         self.node?.sourceData?.removeFromParent()
         self.node?.sourceData = ImageTypeResultNode(url:button.name!)
         (self.node?.sourceData as! ImageTypeResultNode).url = button.name!
-        self.node?.sourceData?.position = CGPoint(x: -300, y: 0)
+        self.node?.sourceData?.position = CGPoint(x: 0, y: -350)
         self.node?.addChild(self.node!.sourceData!)
         self.node!.sourceUrl = button.name!
         self.removeFromParent()

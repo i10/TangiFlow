@@ -51,15 +51,18 @@ class Numpad:SKNode, MTKButtonDelegate{
     }
     
     @objc func tapButton(button:MTKButton){
-        switch button.titleLabel?.text {
+        
+        switch button.titleLabel!.text {
             case "←":
                 var last = self.activeTextInput!.stringValue.count-1
                 self.activeTextInput!.stringValue = String(self.activeTextInput!.stringValue.dropLast())
+                (self.activeTextInput as! CustomTextFields).parent?.changeBaseColor(color: NSColor(calibratedRed: 255.0/255.0, green: 230.0/255.0, blue: 77.0/255.0, alpha: 1.0))
             case "CONFIRM":
                 self.activeTextInput = nil
                 self.removeFromParent()
             default:
-                if (self.activeTextInput?.stringValue.count)! < 10 { 
+                if (self.activeTextInput?.stringValue.count)! < 10 {
+                    (self.activeTextInput as! CustomTextFields).parent?.changeBaseColor(color: NSColor(calibratedRed: 255.0/255.0, green: 230.0/255.0, blue: 77.0/255.0, alpha: 1.0))
                     let a = self.activeTextInput!.stringValue
                     let b =  button.titleLabel!.text!
                     
