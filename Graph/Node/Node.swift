@@ -27,6 +27,8 @@ class Node: SKNode,MTKButtonDelegate {
     var controledArgDicts:[String:String] = [:]
     var filePicker:MTKFileManager = MTKFileManager()
     var keyboard:Numpad = Numpad()
+    var playButton:MTKButton = MTKButton(size: CGSize(width: 30, height: 30),image:"fplay.png")
+    var base:SKShapeNode = SKShapeNode(circleOfRadius: 60)
     
     override init() {
         super.init()
@@ -59,12 +61,17 @@ class Node: SKNode,MTKButtonDelegate {
         self.funcName = json["function"].stringValue
         self.alias = json["alias"].stringValue
         self.drawTitleLabel(text: json["alias"].stringValue)
-        var addButton = MTKButton(size: CGSize(width: 40, height: 40), image:"branch.png")
-        var deleteButton = MTKButton(size: CGSize(width: 40, height: 40), image:"delete.png")
-        deleteButton.position = CGPoint(x: 0, y: -70)
-        addButton.position = CGPoint(x: 70, y: 0)
+        var addButton = MTKButton(size: CGSize(width: 30, height: 30), image:"fbranch.png")
+        var deleteButton = MTKButton(size: CGSize(width: 30, height: 30), image:"ftrash.png")
+        //var playButton = MTKButton(size: CGSize(width: 40, height: 40),image:"play.png")
+        playButton.add(target: self, action: #selector(self.play(button:)))
+        
+        playButton.position = CGPoint(x: 0, y: 35)
+        deleteButton.position = CGPoint(x: -35, y: 0)
+        addButton.position = CGPoint(x: 35, y: 0)
         self.addChild(deleteButton)
         self.addChild(addButton)
+        self.addChild(playButton)
         addButton.add(target: self, action: #selector(self.add(button:)))
         deleteButton.add(target: self, action: #selector(self.delete(button:)))
         self.arcManager = ArcManager(node:self,json:json)
@@ -84,21 +91,33 @@ class Node: SKNode,MTKButtonDelegate {
     }
     
     func drawBase(){
-        let node = SKShapeNode(circleOfRadius: 100)
-        node.position = CGPoint(x: 0, y: 0)
-        node.fillColor = NSColor.white
-        self.addChild(node)
+        
+        self.base.fillColor = NSColor.white
+        self.addChild(self.base)
     }
     
     func drawTitleLabel(text:String){
         self.label = SKLabelNode(text:text)//SKLabelNode(text: funcname["function"] as? String)
         label?.fontSize = 30
-        self.addChild(label!)
-        label?.position = CGPoint(x:0,y:160)
+//        self.addChild(label!)
+        label?.position = CGPoint(x:0,y:250)
+    }
+    
+    @objc func play(button:MTKButton){
+        button.set(size: CGSize(width: 20, height: 20), image:"fplay.png")
+        let scr = ScriptRunner()
+        scr.script(id:button.name!)
+//        let resultMaker = ResultVisualization()
+//        resultMaker.getResults()
+        print(self.inArgs)
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) { // Change `2.0` to the desired number of seconds.
+            // Code you want to be delayed
+            button.set(size: CGSize(width: 30, height: 30), image:"fplay.png")
+        }
+        
+    }
+    
+    func changeBaseColor(color:NSColor){
+        self.base.fillColor = color
     }
 }
-
-
-
-
-

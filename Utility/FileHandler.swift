@@ -19,6 +19,7 @@ class FileHandler{
     var projectDataPath =  "/Users/ppi/Documents/Code/MasterAsifPythonBackEnd/Files/myproj.json"
     var graphDataPath = "/Users/ppi/Documents/Code/MasterAsifPythonBackEnd/Files/graph.json"
     var resultFolderPath = "/Users/ppi/Documents/Code/MasterAsifPythonBackEnd/Files/Result"
+    var imagesFolderPath = "/Users/ppi/Documents/Code/MasterAsifPythonBackEnd/Files/Images"
     var mainScriptpath = "/Users/ppi/Documents/Code/MasterAsifPythonBackEnd/main.py"
     var copyProj = "/Users/ppi/Documents/Code/MasterAsifPythonBackEnd/Files/copy_proj.json"
     var imageSource = "/Users/ppi/Desktop/ImageSource"

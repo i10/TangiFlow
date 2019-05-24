@@ -9,20 +9,25 @@
 import Foundation
 import SwiftyJSON
 class ScriptRunner{
-    func script(){
-        FileHandler.shared.cleanContent(of:FileHandler.shared.resultFolderPath)
-        self.extractJson(path: FileHandler.shared.graphDataPath)
+    func script(id:String){
+        //FileHandler.shared.cleanContent(of:FileHandler.shared.resultFolderPath)
+        self.extractJson(path: FileHandler.shared.graphDataPath,id:id)
         let task = Process()
         task.launchPath = "/usr/bin/env"
         task.arguments = [FileHandler.shared.mainScriptpath,
                           FileHandler.shared.graphDataPath,
                           FileHandler.shared.copyProj]
+        task.terminationHandler = {(process) in
+            let resultMaker = ResultVisualization()
+            resultMaker.getResults()
+            
+        }
         task.launch()
         task.waitUntilExit()
     }
     
     
-    func extractJson(path:String){
+    func extractJson(path:String,id:String){
         var graphStruct:JSON = [:]
         var projData:JSON = [:]
         var argData:JSON = [:]
@@ -38,23 +43,13 @@ class ScriptRunner{
                 }
             }
             graphStruct[node.id!] = JSON(args)
-//            for item in node.controledArgsTextField{
-//                if !item.stringValue.isEmpty{
-//                //    allArgs["controled_args"]![item.id!] = item.stringValue
-//                }
-//            }
-//            if let button = node.button{
-//                print("I AM THE NAME")
-//                print(button.name)
-//                allArgs["data_args"] = [button.name!:node.sourceUrl]
-//
-//            }
             argData[node.id!] = allArgs
         }
         projData["arg_data"] = argData
         projData["graph"] = JSON(revertGraph(graph: graphStruct))
         projData["graph_reverse"] = graphStruct
         projData["type"] = "image"
+        projData["caller"].stringValue = id
         FileHandler.shared.writeJsonContent(data: projData, to: path)
     }
     

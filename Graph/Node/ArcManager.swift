@@ -9,7 +9,8 @@
 import Foundation
 import SpriteKit
 import SwiftyJSON
-class ArcManager{
+import MultiTouchKitSwift
+class ArcManager:MTKButtonDelegate{
     var inputArcNames:[String] = []
     var inputArcs:[Arc] = []
     var outputArcs:[Arc] = []
@@ -40,7 +41,7 @@ class ArcManager{
         for index in 0..<self.inputArcsAmount{
             let rotateAngle = CGFloat.pi + ( CGFloat(self.inputOffset) + CGFloat(spacing))*CGFloat(index)
             let section = Arc(angle: CGFloat(self.inputOffset),
-                              radius: 140,
+                              radius: 90,
                               isInput: true,
                               rotation:CGFloat(rotateAngle),
                               name:Array(self.node?.mainArgDicts.keys ?? [:].keys)[index],
@@ -59,24 +60,67 @@ class ArcManager{
             //if !node!.funcName.contains("terminal"){
                 let rotateAngle =  ( CGFloat(self.outputOffset) + CGFloat(spacing))*CGFloat(index)
                 let section = Arc(angle: CGFloat(self.outputOffset),
-                                  radius: 140, isInput: false,
+                                  radius: 90, isInput: false,
                                   rotation: CGFloat(rotateAngle),
                                   parentNode: self.node!)
                 self.node?.addChild(section)
                 self.outputArcs.append(section)
+            var close = MTKButton(size: CGSize(width: 20, height: 20), image: "close")
+            close.add(target: self, action: #selector(self.removeArc(button:)))
+            if self.outputArcs.count != 1 {
+                section.drawX(angle: section.polarAngle,button: close)
+                
+            }
            // }
         }
+        
         
     }
     
     
     func addOutputArc(){
-        self.outputArcsAmount += 1
-        let section = Arc(angle: CGFloat(self.outputOffset), radius: 140, isInput: false, parentNode: self.node!)
-        self.outputArcs.append(section)
+        if self.outputArcsAmount < 6{
+            self.outputArcsAmount += 1
+            let section = Arc(angle: CGFloat(self.outputOffset), radius: 90, isInput: false, parentNode: self.node!)
+            self.outputArcs.append(section)
+            for index in 0..<self.outputArcs.count{
+                self.outputArcs[index].zRotation = ( CGFloat(self.outputOffset) + CGFloat(spacing))*CGFloat(index)
+                self.outputArcs[index].redrawArc(with: CGFloat(self.outputOffset))
+                var close = MTKButton(size: CGSize(width: 20, height: 20), image: "close")
+                
+                close.add(target: self, action: #selector(self.removeArc(button:)))
+                self.outputArcs[index].drawX(angle: self.outputArcs[index].polarAngle ,button: close)
+                }
+            
+        }
+        //section.drawX(angle: section.angle!)
+    }
+    
+    @objc func removeArc(button:MTKButton){
+        print("HELLO")
+        self.outputArcsAmount -= 1
+        var arc = self.outputArcs.filter{$0.id == button.name!}[0]
+        if let activity = TraceToActivity.getActivity(by: arc){
+            
+            activity.to?.parentNode?.inArgs[activity.to!.name!] = nil
+            //arc.edges[0].to?.parentNode
+            TraceToActivity.removeActivity(activity: activity)
+        }
+        
+        
+        arc.closeButton?.removeFromParent()
+        arc.removeFromParent()
+        self.outputArcs = self.outputArcs.filter{$0.id != button.name!}
+        
         for index in 0..<self.outputArcs.count{
             self.outputArcs[index].zRotation = ( CGFloat(self.outputOffset) + CGFloat(spacing))*CGFloat(index)
             self.outputArcs[index].redrawArc(with: CGFloat(self.outputOffset))
+            self.outputArcs[index].closeButton?.removeFromParent()
+            if self.outputArcs.count != 1 {
+                var close = MTKButton(size: CGSize(width: 20, height: 20), image: "close")
+                
+                close.add(target: self, action: #selector(self.removeArc(button:)))
+                    self.outputArcs[index].drawX(angle: self.outputArcs[index].polarAngle ,button: close)}
         }
     }
 }

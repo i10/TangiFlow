@@ -52,19 +52,21 @@ class ControlElements{
                 parent!.view?.addSubview(textField)
             //view.addSubview(textField)
             case "slider":
-                var slider = Slider()
+                let slider = Slider(min: CGFloat(json[control]["min"].floatValue),
+                                    max: CGFloat(json[control]["max"].floatValue),
+                                    step: CGFloat(json[control]["step"].floatValue),
+                                    defaultVal: CGFloat(json[control]["default"].floatValue))
                 slider.name = control
-                slider.max = CGFloat(json[control]["max"].floatValue)
-                slider.min = CGFloat(json[control]["min"].floatValue)
-                slider.step = CGFloat(json[control]["step"].floatValue)
                 slider.alias = json[control]["alias"].stringValue
                 self.sliders.append(slider)
+                slider.drawLabel()
                 self.parent?.addChild(slider)
+                
                
             case "button":
-                self.button = MTKButton(size: CGSize(width: 40, height: 40), image:"open.png" )
+                self.button = MTKButton(size: CGSize(width: 30, height: 30), image:"ffolder.png" )
                 self.button?.name = control
-                self.button?.position = CGPoint(x: -70, y: 0)
+                self.button?.position = CGPoint(x: 0, y: -35)
                 parent!.addChild(button!)
                 self.button?.add(target: self, action: #selector(self.buttonPressed(button:)))
             default:
@@ -79,7 +81,7 @@ class ControlElements{
     @objc fileprivate func buttonPressed(button: MTKButton) {
         self.filePicker.removeFromParent()
         self.filePicker.node = self.parent
-        filePicker.position = CGPoint(x: -600, y: 0)
+        filePicker.position = CGPoint(x: 0, y: -450)
         self.parent!.addChild(filePicker)
     }
     
@@ -90,11 +92,11 @@ class ControlElements{
             print(index)
     
             print(parent!.position.y + CGFloat(60 + (index+1)*120))
-            textFields[index].setFrameOrigin(CGPoint(x:parent!.position.x-80,y:parent!.position.y + CGFloat(200 + index*70)))
+            textFields[index].setFrameOrigin(CGPoint(x:parent!.position.x-80,y:parent!.position.y + CGFloat(100 + index*70)))
         }
-        var y = 220  + textFields.count * 70
+        var y = 150  + textFields.count * 70
         for index in 0..<sliders.count{
-            sliders[index].position = CGPoint(x: 0, y: y + 80*index)
+            sliders[index].position = CGPoint(x: 0, y: y + 120*index)
         }
     }
     

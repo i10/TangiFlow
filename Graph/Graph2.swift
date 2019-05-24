@@ -42,6 +42,17 @@ class Graph2{
         }
         return false
     }
+    
+    func inRing(center:CGPoint?,point:CGPoint?,radiusIn:CGFloat?,radiusOut:CGFloat?)->Bool{
+        if let center = center,let point = point,let radiusIn = radiusIn, let radiusOut = radiusOut{
+            let x2 = (center.x - point.x)*(center.x - point.x)
+            let y2 = (center.y - point.y)*(center.y - point.y)
+            return radiusIn*radiusIn <= x2 + y2 && x2 + y2 <= radiusOut*radiusOut
+        }
+        return false
+    }
+    
+    
     func touchDown(trace:MTKTrace){
     
         if let scene = self.scene{
@@ -58,11 +69,11 @@ class Graph2{
 //            }
             
             for item in allNodes{
-                if self.inCircle(center: item.position, point: trace.position, radius: 100.0){
+                if self.inCircle(center: item.position, point: trace.position, radius: 60){
                     node = item as? Node
                 }
             }
-            if node == nil{
+            if (node == nil ){
                 //print("I AM TOUCHED")
                 self.arcTouchDown(trace: trace,scene:scene)
                 
@@ -74,36 +85,40 @@ class Graph2{
     }
     
     func arcTouchDown(trace:MTKTrace,scene:SKScene){
+        
         var allArcs = scene.nodes(at:trace.position!).filter{$0 is Arc}
         if !allArcs.isEmpty{
             let arc = allArcs[0] as! Arc
-            if TraceToActivity.getActivity(by: arc) == nil {
-                let to:Arc? = arc.isInput ? arc:nil
-                let from:Arc? = arc.isInput ? nil:arc
-                let activity = TraceToActivity( from:from,to:to)
-                self.setActivity(activity: activity, trace: trace, to: to,from:from,arc:arc)
-                self.edgeManager.addEdge(edge: activity.edge!)
-                arc.redrawArc(with: 1)
-                arc.addEdge(edge: activity.edge!)
-                arc.changeArcColor()
-            } else{
-                let activity = TraceToActivity.getActivity(by: arc)
-                let to = activity?.to
-                let from = activity?.from
-                to?.parentNode?.inArgs[to!.name!] = nil
-                activity?.currentTrace = trace.uuid
-                if arc.isInput{
-                    activity!.to = nil
-                    activity?.fulcrum = activity!.from
-                }else{
-                    activity!.from = nil
-                    activity?.fulcrum = activity!.to
+            if  self.inRing(center: arc.parentNode?.position, point: trace.position, radiusIn: 60, radiusOut: 90){
+                if TraceToActivity.getActivity(by: arc) == nil {
+                    let to:Arc? = arc.isInput ? arc:nil
+                    let from:Arc? = arc.isInput ? nil:arc
+                    let activity = TraceToActivity( from:from,to:to)
+                    self.setActivity(activity: activity, trace: trace, to: to,from:from,arc:arc)
+                    self.edgeManager.addEdge(edge: activity.edge!)
+                    arc.redrawArc(with: 1)
+                    arc.addEdge(edge: activity.edge!)
+                    arc.changeArcColor()
+                } else{
+                    let activity = TraceToActivity.getActivity(by: arc)
+                    let to = activity?.to
+                    let from = activity?.from
+                    to?.parentNode?.inArgs[to!.name!] = nil
+                    activity?.currentTrace = trace.uuid
+                    if arc.isInput{
+                        activity!.to = nil
+                        activity?.fulcrum = activity!.from
+                    }else{
+                        activity!.from = nil
+                        activity?.fulcrum = activity!.to
+                    }
+                    arc.removeEdge(edge: activity!.edge!)
+                    arc.redrawArc(with: -1)
+                    arc.changeArcColor()
+                    activity?.edge?.redrawEdge(from: trace.position, to: activity?.fulcrum?.globalPos ?? nil)
                 }
-                arc.removeEdge(edge: activity!.edge!)
-                arc.redrawArc(with: -1)
-                arc.changeArcColor()
-                activity?.edge?.redrawEdge(from: trace.position, to: activity?.fulcrum?.globalPos ?? nil)
             }
+            
         }
     }
     
@@ -180,7 +195,7 @@ class Graph2{
         if let activity = TraceToNode.getActivity(by: trace.uuid){
             self.moveNode(node: activity.node!, trace: trace)
         }
-        if !self.inCircle(center: position, point: trace.position, radius: 80.0){
+        if !self.inCircle(center: position, point: trace.position, radius: 60){
             if let activity = TraceToActivity.getActivity(by: trace.uuid) {
                 activity.edge?.redrawEdge(from: activity.fulcrum?.globalPos, to: trace.position)
             }

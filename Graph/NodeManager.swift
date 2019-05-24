@@ -23,7 +23,7 @@ class NodeManager{
             
             node.label?.text = "\(node.alias)copy\(self.copies[node.id!]!)"
             node.id = "\(node.id!)_copy\(self.copies[node.id!]!)"
-            
+            //node.playButton.name = node.id
             if var contentOfProj = FileHandler.shared.getJsonContent(of: FileHandler.shared.projectDataPath){
                 contentOfProj[node.id!] = node.json!
                
@@ -38,7 +38,7 @@ class NodeManager{
                 FileHandler.shared.writeJsonContent(data: contentOfProj, to: FileHandler.shared.copyProj)
             }
         }
-        
+        node.playButton.name = node.id
         NodeManager.nodeList.append(node)
         //node.arcManager?.scene = self.scene
         
@@ -57,6 +57,7 @@ class NodeManager{
     }
     
     class func removeNode(with id:String){
+        FileHandler.shared.removeFile(at: URL(fileURLWithPath: FileHandler.shared.resultFolderPath + "/\(id).json"))
         let node = NodeManager.getNode(with: id)
         if let input = node?.arcManager?.inputArcs, let output = node?.arcManager?.outputArcs{
             for arc in input+output{
