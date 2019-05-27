@@ -28,7 +28,7 @@ class Node: SKNode,MTKButtonDelegate {
     var filePicker:MTKFileManager = MTKFileManager()
     var keyboard:Numpad = Numpad()
     var playButton:MTKButton = MTKButton(size: CGSize(width: 30, height: 30),image:"fplay.png")
-    var base:SKShapeNode = SKShapeNode(circleOfRadius: 60)
+    var base:SKShapeNode = SKShapeNode(circleOfRadius: 90)
     
     override init() {
         super.init()
@@ -66,9 +66,9 @@ class Node: SKNode,MTKButtonDelegate {
         //var playButton = MTKButton(size: CGSize(width: 40, height: 40),image:"play.png")
         playButton.add(target: self, action: #selector(self.play(button:)))
         
-        playButton.position = CGPoint(x: 0, y: 35)
-        deleteButton.position = CGPoint(x: -35, y: 0)
-        addButton.position = CGPoint(x: 35, y: 0)
+        playButton.position = CGPoint(x: 0, y: 60)
+        deleteButton.position = CGPoint(x: -60, y: 0)
+        addButton.position = CGPoint(x: 60, y: 0)
         self.addChild(deleteButton)
         self.addChild(addButton)
         self.addChild(playButton)
@@ -99,16 +99,16 @@ class Node: SKNode,MTKButtonDelegate {
     func drawTitleLabel(text:String){
         self.label = SKLabelNode(text:text)//SKLabelNode(text: funcname["function"] as? String)
         label?.fontSize = 30
-//        self.addChild(label!)
-        label?.position = CGPoint(x:0,y:250)
+        self.addChild(label!)
+        label?.position = CGPoint(x:0,y:130)
     }
     
     @objc func play(button:MTKButton){
         button.set(size: CGSize(width: 20, height: 20), image:"fplay.png")
         let scr = ScriptRunner()
         scr.script(id:button.name!)
-//        let resultMaker = ResultVisualization()
-//        resultMaker.getResults()
+        let resultMaker = ResultVisualization()
+        resultMaker.getResults()
         print(self.inArgs)
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) { // Change `2.0` to the desired number of seconds.
             // Code you want to be delayed

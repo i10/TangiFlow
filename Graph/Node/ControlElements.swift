@@ -92,7 +92,7 @@ class ControlElements{
             print(index)
     
             print(parent!.position.y + CGFloat(60 + (index+1)*120))
-            textFields[index].setFrameOrigin(CGPoint(x:parent!.position.x-80,y:parent!.position.y + CGFloat(100 + index*70)))
+            textFields[index].setFrameOrigin(CGPoint(x:parent!.position.x-80,y:parent!.position.y + CGFloat(150 + index*70)))
         }
         var y = 150  + textFields.count * 70
         for index in 0..<sliders.count{
