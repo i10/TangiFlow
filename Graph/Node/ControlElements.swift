@@ -88,15 +88,27 @@ class ControlElements{
     
     func positionControls(){
         
+//        for index in 0..<textFields.count{
+//            print(index)
+//    
+//            print(parent!.position.y + CGFloat(60 + (index+1)*120))
+//            textFields[index].setFrameOrigin(CGPoint(x:parent!.position.x-80,y:parent!.position.y + CGFloat(150 + index*70)))
+//        }
+//        var y = 150  + textFields.count * 70
+//        for index in 0..<sliders.count{
+//            sliders[index].position = CGPoint(x: 0, y: y + 120*index)
+//        }
+        
+        
         for index in 0..<textFields.count{
             print(index)
-    
+            
             print(parent!.position.y + CGFloat(60 + (index+1)*120))
-            textFields[index].setFrameOrigin(CGPoint(x:parent!.position.x-80,y:parent!.position.y + CGFloat(150 + index*70)))
+            textFields[index].setFrameOrigin(CGPoint(x:parent!.position.x-80,y:parent!.position.y + CGFloat(200 + index*70)))
         }
-        var y = 150  + textFields.count * 70
+        var y = 220  + textFields.count * 70
         for index in 0..<sliders.count{
-            sliders[index].position = CGPoint(x: 0, y: y + 120*index)
+            sliders[index].position = CGPoint(x: 0, y: y + 80*index)
         }
     }
     
