@@ -66,7 +66,7 @@ class ControlElements{
             case "button":
                 self.button = MTKButton(size: CGSize(width: 30, height: 30), image:"ffolder.png" )
                 self.button?.name = control
-                self.button?.position = CGPoint(x: 0, y: -35)
+                self.button?.position = CGPoint(x: 0, y: -60)
                 parent!.addChild(button!)
                 self.button?.add(target: self, action: #selector(self.buttonPressed(button:)))
             default:

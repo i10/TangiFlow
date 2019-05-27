@@ -40,14 +40,18 @@ class ResultVisualization{
                     }else if data["type"].stringValue == "generic"{
                         resultNode = GenericTypeResultNode(data:data["data"].stringValue)
                     }
+                    node.crawl()
+                    node.status.removeFromParent()
                 } else {
                     resultNode = GenericTypeResultNode(data: data["data"].stringValue)
+                    node.changeBaseColor(color: .red)
                 }
                 if let result = resultNode, nil == node.controlElements?.button{
 
                     ResultVisualization.globalResultNodes.append(result)
                     result.position = CGPoint(x: 0, y: -350)
                     node.addChild(result)
+                    node.status.removeFromParent()
                 }
             //}
         }

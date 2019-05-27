@@ -29,7 +29,7 @@ class Node: SKNode,MTKButtonDelegate {
     var keyboard:Numpad = Numpad()
     var playButton:MTKButton = MTKButton(size: CGSize(width: 30, height: 30),image:"fplay.png")
     var base:SKShapeNode = SKShapeNode(circleOfRadius: 90)
-    
+    var status = SKLabelNode(text: "RUNNING")
     override init() {
         super.init()
         
@@ -48,6 +48,8 @@ class Node: SKNode,MTKButtonDelegate {
     
     convenience init(id:String,position:CGPoint,json:JSON,view:SKView) {
         self.init()
+        status.fontColor = .black
+        status.fontSize = 20
         self.zPosition = 5
         self.view = view
         self.position = position
@@ -100,10 +102,12 @@ class Node: SKNode,MTKButtonDelegate {
         self.label = SKLabelNode(text:text)//SKLabelNode(text: funcname["function"] as? String)
         label?.fontSize = 30
         self.addChild(label!)
-        label?.position = CGPoint(x:0,y:130)
+        label?.position = CGPoint(x:0,y:150)
     }
     
     @objc func play(button:MTKButton){
+        //self.crawl()
+        self.addChild(status)
         button.set(size: CGSize(width: 20, height: 20), image:"fplay.png")
         let scr = ScriptRunner()
         scr.script(id:button.name!)
@@ -119,5 +123,35 @@ class Node: SKNode,MTKButtonDelegate {
     
     func changeBaseColor(color:NSColor){
         self.base.fillColor = color
+    }
+    
+    func crawl(){
+        var checked:[Node] = [self]
+        var checking:[Node] = [self]
+        var result:[Node] = []
+//        for (_,value) in self.inArgs{
+//            if let node = NodeManager.getNode(with: value){
+//                checking.append(node)
+//                result.append(node)
+//                checked.append(node)
+//            }
+//
+//        }
+        while !checking.isEmpty{
+            var popped = checking.popLast()
+            for (_,value) in popped!.inArgs{
+                if let node = NodeManager.getNode(with: value){
+                    checking.append(node)
+                }
+            }
+            result.append(popped!)
+            checked.append(popped!)
+            checking = checking.filter{$0.id != popped?.id}
+        }
+        print("=============")
+        for item in result{
+            item.changeBaseColor(color: NSColor(calibratedRed: 144/255.0, green: 238.0/255.0, blue: 144/255.0, alpha: 1.0))
+        }
+        print("=============")
     }
 }

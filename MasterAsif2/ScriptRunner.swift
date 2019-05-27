@@ -23,7 +23,7 @@ class ScriptRunner{
             
         }
         task.launch()
-        task.waitUntilExit()
+        //task.waitUntilExit()
     }
     
     
