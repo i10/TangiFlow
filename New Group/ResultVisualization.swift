@@ -32,11 +32,16 @@ class ResultVisualization{
     func addResultNodes(item:URL,data:JSON){
         let lastIndex = item.lastPathComponent.lastIndex(of: ".")
         if let node = NodeManager.getNode(with: String(item.lastPathComponent[..<lastIndex!])){
+            print(node.name)
             var resultNode:SKNode?
             let error = data["error"].boolValue //{
                 if  !error {
                     if data["type"].stringValue == "image"{
-                        resultNode = ImageTypeResultNode(data: data)
+                        var val:CGFloat = 350.0
+                        if node.funcName == "stitch_verticaly" || node.funcName == "stitch_horizontaly"{
+                            val = 400.0
+                        }
+                        resultNode = ImageTypeResultNode(data: data,sizeValue: val)
                     }else if data["type"].stringValue == "generic"{
                         resultNode = GenericTypeResultNode(data:data["data"].stringValue)
                     }

@@ -26,7 +26,7 @@ class Node: SKNode,MTKButtonDelegate {
     var mainArgDicts:[String:JSON] = [:]
     var controledArgDicts:[String:String] = [:]
     var filePicker:MTKFileManager = MTKFileManager()
-    var keyboard:Numpad = Numpad()
+    var keyboard:Keyboard = Keyboard()
     var playButton:MTKButton = MTKButton(size: CGSize(width: 30, height: 30),image:"fplay.png")
     var base:SKShapeNode = SKShapeNode(circleOfRadius: 90)
     var status = SKLabelNode(text: "RUNNING")

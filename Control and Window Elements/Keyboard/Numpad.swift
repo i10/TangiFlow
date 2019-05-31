@@ -11,7 +11,7 @@ import SpriteKit
 import MultiTouchKitSwift
 
 class Numpad:SKNode, MTKButtonDelegate{
-    var activeTextInput:NSTextField?
+    var activeTextInput:NSTextView?
     var keys:[MTKButton] = []
     override init() {
         super.init()
@@ -22,7 +22,7 @@ class Numpad:SKNode, MTKButtonDelegate{
     }
     
     
-    convenience init(textField:NSTextField) {
+    convenience init(textField:NSTextView) {
         self.init()
         self.activeTextInput = textField
     }
@@ -54,22 +54,26 @@ class Numpad:SKNode, MTKButtonDelegate{
         
         switch button.titleLabel!.text {
             case "←":
-                var last = self.activeTextInput!.stringValue.count-1
-                self.activeTextInput!.stringValue = String(self.activeTextInput!.stringValue.dropLast())
+                var last = self.activeTextInput!.string.count-1
+                self.activeTextInput!.string = String(self.activeTextInput!.string.dropLast())
                 (self.activeTextInput as! CustomTextFields).parent?.changeBaseColor(color: NSColor(calibratedRed: 255.0/255.0, green: 230.0/255.0, blue: 77.0/255.0, alpha: 1.0))
             case "CONFIRM":
                 self.activeTextInput = nil
                 self.removeFromParent()
             default:
-                if (self.activeTextInput?.stringValue.count)! < 10 {
+                if (self.activeTextInput?.string.count)! < 140 {
                     (self.activeTextInput as! CustomTextFields).parent?.changeBaseColor(color: NSColor(calibratedRed: 255.0/255.0, green: 230.0/255.0, blue: 77.0/255.0, alpha: 1.0))
-                    let a = self.activeTextInput!.stringValue
+                    let a = self.activeTextInput!.string
                     let b =  button.titleLabel!.text!
                     
                     let c = a + b
                     let d: Float? = Float(c) ?? nil
                     if d != nil {
-                        self.activeTextInput!.stringValue = self.activeTextInput!.stringValue + button.titleLabel!.text!
+                        self.activeTextInput!.string = self.activeTextInput!.string + button.titleLabel!.text!
+//                        self.activeTextInput!.textStorage?.append(NSAttributedString(string: button.titleLabel!.text!))
+                        print("I AM TEXT")
+                        print(self.activeTextInput!.string)
+                        
                     } else {
                         print("provide proper float value")
                     }

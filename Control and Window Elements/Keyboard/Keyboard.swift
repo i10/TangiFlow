@@ -11,18 +11,18 @@ import SpriteKit
 import MultiTouchKitSwift
 class Keyboard:SKNode,MTKButtonDelegate{
     var capsLock:Bool = false
-    var activeTextInput:NSTextField?
+    var activeTextInput:NSTextView?
     var keys:[MTKButton] = []
     override init() {
         super.init()
-        var frame = SKShapeNode(rectOf: CGSize(width: 800, height: 365))
+        var frame = SKShapeNode(rectOf: CGSize(width: 800, height: 400))
         frame.fillColor = NSColor.white
         self.drawKeys()
         self.addChild(frame)
     }
     
     
-    convenience init(textField:NSTextField) {
+    convenience init(textField:NSTextView) {
         self.init()
         self.activeTextInput = textField
     }
@@ -34,13 +34,17 @@ class Keyboard:SKNode,MTKButtonDelegate{
         //print(button.titleLabel?.text)
         switch button.titleLabel!.text {
         case "Space":
-            self.activeTextInput!.stringValue = self.activeTextInput!.stringValue + " "
+            self.activeTextInput!.string = self.activeTextInput!.string + " "
         case "Ret":
+//            self.activeTextInput = nil
+//            self.removeFromParent()
+            self.activeTextInput!.string = self.activeTextInput!.string + "\n"
+        case "Close keyboard":
             self.activeTextInput = nil
             self.removeFromParent()
         case "Del":
-            var last = self.activeTextInput!.stringValue.count-1
-            self.activeTextInput!.stringValue = String(self.activeTextInput!.stringValue.dropLast())
+            var last = self.activeTextInput!.string.count-1
+            self.activeTextInput!.string = String(self.activeTextInput!.string.dropLast())
         case "Caps":
             self.capsLock = !self.capsLock
         case "123":
@@ -53,9 +57,9 @@ class Keyboard:SKNode,MTKButtonDelegate{
             self.drawKeys()
         default:
             if self.capsLock{
-                self.activeTextInput!.stringValue = self.activeTextInput!.stringValue + button.titleLabel!.text!.uppercased()
+                self.activeTextInput!.string = self.activeTextInput!.string + button.titleLabel!.text!.uppercased()
             }else{
-                self.activeTextInput!.stringValue = self.activeTextInput!.stringValue + button.titleLabel!.text!
+                self.activeTextInput!.string = self.activeTextInput!.string + button.titleLabel!.text!
                 
             }
         }
@@ -131,6 +135,13 @@ class Keyboard:SKNode,MTKButtonDelegate{
 //            testButton.add(target: self, action: #selector(self.buttonTapped(button:)))
 //            x = x + 3*70
 //        }
+        
+        
+        var button = MTKButton(size: CGSize(width: 550, height: keyHeight),label: "Close keyboard")
+        button.position = CGPoint(x: x-150, y: y - 80)
+        self.keys.append(button)
+        self.addChild(button)
+        button.add(target: self, action: #selector(self.buttonTapped(button:)))
     }
     
     

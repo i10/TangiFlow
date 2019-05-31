@@ -22,7 +22,8 @@ class ControlElements{
             switch json[control]["type"].stringValue{
             case "number":
                 let textFieldFrame = CGRect(origin: CGPoint(x:0,y:0), size: CGSize(width: 160, height: 60))
-                let textField = CustomTextFields(frame: textFieldFrame, id: control)
+                var textStorage = NSTextContainer(containerSize: CGSize(width: 160, height: 60))
+                let textField = CustomTextFields(frame: textFieldFrame, textContainer: textStorage ,id:control)
                 textField.parent = node
                 textField.type = "number"
                 textField.alignment = .right
@@ -35,21 +36,43 @@ class ControlElements{
                 //textField.setFrameOrigin(CGPoint(x:self.position.x-80,y:self.position.y + 60 + multiplier*60.0))
                 //multiplier-=1.0
                 textField.backgroundColor = NSColor.white
-                textField.placeholderString = json[control]["alias"].stringValue
+                //textField.placeHo = json[control]["alias"].stringValue
                 parent!.view?.addSubview(textField)
                 //view.addSubview(textField)
             case "text":
-                let textFieldFrame = CGRect(origin: CGPoint(x:0,y:0), size: CGSize(width: 160, height: 60))
-                let textField = CustomTextFields(frame: textFieldFrame, id: control)
-                textField.parent = node
-                textField.type = "text"
-                textField.backgroundColor = NSColor.red
-                self.textFields.append(textField)
-               //textField.setFrameOrigin(CGPoint(x:500,y:500))
-                //multiplier-=1.0
-                textField.backgroundColor = NSColor.white
-                textField.placeholderString = json[control]["alias"].stringValue
-                parent!.view?.addSubview(textField)
+                
+                var textStorage = NSTextStorage()
+                var layoutManager = NSLayoutManager()
+                textStorage.addLayoutManager(layoutManager)
+                var textContainer = NSTextContainer(containerSize: CGSize(width: 200, height: 80))
+                layoutManager.addTextContainer(textContainer)
+                var textView = CustomTextFields(frame: CGRect(origin: CGPoint(x:0,y:0), size: CGSize(width: 200, height: 80)), textContainer: textContainer,id:control)
+                textView.parent = node
+                textView.type = "text"
+                self.textFields.append(textView)
+                textView.isEditable = true
+                textView.isSelectable = true
+                parent!.view!.addSubview(textView)
+                
+                textView.textStorage?.append(NSAttributedString(string: "5"))
+                
+                
+                
+                
+//                
+//                let textFieldFrame = CGRect(origin: CGPoint(x:0,y:0), size: CGSize(width: 300, height: 300))
+//                var textStorage = NSTextContainer(containerSize: CGSize(width: 300, height: 300))
+//                let textField = CustomTextFields(frame: textFieldFrame, textContainer: textStorage ,id:control)
+//                textField.parent = node
+//                textField.textStorage?.append(NSAttributedString(string: "lskdjfdslf"))
+//                textField.type = "text"
+//                textField.backgroundColor = NSColor.red
+//                self.textFields.append(textField)
+//               //textField.setFrameOrigin(CGPoint(x:500,y:500))
+//                //multiplier-=1.0
+//                textField.backgroundColor = NSColor.white
+//               // textField.placeholderString = json[control]["alias"].stringValue
+//                parent!.view?.addSubview(textField)
             //view.addSubview(textField)
             case "slider":
                 let slider = Slider(min: CGFloat(json[control]["min"].floatValue),
@@ -116,7 +139,7 @@ class ControlElements{
     func retrieveJSON()->JSON{
         var json:JSON = [:]
         for item in textFields {
-            json[item.id!].string = item.stringValue
+            json[item.id!].string = item.string
         }
         for item in sliders{
             json[item.name!].string = String(item.currentValue)

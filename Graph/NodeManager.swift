@@ -59,6 +59,12 @@ class NodeManager{
     class func removeNode(with id:String){
         FileHandler.shared.removeFile(at: URL(fileURLWithPath: FileHandler.shared.resultFolderPath + "/\(id).json"))
         let node = NodeManager.getNode(with: id)
+        if let textFields = node?.controlElements?.textFields{
+            for item in textFields{
+                item.removeFromSuperview()
+            }
+        }
+        
         if let input = node?.arcManager?.inputArcs, let output = node?.arcManager?.outputArcs{
             for arc in input+output{
                 if !arc.edges.isEmpty{

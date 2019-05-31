@@ -61,20 +61,21 @@ class GameScene: MTKScene, MTKButtonDelegate {
                     
                 }
                 for textField in textFields{
-                    if textField.frame.origin.x < trace.position!.x && trace.position!.x < textField.frame.origin.x + 160 &&
-                        textField.frame.origin.y < trace.position!.y && trace.position!.y < textField.frame.origin.y + 60{
+                    if textField.frame.origin.x < trace.position!.x && trace.position!.x < textField.frame.origin.x + 200 &&
+                        textField.frame.origin.y < trace.position!.y && trace.position!.y < textField.frame.origin.y + 80{
 //                        print(textFererwerewrerewrwerwerwerwerwerwewererewield)
                       
-                        textField.isEnabled = true
+                       // textField.isEnabled = true
                         textField.isEditable = true
-                        textField.becomeFirstResponder()
+                        //textField.becomeFirstResponder()
+                        textField.window?.makeFirstResponder(textField)
                         //textField.stringValue = ""
                        // print(textField.stringValue)
 
                             textField.parent?.keyboard.removeFromParent()
                             textField.parent?.addChild(textField.parent!.keyboard)
                             textField.parent!.keyboard.drawKeys()
-                            textField.parent?.keyboard.position = CGPoint(x: 300, y: 0)
+                            textField.parent?.keyboard.position = CGPoint(x: 700, y: 300)
                             
                         textField.parent!.keyboard.activeTextInput = textField
                     }
