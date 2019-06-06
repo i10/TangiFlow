@@ -29,7 +29,7 @@ class Node: SKNode,MTKButtonDelegate {
     var filePicker:MTKFileManager = MTKFileManager()
     var keyboard:Keyboard = Keyboard()
     var playButton:MTKButton = MTKButton(size: CGSize(width: 30, height: 30),image:"fplay.png")
-    var base:SKShapeNode = SKShapeNode(circleOfRadius: 100)
+    var base:SKShapeNode = SKShapeNode(circleOfRadius: 60)
     var status = SKLabelNode(text: "RUNNING")
     override init() {
         super.init()

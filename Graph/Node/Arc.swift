@@ -19,7 +19,7 @@ class Arc:SKShapeNode{
                                  false:NSColor(calibratedRed: 144/255.0, green: 238.0/255.0, blue: 144/255.0, alpha: 1.0)]
     
     let outColors:[Bool:NSColor] = [true:NSColor(calibratedRed: 111.0/255.0, green: 195.0/255.0, blue: 223.0/255.0, alpha: 1.0),false:NSColor(calibratedRed: 144/255.0, green: 238/255.0, blue: 144/255.0, alpha: 1.0)]
-    var segmentRadius:CGFloat = 30
+    var segmentRadius:CGFloat = 16
     var angle:CGFloat?
     var radius:CGFloat?
     var localPos:CGPoint?
