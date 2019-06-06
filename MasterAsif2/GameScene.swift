@@ -7,6 +7,7 @@
 //
 
 import SpriteKit
+import SwiftyJSON
 
 import MultiTouchKitSwift
 class GameScene: MTKScene, MTKButtonDelegate {
@@ -28,6 +29,31 @@ class GameScene: MTKScene, MTKButtonDelegate {
         self.addChild(sideMenu)
         self.addChild(sideMenuRight)
         
+        // Place all required nodes here
+        // 1. Open and read restore.json
+        guard let restoreJSONPath = Bundle.main.path(forResource: "restore", ofType: "json") else { return }
+        
+        do {
+            let data = try Data(contentsOf: URL(fileURLWithPath: restoreJSONPath), options: .mappedIfSafe)
+            
+            let json = try JSON(data: data)
+            
+            for j in json {
+                let x = CGFloat(j.1["x"].floatValue)
+                let y = CGFloat(j.1["y"].floatValue)
+                
+                let point = CGPoint(x: x, y: y)
+                
+                let node = Node(id: j.0, position: point, json: j.1, view: self.view!)
+                (self.scene as! GameScene).graph?.addNode(node: node)
+
+            }
+        } catch {
+            print("Error: ", error.localizedDescription)
+        }
+        
+        
+        
         
     }
     override func setupScene() {
@@ -35,14 +61,9 @@ class GameScene: MTKScene, MTKButtonDelegate {
         FileHandler.shared.cleanContent(of:FileHandler.shared.resultFolderPath)
         graph = Graph2(scene: self)
         MTKHub.sharedHub.traceDelegate = self
-        
-       
-        
     }
     
     func preProcessTraceSet(traceSet: Set<MTKTrace>, node: SKNode, timestamp: TimeInterval) -> Set<MTKTrace> {
-        
-
         for trace in traceSet{
             if trace.state == MTKUtils.MTKTraceState.beginningTrace{
                 self.graph?.touchDown(trace: trace)
@@ -50,7 +71,7 @@ class GameScene: MTKScene, MTKButtonDelegate {
                 self.graph?.touchMove(trace: trace)
             }else{
                 self.graph?.touchUp(trace: trace)
-
+                print("Line: #74, File: GameScene ::: ", trace.position)
                 
                 let allNodes = NodeManager.nodeList
                 var textFields:[CustomTextFields] = []

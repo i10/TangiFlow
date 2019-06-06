@@ -19,7 +19,6 @@ class ProjectFilesManager{
                 
                 let data = try Data(contentsOf: URL(fileURLWithPath: jsonPath), options: .mappedIfSafe)
                 self.projectFileJson = try JSON(data:data)
-                print("hey")
 //                let jsonResult = try JSONSerialization.jsonObject(with: data, options: .mutableLeaves)
 //                if let jsonResult = jsonResult as? Dictionary<String, AnyObject> {
 //                    self.projectFileJson = jsonResult

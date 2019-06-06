@@ -1,12 +1,7 @@
 {
-  "config": {
-    "type": "image",
-    "tool_type":"pil"
-  },
-
   "PT-127.99.88": {
-      "x": "100.0",
-      "y": "100.0",
+      "x": "2608.0",
+      "y": "621.0",
       "alias": "Load image",
       "function": "image_source",
       "arguments": {
