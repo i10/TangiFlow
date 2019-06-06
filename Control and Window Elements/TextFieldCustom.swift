@@ -14,6 +14,7 @@ class CustomTextFields:NSTextView{
     var parent:Node? = nil
     override init(frame frameRect: NSRect, textContainer container: NSTextContainer?) {
         super.init(frame:frameRect,textContainer: container)
+        
     }
     
 //    convenience init(frame frameRect: NSRect, id:String) {
@@ -30,5 +31,6 @@ class CustomTextFields:NSTextView{
     convenience init(frame frameRect: NSRect, textContainer container: NSTextContainer?, id:String) {
         self.init(frame: frameRect, textContainer: container)
         self.id = id
+        self.setFont(NSFont(name: "Arial", size: 100)!, range: NSRange(location: 0, length:0))
     }
 }

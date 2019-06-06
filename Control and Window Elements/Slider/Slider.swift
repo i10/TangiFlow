@@ -1,6 +1,7 @@
 import Foundation
 import SpriteKit
 class Slider: SKNode {
+    var image:ImageTypeResultNode?
     var alias:String = ""
     var min:CGFloat = 0
     var max:CGFloat = 1
@@ -55,7 +56,7 @@ class Slider: SKNode {
         }
         print(self.values)
         print(self.pixelValues)
-        self.currentValue = "\(self.defaultVal+1)"
+        self.currentValue = "\(self.defaultVal)"
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -88,18 +89,28 @@ class Slider: SKNode {
     }
     
     func countValue(){
-        (self.parent as! Node).changeBaseColor(color: NSColor(calibratedRed: 255.0/255.0, green: 230.0/255.0, blue: 77.0/255.0, alpha: 1.0))
+        if let parent = self.parent as? Node {
+            if parent.funcName  != "image_source"{
+                parent.changeBaseColor(color: NSColor(calibratedRed: 255.0/255.0, green: 230.0/255.0, blue: 77.0/255.0, alpha: 1.0))
+                
+            }
+        }
+        
         let distance = abs(-80.0-button.position.x)/self.pixelsPerStep
         //self.currentValueLabel!.text = "\(value)"
         if self.isInt{
             self.currentValueLabel!.text = String( Int(round(min + distance)))
-            self.currentValue = String( Int(round(min + distance)+1))
+            self.currentValue = String( Int(round(min + distance)))
             
         } else{
             self.currentValueLabel!.text = String(format: "%.1f", min+distance)
-            self.currentValue = String(format: "%.1f", min+distance+1)
+            self.currentValue = String(format: "%.1f", min+distance)
         }
         
+        if let image = self.image{
+            (self.parent?.parent as! Node).zoomValue = CGFloat((currentValue as NSString).doubleValue )
+            image.reloadImage(zoom: CGFloat((currentValue as NSString).doubleValue ))
+        }
     }
     
     func countPosition() -> CGFloat{

@@ -29,7 +29,8 @@ class ControlElements{
                 textField.alignment = .right
                // textField.font?.se
                 //textField.font?.
-                textField.font = NSFont(name: "Arial", size: 25)
+                //textField.font = NSFont(name: "Arial", size: 35)
+//                textField.setFont(NSFont(name: "Arial", size: 35)!, range: NSRange(location: 0, length: 200))
                 
                 textField.backgroundColor = NSColor.red
                 self.textFields.append(textField)
@@ -54,7 +55,7 @@ class ControlElements{
                 textView.isSelectable = true
                 parent!.view!.addSubview(textView)
                 
-                textView.textStorage?.append(NSAttributedString(string: "5"))
+                //textView.textStorage?.append(NSAttributedString(string: "5"))
                 
                 
                 
@@ -89,9 +90,10 @@ class ControlElements{
             case "button":
                 self.button = MTKButton(size: CGSize(width: 30, height: 30), image:"ffolder.png" )
                 self.button?.name = control
-                self.button?.position = CGPoint(x: 0, y: -60)
+                self.button?.position = CGPoint(x: 0, y: -70)
                 parent!.addChild(button!)
                 self.button?.add(target: self, action: #selector(self.buttonPressed(button:)))
+                self.parent?.playButton.removeFromParent()
             default:
                 print("unknown")
             }
@@ -103,6 +105,7 @@ class ControlElements{
     
     @objc fileprivate func buttonPressed(button: MTKButton) {
         self.filePicker.removeFromParent()
+        self.filePicker.drawFolders()
         self.filePicker.node = self.parent
         filePicker.position = CGPoint(x: 0, y: -450)
         self.parent!.addChild(filePicker)
@@ -127,9 +130,9 @@ class ControlElements{
             print(index)
             
             print(parent!.position.y + CGFloat(60 + (index+1)*120))
-            textFields[index].setFrameOrigin(CGPoint(x:parent!.position.x-80,y:parent!.position.y + CGFloat(200 + index*70)))
+            textFields[index].setFrameOrigin(CGPoint(x:parent!.position.x-80,y:parent!.position.y + CGFloat(250 + index*70)))
         }
-        var y = 220  + textFields.count * 70
+        var y = 250  + textFields.count * 70
         for index in 0..<sliders.count{
             sliders[index].position = CGPoint(x: 0, y: y + 80*index)
         }
@@ -142,7 +145,7 @@ class ControlElements{
             json[item.id!].string = item.string
         }
         for item in sliders{
-            json[item.name!].string = String(item.currentValue)
+            json[item.name!].string = "\(CGFloat((item.currentValue as NSString).doubleValue) + 1.0)"
         }
         if let button = self.button {
             json[button.name!].string = parent?.sourceUrl

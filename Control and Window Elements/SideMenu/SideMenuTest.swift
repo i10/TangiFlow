@@ -220,7 +220,7 @@ class SideMenuTest:SKNode,MTKButtonDelegate{
         self.infoNode?.removeFromParent()
         self.infoNode = SKNode()
         let image = ImageTypeResultNode(data: self.tangibleData![button.parent!.name!]["info"])
-        
+        image.reloadImage(zoom: 1.5)
         var x:CGFloat = 0.0
         var y:CGFloat = 0.0
         if self.right{
@@ -229,7 +229,7 @@ class SideMenuTest:SKNode,MTKButtonDelegate{
         }else{ x = 370}
         y = (button.parent?.position.y)! + 50
         image.position = CGPoint(x: 0, y: 0)
-        self.infoNode?.position = CGPoint(x: x, y: y)
+        self.infoNode?.position = CGPoint(x: x-80, y: y)
         self.infoNode?.addChild(image)
         var close = MTKButton(size: CGSize(width: 20, height: 20), image: "close")
         close.set(color: NSColor.red)

@@ -37,11 +37,8 @@ class ResultVisualization{
             let error = data["error"].boolValue //{
                 if  !error {
                     if data["type"].stringValue == "image"{
-                        var val:CGFloat = 350.0
-                        if node.funcName == "stitch_verticaly" || node.funcName == "stitch_horizontaly"{
-                            val = 400.0
-                        }
-                        resultNode = ImageTypeResultNode(data: data,sizeValue: val)
+                        
+                        resultNode = ImageTypeResultNode(data: data)
                     }else if data["type"].stringValue == "generic"{
                         resultNode = GenericTypeResultNode(data:data["data"].stringValue)
                     }
@@ -54,8 +51,16 @@ class ResultVisualization{
                 if let result = resultNode, nil == node.controlElements?.button{
 
                     ResultVisualization.globalResultNodes.append(result)
-                    result.position = CGPoint(x: 0, y: -350)
+                    
                     node.addChild(result)
+                    
+                    if result is ImageTypeResultNode{
+                        
+                        (result as! ImageTypeResultNode).reloadImage(zoom: node.zoomValue)
+                        (result as! ImageTypeResultNode).setSlider()
+                    } else {
+                        result.position = CGPoint(x: 0, y: -350)
+                    }
                     node.status.removeFromParent()
                 }
             //}

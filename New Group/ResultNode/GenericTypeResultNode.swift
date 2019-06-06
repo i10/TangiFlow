@@ -17,7 +17,7 @@ class GenericTypeResultNode:SKShapeNode{
     }
     
     convenience init(data:String){
-        self.init(rectOf: CGSize(width: 200, height: 200))
+        self.init(rectOf: CGSize(width: 300, height: 200))
         self.position = CGPoint(x:80,y:0)
         self.fillColor = SKColor.red
         let titleLabel = SKLabelNode(text:"RESULT")

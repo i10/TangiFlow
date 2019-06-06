@@ -75,7 +75,7 @@ class GameScene: MTKScene, MTKButtonDelegate {
                             textField.parent?.keyboard.removeFromParent()
                             textField.parent?.addChild(textField.parent!.keyboard)
                             textField.parent!.keyboard.drawKeys()
-                            textField.parent?.keyboard.position = CGPoint(x: 700, y: 300)
+                            textField.parent?.keyboard.position = CGPoint(x: 600, y: 200)
                             
                         textField.parent!.keyboard.activeTextInput = textField
                     }

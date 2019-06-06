@@ -69,7 +69,7 @@ class Graph2{
 //            }
             
             for item in allNodes{
-                if self.inCircle(center: item.position, point: trace.position, radius: 90){
+                if self.inCircle(center: item.position, point: trace.position, radius: 100){
                     node = item as? Node
                 }
             }
@@ -89,7 +89,7 @@ class Graph2{
         var allArcs = scene.nodes(at:trace.position!).filter{$0 is Arc}
         if !allArcs.isEmpty{
             let arc = allArcs[0] as! Arc
-            if  self.inRing(center: arc.parentNode?.position, point: trace.position, radiusIn: 90, radiusOut: 120){
+            if  self.inRing(center: arc.parentNode?.position, point: trace.position, radiusIn: 100, radiusOut: 130){
                 if TraceToActivity.getActivity(by: arc) == nil {
                     let to:Arc? = arc.isInput ? arc:nil
                     let from:Arc? = arc.isInput ? nil:arc

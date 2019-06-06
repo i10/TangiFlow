@@ -4,7 +4,8 @@ import MultiTouchKitSwift
 import SwiftyJSON
 class Node: SKNode,MTKButtonDelegate {
     var controlElements:ControlElements?
-    
+    var zoomSlider:Slider?
+    var zoomValue:CGFloat = 1.0
     var view:SKView?
     var button:MTKButton?
     var inputArcNames:[String] = []
@@ -28,7 +29,7 @@ class Node: SKNode,MTKButtonDelegate {
     var filePicker:MTKFileManager = MTKFileManager()
     var keyboard:Keyboard = Keyboard()
     var playButton:MTKButton = MTKButton(size: CGSize(width: 30, height: 30),image:"fplay.png")
-    var base:SKShapeNode = SKShapeNode(circleOfRadius: 90)
+    var base:SKShapeNode = SKShapeNode(circleOfRadius: 100)
     var status = SKLabelNode(text: "RUNNING")
     override init() {
         super.init()
@@ -55,6 +56,7 @@ class Node: SKNode,MTKButtonDelegate {
         self.position = position
         self.id = id
         self.json = json
+        self.addChild(playButton)
         if json["arguments"]["controled_args"].count != 0 {
             self.controlElements = ControlElements(json: json["arguments"]["controled_args"],node:self)
         }
@@ -68,12 +70,12 @@ class Node: SKNode,MTKButtonDelegate {
         //var playButton = MTKButton(size: CGSize(width: 40, height: 40),image:"play.png")
         playButton.add(target: self, action: #selector(self.play(button:)))
         
-        playButton.position = CGPoint(x: 0, y: 60)
-        deleteButton.position = CGPoint(x: -60, y: 0)
-        addButton.position = CGPoint(x: 60, y: 0)
+        playButton.position = CGPoint(x: 0, y: 70)
+        deleteButton.position = CGPoint(x: -70, y: 0)
+        addButton.position = CGPoint(x: 70, y: 0)
         self.addChild(deleteButton)
         self.addChild(addButton)
-        self.addChild(playButton)
+        
         addButton.add(target: self, action: #selector(self.add(button:)))
         deleteButton.add(target: self, action: #selector(self.delete(button:)))
         self.arcManager = ArcManager(node:self,json:json)
@@ -102,7 +104,7 @@ class Node: SKNode,MTKButtonDelegate {
         self.label = SKLabelNode(text:text)//SKLabelNode(text: funcname["function"] as? String)
         label?.fontSize = 30
         self.addChild(label!)
-        label?.position = CGPoint(x:0,y:150)
+        label?.position = CGPoint(x:0,y:185)
     }
     
     @objc func play(button:MTKButton){

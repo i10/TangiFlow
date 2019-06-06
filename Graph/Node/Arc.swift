@@ -19,7 +19,7 @@ class Arc:SKShapeNode{
                                  false:NSColor(calibratedRed: 144/255.0, green: 238.0/255.0, blue: 144/255.0, alpha: 1.0)]
     
     let outColors:[Bool:NSColor] = [true:NSColor(calibratedRed: 111.0/255.0, green: 195.0/255.0, blue: 223.0/255.0, alpha: 1.0),false:NSColor(calibratedRed: 144/255.0, green: 238/255.0, blue: 144/255.0, alpha: 1.0)]
-    var segmentRadius:CGFloat = 20
+    var segmentRadius:CGFloat = 30
     var angle:CGFloat?
     var radius:CGFloat?
     var localPos:CGPoint?
@@ -180,7 +180,7 @@ class Arc:SKShapeNode{
         print("I AM WIDTH")
         print(label.frame.width)
         label.position = CoordinateConverter.polarToDecart(radius: self.radius! + 40, angle: angle+0.1)
-        var backgroundNode:SKShapeNode = SKShapeNode(rectOf: CGSize(width: label.frame.width+20, height:40) )
+        var backgroundNode:SKShapeNode = SKShapeNode(rectOf: CGSize(width: label.frame.width+35, height:40) )
         backgroundNode.fillColor = NSColor(calibratedRed: 111.0/255.0, green: 195.0/255.0, blue: 223.0/255.0, alpha: 0.5)
         backgroundNode.position.y = 5
         backgroundNode.position.x = -label.frame.width/2
