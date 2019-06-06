@@ -28,7 +28,7 @@ class Node: SKNode,MTKButtonDelegate {
     var controledArgDicts:[String:String] = [:]
     var filePicker:MTKFileManager = MTKFileManager()
     var keyboard:Keyboard = Keyboard()
-    var playButton:MTKButton = MTKButton(size: CGSize(width: 30, height: 30),image:"fplay.png")
+    var playButton: MTKButton = MTKButton(size: CGSize(width: 20, height: 20),image: "playGlyph")
     var base:SKShapeNode = SKShapeNode(circleOfRadius: 60)
     var status = SKLabelNode(text: "RUNNING")
     override init() {
@@ -65,14 +65,13 @@ class Node: SKNode,MTKButtonDelegate {
         self.funcName = json["function"].stringValue
         self.alias = json["alias"].stringValue
         self.drawTitleLabel(text: json["alias"].stringValue)
-        var addButton = MTKButton(size: CGSize(width: 30, height: 30), image:"fbranch.png")
-        var deleteButton = MTKButton(size: CGSize(width: 30, height: 30), image:"ftrash.png")
-        //var playButton = MTKButton(size: CGSize(width: 40, height: 40),image:"play.png")
+        let addButton = MTKButton(size: CGSize(width: 20, height: 20), image:"branchGlyph")
+        let deleteButton = MTKButton(size: CGSize(width: 20, height: 20), image:"trashGlyph")
         playButton.add(target: self, action: #selector(self.play(button:)))
         
-        playButton.position = CGPoint(x: 0, y: 70)
-        deleteButton.position = CGPoint(x: -70, y: 0)
-        addButton.position = CGPoint(x: 70, y: 0)
+        playButton.position = CGPoint(x: 0, y: 110)
+        deleteButton.position = CGPoint(x: -110, y: 0)
+        addButton.position = CGPoint(x: 110, y: 0)
         self.addChild(deleteButton)
         self.addChild(addButton)
         

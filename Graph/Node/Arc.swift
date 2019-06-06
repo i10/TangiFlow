@@ -57,14 +57,12 @@ class Arc:SKShapeNode{
         self.drawArc(angle: angle, radius: radius, isInput: isInput, rotation: rotation)
         self.position = CGPoint(x: 0, y: 0)
         if isInput{
-            self.lineWidth = 4
-            self.strokeColor = .black
             self.fillColor = inColors[self.canAdd]!
         } else {
-            self.strokeColor = outColors[self.canAdd]!
             self.fillColor = outColors[self.canAdd]!
         }
         
+        self.strokeColor = outColors[self.canAdd]!
         self.lineWidth = 1
         self.zRotation = rotation
         self.zPosition = -1
