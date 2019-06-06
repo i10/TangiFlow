@@ -16,7 +16,7 @@ class FileHandler{
         //Code Process
         print("Location granted")
     }
-    var projectDataPath =  "/Users/ppi/Documents/Code/MasterAsifPythonBackEnd/Files/myproj.json"
+    var projectDataPath =  "/Users/ppi/Documents/Code/MasterAsif/RestoreJSON/restore.json"
     var graphDataPath = "/Users/ppi/Documents/Code/MasterAsifPythonBackEnd/Files/graph.json"
     var resultFolderPath = "/Users/ppi/Documents/Code/MasterAsifPythonBackEnd/Files/Result"
     var imagesFolderPath = "/Users/ppi/Documents/Code/MasterAsifPythonBackEnd/Files/Images"
@@ -49,16 +49,15 @@ class FileHandler{
         }catch{ print("Error while deleting file: \(error.localizedDescription)") }
     }
     
-    func getJsonContent(of path:String) -> JSON?{
-        do{
+    func getJsonContent(of path:String) -> JSON? {
+        do {
             let data = try Data(contentsOf: URL(fileURLWithPath: path), options: .mappedIfSafe)
-            let json = try JSON(data:data)
+            let json = try JSON(data: data)
+            
             return json
-//            let jsonResult = try JSONSerialization.jsonObject(with: data, options: .mutableLeaves)
-//            if let jsonResult = jsonResult as? Dictionary<String, AnyObject> {
-//                return jsonResult
-//            }
-        }catch{print("Error while getting json: \(error.localizedDescription)")}
+        } catch{
+            print("Error while getting json: \(error.localizedDescription)")
+        }
         return nil
     }
     func writeJsonContent(data:JSON,to path:String){

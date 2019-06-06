@@ -1,0 +1,19 @@
+{
+  "config": {
+    "type": "image",
+    "tool_type":"pil"
+  },
+
+  "PT-127.99.88": {
+      "x": "100.0",
+      "y": "100.0",
+      "alias": "Load image",
+      "function": "image_source",
+      "arguments": {
+        "main_args": {},
+        "controled_args": {
+            "controled_value":{"type":"button","alias":"Load image"}
+        }
+      }
+    }
+}

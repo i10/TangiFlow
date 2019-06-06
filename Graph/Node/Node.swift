@@ -65,6 +65,7 @@ class Node: SKNode,MTKButtonDelegate {
         self.funcName = json["function"].stringValue
         self.alias = json["alias"].stringValue
         self.drawTitleLabel(text: json["alias"].stringValue)
+        self.position = CGPoint(x: CGFloat(json["x"].floatValue), y: CGFloat(json["y"].floatValue))
         let addButton = MTKButton(size: CGSize(width: 20, height: 20), image:"branchGlyph")
         let deleteButton = MTKButton(size: CGSize(width: 20, height: 20), image:"trashGlyph")
         playButton.add(target: self, action: #selector(self.play(button:)))
