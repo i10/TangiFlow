@@ -88,9 +88,9 @@ class ControlElements{
                 
                
             case "button":
-                self.button = MTKButton(size: CGSize(width: 30, height: 30), image:"ffolder.png" )
+                self.button = MTKButton(size: CGSize(width: 20, height: 20), image:"folderGlyph" )
                 self.button?.name = control
-                self.button?.position = CGPoint(x: 0, y: -70)
+                self.button?.position = CGPoint(x: 0, y: -110)
                 parent!.addChild(button!)
                 self.button?.add(target: self, action: #selector(self.buttonPressed(button:)))
                 self.parent?.playButton.removeFromParent()

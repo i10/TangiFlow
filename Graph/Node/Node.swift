@@ -101,10 +101,15 @@ class Node: SKNode,MTKButtonDelegate {
     }
     
     func drawTitleLabel(text:String){
-        self.label = SKLabelNode(text:text)//SKLabelNode(text: funcname["function"] as? String)
-        label?.fontSize = 30
+        self.label = SKLabelNode(text:text)
+        label?.fontSize = 20
         self.addChild(label!)
-        label?.position = CGPoint(x:0,y:185)
+        
+        if self.mainArgDicts.keys.count > 0 {
+            label?.position = CGPoint(x: 0, y: -120)
+        } else {
+            label?.position = CGPoint(x: 0, y: 100)
+        }
     }
     
     @objc func play(button:MTKButton){

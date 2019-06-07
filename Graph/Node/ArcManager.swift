@@ -49,7 +49,6 @@ class ArcManager:MTKButtonDelegate{
             self.node?.addChild(section)
             self.inputArcs.append(section)
             section.alias = self.node?.mainArgDicts[section.name!]?.stringValue ?? ""
-            section.drawLabel( angle: section.polarAngle)
         }
         
     }

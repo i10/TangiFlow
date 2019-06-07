@@ -6,8 +6,8 @@ class Slider: SKNode {
     var min:CGFloat = 0
     var max:CGFloat = 1
     var step:CGFloat = 0.1
-    var bar:SKShapeNode = SKShapeNode(rectOf: CGSize(width: 200, height: 20))
-    var button:SKShapeNode = SKShapeNode(rectOf: CGSize(width: 40, height: 40))
+    var bar:SKShapeNode = SKShapeNode(rectOf: CGSize(width: 200, height: 2))
+    var button:SKShapeNode = SKShapeNode(rectOf: CGSize(width: 20, height: 20))
     var currentValueLabel:SKLabelNode?
     var currentValue:String = ""
     var values:[CGFloat] = []
@@ -66,11 +66,13 @@ class Slider: SKNode {
     
     func drawBar(){
         self.bar.fillColor = SKColor.gray
+        self.bar.position.y = -100.0
         self.addChild(self.bar)
     }
     
     func drawSliderButton(){
         self.currentValueLabel = SKLabelNode(text: "\(self.defaultVal)")
+        self.currentValueLabel?.fontSize = 24.0
         self.currentValueLabel!.position = CGPoint(x: 0, y: 30)
         self.button.position = CGPoint(x: self.countPosition(), y: 0)
         self.button.addChild(self.currentValueLabel!)
@@ -82,8 +84,10 @@ class Slider: SKNode {
     func drawSideLabels(){
         let leftLabel:SKLabelNode = SKLabelNode(text: "\(self.min)")
         let rightLabel:SKLabelNode = SKLabelNode(text: "\(self.max)")
-        leftLabel.position = CGPoint(x: -100 - leftLabel.frame.width, y: -13)
-        rightLabel.position = CGPoint(x:100 + rightLabel.frame.width/1.5,y:-13)
+        leftLabel.position = CGPoint(x: -100 - leftLabel.frame.width, y: -113)
+        rightLabel.position = CGPoint(x:100 + rightLabel.frame.width/1.5,y:-113)
+        leftLabel.fontSize = 24.0
+        rightLabel.fontSize = 24.0
         self.addChild(leftLabel)
         self.addChild(rightLabel)
     }
@@ -106,7 +110,7 @@ class Slider: SKNode {
             self.currentValueLabel!.text = String(format: "%.1f", min+distance)
             self.currentValue = String(format: "%.1f", min+distance)
         }
-        
+                
         if let image = self.image{
             (self.parent?.parent as! Node).zoomValue = CGFloat((currentValue as NSString).doubleValue )
             image.reloadImage(zoom: CGFloat((currentValue as NSString).doubleValue ))

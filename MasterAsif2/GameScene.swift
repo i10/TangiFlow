@@ -21,13 +21,13 @@ class GameScene: MTKScene, MTKButtonDelegate {
         graph = Graph2(scene: self)
         self.projectManager = ProjectFilesManager()
         self.projectManager?.openJson()
-        let projectJson = self.projectManager?.projectFileJson
-        var sideMenu = SideMenuTest(json: projectJson ?? [:],view:view,scene:self)
-        sideMenu.right = false
-        var sideMenuRight = SideMenuTest(json: projectJson ?? [:],view:view,scene:self)
-        sideMenuRight.position = CGPoint(x:self.size.width - 180,y:550)
-        self.addChild(sideMenu)
-        self.addChild(sideMenuRight)
+//        let projectJson = self.projectManager?.projectFileJson
+//        var sideMenu = SideMenuTest(json: projectJson ?? [:],view:view,scene:self)
+//        sideMenu.right = false
+//        var sideMenuRight = SideMenuTest(json: projectJson ?? [:],view:view,scene:self)
+//        sideMenuRight.position = CGPoint(x:self.size.width - 180,y:550)
+//        self.addChild(sideMenu)
+//        self.addChild(sideMenuRight)
         
         // Place all required nodes here
         // 1. Open and read restore.json
