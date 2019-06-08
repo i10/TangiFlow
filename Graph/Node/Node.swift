@@ -89,12 +89,21 @@ class Node: SKNode,MTKButtonDelegate {
         assignButton.add(target: self, action: #selector(self.assignButtonTapped(_:)))
         self.addChild(assignButton)
         
+        let disconnectButton = MTKButton(size: CGSize(width: 20.0, height: 20.0), image: "disconnectGlyph")
+        disconnectButton.position = CGPoint(x: -84.0, y: -70.0)
+        disconnectButton.add(target: self, action: #selector(self.disconnectButtonTapped(_:)))
+        self.addChild(disconnectButton)
+        
         self.arcManager?.drawArcs()
         self.drawBase()
     }
     
     @objc fileprivate func assignButtonTapped(_ sender: MTKButton) {
         print("Assign Button Tapped")
+    }
+    
+    @objc fileprivate func disconnectButtonTapped(_ sender: MTKButton) {
+        print("Disconnect Button Tapped")
     }
     
     required init?(coder aDecoder: NSCoder) {
