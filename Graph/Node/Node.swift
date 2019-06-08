@@ -113,7 +113,6 @@ class Node: SKNode,MTKButtonDelegate {
     }
     
     @objc func play(button:MTKButton){
-        //self.crawl()
         self.addChild(status)
         button.set(size: CGSize(width: 20, height: 20), image:"fplay.png")
         let scr = ScriptRunner()

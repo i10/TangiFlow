@@ -57,8 +57,9 @@ class ResultVisualization{
                         
                         (result as! ImageTypeResultNode).reloadImage(zoom: node.zoomValue)
                         (result as! ImageTypeResultNode).setSlider()
+                        result.position = CGPoint(x: 0, y: -220)
                     } else {
-                        result.position = CGPoint(x: 0, y: -350)
+                        result.position = CGPoint(x: 0, y: -220)
                     }
                     node.status.removeFromParent()
                 }
