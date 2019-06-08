@@ -71,7 +71,7 @@ class Node: SKNode,MTKButtonDelegate {
         playButton.add(target: self, action: #selector(self.play(button:)))
         
         playButton.position = CGPoint(x: 0, y: 110)
-        deleteButton.position = CGPoint(x: -110, y: 0)
+        deleteButton.position = CGPoint(x: -84, y: 70)
         addButton.position = CGPoint(x: 110, y: 0)
         self.addChild(deleteButton)
         self.addChild(addButton)
@@ -83,12 +83,19 @@ class Node: SKNode,MTKButtonDelegate {
             self.arcManager?.inputArcNames = Array((args["main_args"]?.dictionaryValue.keys)!)
             self.inputArcNames = Array((args["main_args"]?.dictionaryValue.keys)!)
         }
+        
+        let assignButton = MTKButton(size: CGSize(width: 20.0, height: 20.0), image: "assignGlyph")
+        assignButton.position = CGPoint(x: -110.0, y: 0.0)
+        assignButton.add(target: self, action: #selector(self.assignButtonTapped(_:)))
+        self.addChild(assignButton)
+        
         self.arcManager?.drawArcs()
         self.drawBase()
-       
     }
     
-
+    @objc fileprivate func assignButtonTapped(_ sender: MTKButton) {
+        print("Assign Button Tapped")
+    }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
