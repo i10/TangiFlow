@@ -1,7 +1,7 @@
 {
     "PT-127.99.01": {
-        "x": "284.0",
-        "y": "1062.0",
+        "x": "2955.0",
+        "y": "411.0",
         "alias": "Load image",
         "function": "image_source",
         "arguments": {

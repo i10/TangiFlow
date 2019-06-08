@@ -15,7 +15,8 @@ class MTKFileManager:SKNode,MTKButtonDelegate{
     override init() {
         super.init()
         self.zPosition = 10
-        var frame = SKShapeNode(rectOf: CGSize(width: 900, height: 500))
+        var frame = SKShapeNode(rectOf: CGSize(width: 600, height: 300))
+        frame.position.y = 160.0
         frame.fillColor = SKColor.gray
         var close = MTKButton(size: CGSize(width: 100, height: 40), label: "Close")
         close.add(target: self, action: #selector(self.close(button:)))
@@ -78,15 +79,16 @@ class MTKFileManager:SKNode,MTKButtonDelegate{
        
         for index in 0 ..< images.count{
             let i = index
-            let x = -300 + (i%3)*300
-            let y = 140 - (i/3)*280
+            let x = -200 + (i%3)*300
+            let y = 240 - (i/3)*280
            // self.position = CGPoint.zero
-            let button = MTKButton(size: CGSize(width: 200, height: 200), image: "ffolder.png")
+            let button = MTKButton(size: CGSize(width: 100, height: 100), image: "ffolder.png")
             self.folders.append(button)
             button.name = images[index].path
             let label = SKLabelNode(text: images[index].lastPathComponent)
             button.addChild(label)
-            label.position.y = -140
+            label.position.y = -70
+            label.fontSize = 21.0
             self.addChild(button)
             button.position = CGPoint(x: x, y: y)
             button.add(target: self, action: #selector(self.buttonTapped(button:)))
@@ -107,8 +109,8 @@ class MTKFileManager:SKNode,MTKButtonDelegate{
         for index in 0 ..< self.chuncked[self.page].count{
             //if self.chuncked[self.page][index].lastPathComponent != ".DS_Store"{
             let i = index
-            let x = -300 + (i%3)*300
-            let y = 180 - (i/3)*220
+            let x = -200 + (i%3)*200
+            let y = 220 - (i/3)*120
                 var buttonHeight = 0
                 var buttonWidth = 0
                 let imageFile = NSImage(byReferencing: URL(fileURLWithPath: self.chuncked[self.page][index].path))
@@ -116,11 +118,11 @@ class MTKFileManager:SKNode,MTKButtonDelegate{
                 //self.position = CGPoint.zero
                 var factor = imageFile.size.height/imageFile.size.width
            
-                if imageFile.size.width > 200 || imageFile.size.height > 200{
+                if imageFile.size.width > 140 || imageFile.size.height > 140{
                     
                     if imageFile.size.width > imageFile.size.height {
                         
-                        var button = MTKButton(size: CGSize(width: 200, height: 200*factor), image: self.chuncked[self.page][index].path)
+                        var button = MTKButton(size: CGSize(width: 140, height: 140*factor), image: self.chuncked[self.page][index].path)
                         self.files.append(button)
                         button.name = self.chuncked[self.page][index].path
                         self.addChild(button)
@@ -130,7 +132,7 @@ class MTKFileManager:SKNode,MTKButtonDelegate{
                         
                     } else {
                         
-                        var button = MTKButton(size: CGSize(width: 200/factor, height: 200), image: self.chuncked[self.page][index].path)
+                        var button = MTKButton(size: CGSize(width: 140/factor, height: 140), image: self.chuncked[self.page][index].path)
                         self.files.append(button)
                         button.name = self.chuncked[self.page][index].path
                         self.addChild(button)
@@ -142,7 +144,7 @@ class MTKFileManager:SKNode,MTKButtonDelegate{
                     
                 }else{
                     
-                    var button = MTKButton(size: CGSize(width: 200, height: 200), image: self.chuncked[self.page][index].path)
+                    var button = MTKButton(size: CGSize(width: 140, height: 140), image: self.chuncked[self.page][index].path)
                     self.files.append(button)
                     button.name = self.chuncked[self.page][index].path
                     self.addChild(button)
