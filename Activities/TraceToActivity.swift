@@ -34,7 +34,7 @@ class TraceToActivity{
     }
     
     class func getActivity(by id:String) -> TraceToActivity?{
-        let activities = TraceToActivity.activityList.filter{$0.id == id && ($0.from?.id == id || $0.to?.id == id)}
+        let activities = TraceToActivity.activityList.filter{$0.id == id}
         if activities.isEmpty{return nil}
         return activities[0]
     }

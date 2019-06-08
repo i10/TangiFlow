@@ -37,6 +37,15 @@ class Edge:SKShapeNode{
         }
     }
     
+    func redrawEdge(on scene: SKScene, from:CGPoint?,to:CGPoint?){
+        if let from = from, let to = to{
+            self.removeFromParent()
+            self.pathToDraw  = CGMutablePath()
+            self.drawLineBasic(from: from, to: to)
+            scene.addChild(self)
+        }
+    }
+    
     func drawLineBasic(from:CGPoint,to:CGPoint){
         self.path = pathToDraw
         self.fillColor = NSColor.white

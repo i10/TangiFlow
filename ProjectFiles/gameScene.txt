@@ -15,21 +15,21 @@ class GameScene: MTKScene, MTKButtonDelegate {
     var traceCall:[Int:Int] = [:]
     var projectManager:ProjectFilesManager?
 
-    
+
     fileprivate func setEdge(from fromNode: Node, to toNode: Node) {
         guard let fromNodeArc = fromNode.arcManager?.outputArcs.first, let toNodeArc = toNode.arcManager?.inputArcs.first else { return }
-        
+
         let edge = Edge.init(from: fromNodeArc.globalPos!, to: toNodeArc.globalPos!)
         fromNode.arcManager!.outputArcs.first!.addEdge(edge: edge)
         fromNodeArc.addEdge(edge: edge)
         toNodeArc.addEdge(edge: edge)
-        
+
         let trace = TraceToActivity.init(from: fromNodeArc, to: toNodeArc)
         trace.edge = edge
         if let activity = TraceToActivity.getActivity(by: trace.id!) {
             activity.edge?.redrawEdge(on: scene!, from: fromNodeArc.globalPos!, to: toNodeArc.globalPos!)
         }
-        
+
         // to
         if fromNodeArc.parentNode != toNodeArc.parentNode && fromNodeArc.isInput != toNodeArc.isInput {
             toNodeArc.parentNode?.inArgs[toNodeArc.name!] = fromNodeArc.parentNode?.id
@@ -44,16 +44,16 @@ class GameScene: MTKScene, MTKButtonDelegate {
             toNodeArc.changeArcColor()
             toNodeArc.redrawArc(with: 1)
         }
-        
+
         // from
         fromNodeArc.changeArcColor()
         fromNodeArc.isInput = false
         self.setActivity(activity: trace, trace: MTKTrace.init(), to: toNodeArc, from: fromNodeArc, arc: fromNodeArc)
         EdgeManager().addEdge(edge: trace.edge!)
         fromNodeArc.redrawArc(with: 1)
-//        fromNodeArc.addEdge(edge: trace.edge!)
+        fromNodeArc.addEdge(edge: trace.edge!)
     }
-    
+
     override func didMove(to view: SKView) {
         self.view?.ignoresSiblingOrder = true
         graph = Graph2(scene: self)
@@ -66,142 +66,136 @@ class GameScene: MTKScene, MTKButtonDelegate {
 //        sideMenuRight.position = CGPoint(x:self.size.width - 180,y:550)
 //        self.addChild(sideMenu)
 //        self.addChild(sideMenuRight)
-        
+
         // Place all required nodes here
         // 1. Open and read restore.json
         var json: JSON!
         guard let restoreJSONPath = Bundle.main.path(forResource: "restore", ofType: "json") else { return }
-        
+
         do {
             let data = try Data(contentsOf: URL(fileURLWithPath: restoreJSONPath), options: .mappedIfSafe)
-            
+
             json = try JSON(data: data)
-            
+
             for j in json {
                 let x = CGFloat(j.1["x"].floatValue)
                 let y = CGFloat(j.1["y"].floatValue)
-                
+
                 let point = CGPoint(x: x, y: y)
-                
+
                 let node = Node(id: j.0, position: point, json: j.1, view: self.view!)
                 (self.scene as! GameScene).graph?.addNode(node: node)
             }
         } catch {
             print("Error: ", error.localizedDescription)
         }
-        
-        
-        
+
+
+
         guard let graphJSONPath = Bundle.main.path(forResource: "graph", ofType: "json") else { return }
-        
+
         do {
             let data = try Data(contentsOf: URL(fileURLWithPath: graphJSONPath), options: .mappedIfSafe)
-            
+
             let json2 = try JSON(data: data)
-            
+
             for j in json2["graph"] {
                 let title = j.0
                 let jsonPart = j.1
-                
+
                 if jsonPart.count > 0 {
                     let fromX = CGFloat(json[title]["x"].floatValue)
                     let fromY = CGFloat(json[title]["y"].floatValue)
-                    
+                    let fromPos = CGPoint(x: fromX, y: fromY)
+
+                    let toX = CGFloat(jsonPart[title]["x"].floatValue)
+                    let toY = CGFloat(jsonPart[title]["y"].floatValue)
+                    let toPos = CGPoint(x: toX, y: toY)
                     let toTitle = jsonPart.first!.1.stringValue
-                    let toX = CGFloat(json[toTitle]["x"].floatValue)
-                    let toY = CGFloat(json[toTitle]["y"].floatValue)
-                    
-                    let fromNode = scene?.nodes(at: CGPoint(x: fromX, y: fromY))[1] as! Node
-//                    let fromNodeArc = fromNode.arcManager!.outputArcs.first!
-                    let toNode = scene?.nodes(at: CGPoint(x: toX, y: toY))[1] as! Node
-//                    let toNodeArc = toNode.arcManager!.inputArcs.first!
-                    
-//                    let edge = Edge.init(from: fromNode.arcManager!.outputArcs.first!.globalPos!, to: toNode.arcManager!.inputArcs.first!.globalPos!)
-//                    fromNode.arcManager!.outputArcs.first!.addEdge(edge: edge)
-//                    fromNodeArc.addEdge(edge: edge)
-//                    toNodeArc.addEdge(edge: edge)
-                    
-//                    let fromNode = Node.init(id: title, position: fromPos, json: json[title], view: self.view!)
-//                    let toNode = Node.init(id: toTitle, position: toPos, json: json[toTitle], view: self.view!)
+
+                    let fromNode = Node.init(id: title, position: fromPos, json: json[title], view: self.view!)
+                    let toNode = Node.init(id: toTitle, position: toPos, json: json[toTitle], view: self.view!)
                     setEdge(from: fromNode, to: toNode)
                 }
             }
         } catch {
             print("Error: ", error.localizedDescription)
         }
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     }
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+
+
+
+
+
+
+
+
+
+
+
     func setActivity(activity:TraceToActivity,trace:MTKTrace,to:Arc?,from:Arc?,arc:Arc){
         activity.currentTrace = trace.uuid
-        activity.edge = Edge(from: CGPoint.zero, to: CGPoint.zero)
+//        activity.edge = Edge(from: CGPoint.zero, to: CGPoint.zero)
         activity.edge!.zPosition = -2
-        activity.edge?.to = to
-        activity.edge?.from = from
+        activity.edge!.to = to
+        activity.edge!.from = from
         activity.fulcrum = arc
     }
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+
+
+
+
+
+
+
+
+
+
     override func setupScene() {
         FileHandler.shared.cleanContent(of:FileHandler.shared.imagesFolderPath)
         FileHandler.shared.cleanContent(of:FileHandler.shared.resultFolderPath)
         graph = Graph2(scene: self)
         MTKHub.sharedHub.traceDelegate = self
     }
-    
+
     func preProcessTraceSet(traceSet: Set<MTKTrace>, node: SKNode, timestamp: TimeInterval) -> Set<MTKTrace> {
         for trace in traceSet{
             if trace.state == MTKUtils.MTKTraceState.beginningTrace{
                 self.graph?.touchDown(trace: trace)
             }else if trace.state == MTKUtils.MTKTraceState.movingTrace{
+                guard let node = self.nodes(at: trace.position!).filter({ $0 is Node }).first else { return [] }
+                print(node)
                 self.graph?.touchMove(trace: trace)
             }else{
                 self.graph?.touchUp(trace: trace)
                 print("Line: #74, File: GameScene ::: ", trace.position)
-                
+
                 let allNodes = NodeManager.nodeList
                 var textFields:[CustomTextFields] = []
                 for node in allNodes{
                     if let controlElements = node.controlElements {
                         textFields += textFields + controlElements.textFields
                     }
-                    
+
                 }
                 for textField in textFields{
                     if textField.frame.origin.x < trace.position!.x && trace.position!.x < textField.frame.origin.x + 200 &&
                         textField.frame.origin.y < trace.position!.y && trace.position!.y < textField.frame.origin.y + 80{
-                      
+
                        // textField.isEnabled = true
                         textField.isEditable = true
                         //textField.becomeFirstResponder()
@@ -213,33 +207,31 @@ class GameScene: MTKScene, MTKButtonDelegate {
                             textField.parent?.addChild(textField.parent!.keyboard)
                             textField.parent!.keyboard.drawKeys()
                             textField.parent?.keyboard.position = CGPoint(x: 600, y: 200)
-                            
+
                         textField.parent!.keyboard.activeTextInput = textField
                     }
                 }
                 //print(tf)
             }
                 self.nodes(at: trace.position!)
-                
+
         }
-        
+
         return traceSet
     }
-    
 
-    
+
+
     override func update(_ currentTime: TimeInterval) {
         super.update(currentTime)
-        
+
     }
-   
+
 //    @objc func run(button:MTKButton,id:String){
 //        let scr = ScriptRunner()
 //        scr.script(id:id)
 //        let resultMaker = ResultVisualization()
 //        resultMaker.getResults()
 //    }
-    
+
 }
-
-

@@ -123,7 +123,6 @@ class Graph2{
     
     
     func touchUp(trace:MTKTrace) {
-        //TraceToNode.removeActivity(id: trace.uuid)
         guard let scene = self.scene as? GameScene else {return}
         guard let activity = TraceToActivity.getActivity(by: trace.uuid) else{return}
         var allNodes = scene.nodes(at: trace.position!).filter{!($0 is Edge) && ($0 is Arc)}
@@ -194,11 +193,11 @@ class Graph2{
         if let activity = TraceToNode.getActivity(by: trace.uuid){
             self.moveNode(node: activity.node!, trace: trace)
         }
-        if !self.inCircle(center: position, point: trace.position, radius: 60){
+//        if !self.inCircle(center: position, point: trace.position, radius: 60){
             if let activity = TraceToActivity.getActivity(by: trace.uuid) {
                 activity.edge?.redrawEdge(from: activity.fulcrum?.globalPos, to: trace.position)
             }
-        }
+//        }
     }
 
     
