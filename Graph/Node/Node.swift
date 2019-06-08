@@ -120,7 +120,6 @@ class Node: SKNode,MTKButtonDelegate {
         scr.script(id:button.name!)
         let resultMaker = ResultVisualization()
         resultMaker.getResults()
-        print(self.inArgs)
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) { // Change `2.0` to the desired number of seconds.
             // Code you want to be delayed
             button.set(size: CGSize(width: 30, height: 30), image:"fplay.png")
@@ -155,10 +154,8 @@ class Node: SKNode,MTKButtonDelegate {
             checked.append(popped!)
             checking = checking.filter{$0.id != popped?.id}
         }
-        print("=============")
         for item in result{
             item.changeBaseColor(color: NSColor(calibratedRed: 144/255.0, green: 238.0/255.0, blue: 144/255.0, alpha: 1.0))
         }
-        print("=============")
     }
 }

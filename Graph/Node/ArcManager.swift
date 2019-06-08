@@ -94,7 +94,6 @@ class ArcManager:MTKButtonDelegate{
     }
     
     @objc func removeArc(button:MTKButton){
-        print("HELLO")
         self.outputArcsAmount -= 1
         var arc = self.outputArcs.filter{$0.id == button.name!}[0]
         if let activity = TraceToActivity.getActivity(by: arc){

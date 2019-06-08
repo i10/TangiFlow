@@ -54,8 +54,6 @@ class Slider: SKNode {
             self.values.append(CGFloat(index)*step+min)
             self.pixelValues.append(CGFloat(index)*pixelsPerStep-80)
         }
-        print(self.values)
-        print(self.pixelValues)
         self.currentValue = "\(self.defaultVal)"
     }
     

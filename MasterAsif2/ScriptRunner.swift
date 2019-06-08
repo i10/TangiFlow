@@ -58,14 +58,10 @@ class ScriptRunner{
         var result:JSON = [:]
         for key in graph.dictionary!.keys{
             if !result[key].exists() {
-                print("HELLO!")
                 result[key]=[]
-                
-                
             }
             for innerkey in graph.dictionary!.keys{
                 if graph[innerkey].arrayValue.contains(JSON(key)) {
-                    print("HELLO")
                     result[key].arrayObject?.append(innerkey)
                     //result[key].append(innerkey)
                 }

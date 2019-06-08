@@ -14,7 +14,6 @@ class FileHandler{
      private init(){}
     func requestForLocation(){
         //Code Process
-        print("Location granted")
     }
     var projectDataPath =  "/Users/ppi/Documents/Code/MasterAsif/RestoreJSON/restore.json"
     var graphDataPath = "/Users/ppi/Documents/Code/MasterAsifPythonBackEnd/Files/graph.json"
@@ -38,7 +37,6 @@ class FileHandler{
         print("CLEANING CONTENT OF")
         let files = self.getContent(of: path)
         for file in files{
-            print(file)
             self.removeFile(at: file)
         }
     }

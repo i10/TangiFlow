@@ -127,9 +127,6 @@ class ControlElements{
         
         
         for index in 0..<textFields.count{
-            print(index)
-            
-            print(parent!.position.y + CGFloat(60 + (index+1)*120))
             textFields[index].setFrameOrigin(CGPoint(x:parent!.position.x-80,y:parent!.position.y + CGFloat(250 + index*70)))
         }
         var y = 250  + textFields.count * 70

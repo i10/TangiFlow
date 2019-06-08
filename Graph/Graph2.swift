@@ -58,7 +58,6 @@ class Graph2{
         if let scene = self.scene{
             var allNodes = scene.nodes(at:trace.position!).filter{$0 is Node}
             var sliderButton = scene.nodes(at: trace.position!).filter{$0.name == "sliderButton"}
-            print(sliderButton)
             if !sliderButton.isEmpty{
                 let activity = SliderActivity(trace: trace, slider: sliderButton[0].parent?.parent as! Slider)
                 return

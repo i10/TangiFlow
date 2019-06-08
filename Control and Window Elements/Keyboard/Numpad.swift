@@ -70,10 +70,6 @@ class Numpad:SKNode, MTKButtonDelegate{
                     let d: Float? = Float(c) ?? nil
                     if d != nil {
                         self.activeTextInput!.string = self.activeTextInput!.string + button.titleLabel!.text!
-//                        self.activeTextInput!.textStorage?.append(NSAttributedString(string: button.titleLabel!.text!))
-                        print("I AM TEXT")
-                        print(self.activeTextInput!.string)
-                        
                     } else {
                         print("provide proper float value")
                     }

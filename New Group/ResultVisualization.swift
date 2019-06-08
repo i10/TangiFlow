@@ -32,7 +32,6 @@ class ResultVisualization{
     func addResultNodes(item:URL,data:JSON){
         let lastIndex = item.lastPathComponent.lastIndex(of: ".")
         if let node = NodeManager.getNode(with: String(item.lastPathComponent[..<lastIndex!])){
-            print(node.name)
             var resultNode:SKNode?
             let error = data["error"].boolValue //{
                 if  !error {

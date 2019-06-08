@@ -84,7 +84,6 @@ class GameScene: MTKScene, MTKButtonDelegate {
                 for textField in textFields{
                     if textField.frame.origin.x < trace.position!.x && trace.position!.x < textField.frame.origin.x + 200 &&
                         textField.frame.origin.y < trace.position!.y && trace.position!.y < textField.frame.origin.y + 80{
-//                        print(textFererwerewrerewrwerwerwerwerwerwewererewield)
                       
                        // textField.isEnabled = true
                         textField.isEditable = true

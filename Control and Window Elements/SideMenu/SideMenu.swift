@@ -96,7 +96,6 @@ class SideMenu:SKNode,MTKButtonDelegate{
     
     @objc func buttonTapped(button: MTKButton) {
         if button.titleLabel!.text == ">" {
-            print("I am working")
             let action = SKAction.move(to: CGPoint(x: 180, y: 500), duration: 1)
             button.titleLabel!.text = "<"
             self.run(action)
@@ -156,7 +155,6 @@ class SideMenu:SKNode,MTKButtonDelegate{
             for item in subMenu{
                 subMenuItems.append(item.0)
             }
-            print(subMenuItems)
             menuStruct[item] = subMenuItems
         }
         

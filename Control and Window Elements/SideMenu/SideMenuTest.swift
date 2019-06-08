@@ -184,7 +184,6 @@ class SideMenuTest:SKNode,MTKButtonDelegate{
                 button.add(target: self, action: #selector(self.menuButtonTapped(button:)))
             }
             subMenuItems = tempSubmenuItems.chunked(into: 6)
-            print(subMenuItems)
             menuStruct[button] = subMenuItems
         }
         
