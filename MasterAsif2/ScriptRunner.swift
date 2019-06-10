@@ -9,6 +9,13 @@
 import Foundation
 import SwiftyJSON
 class ScriptRunner{
+    
+    let node: Node
+    
+    init(from node: Node) {
+        self.node = node
+    }
+    
     func script(id:String){
         //FileHandler.shared.cleanContent(of:FileHandler.shared.resultFolderPath)
         self.extractJson(path: FileHandler.shared.graphDataPath,id:id)
@@ -18,7 +25,7 @@ class ScriptRunner{
                           FileHandler.shared.graphDataPath,
                           FileHandler.shared.copyProj]
         task.terminationHandler = {(process) in
-            let resultMaker = ResultVisualization()
+            let resultMaker = ResultVisualization(from: self.node)
             resultMaker.getResults()
             
         }

@@ -9,6 +9,13 @@
 import Foundation
 import SpriteKit
 class ResultVisualization{
+    
+    let node: Node
+    
+    init(from node: Node) {
+        self.node = node
+    }
+    
     static var globalResultNodes:[SKNode] = []
     
     func cleanResults(){
@@ -21,7 +28,8 @@ class ResultVisualization{
     func getResults(){
         self.cleanResults()
         let files = FileHandler.shared.getContent(of: FileHandler.shared.resultFolderPath)
-        for file in files{
+        
+        if let file = files.filter({ $0.path.contains(node.id!) }).first {
             if let json = FileHandler.shared.getJsonContent(of: file.path){
                 self.addResultNodes(item: file, data: json)
             }
@@ -48,7 +56,6 @@ class ResultVisualization{
                     node.changeBaseColor(color: .red)
                 }
                 if let result = resultNode, nil == node.controlElements?.button{
-
                     ResultVisualization.globalResultNodes.append(result)
                     
                     node.addChild(result)

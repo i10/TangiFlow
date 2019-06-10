@@ -131,9 +131,9 @@ class Node: SKNode,MTKButtonDelegate {
     @objc func play(button:MTKButton){
         self.addChild(status)
         button.set(size: CGSize(width: 30, height: 30), image:"playGlyph")
-        let scr = ScriptRunner()
+        let scr = ScriptRunner(from: self)
         scr.script(id:button.name!)
-        let resultMaker = ResultVisualization()
+        let resultMaker = ResultVisualization(from: self)
         resultMaker.getResults()
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) { // Change `2.0` to the desired number of seconds.
             // Code you want to be delayed
