@@ -69,6 +69,7 @@ class GameScene: MTKScene, MTKButtonDelegate {
         
         // Place all required nodes here
         // 1. Open and read restore.json
+        
         var json: JSON!
         guard let restoreJSONPath = Bundle.main.path(forResource: "restore", ofType: "json") else { return }
         
@@ -83,7 +84,7 @@ class GameScene: MTKScene, MTKButtonDelegate {
                 
                 let point = CGPoint(x: x, y: y)
                 
-                let node = Node(id: j.0, position: point, json: j.1, view: self.view!)
+                let node = Node(id: j.0, position: point, json: j.1)
                 (self.scene as! GameScene).graph?.addNode(node: node)
             }
         } catch {

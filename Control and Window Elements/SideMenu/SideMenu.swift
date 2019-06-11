@@ -112,7 +112,7 @@ class SideMenu:SKNode,MTKButtonDelegate{
             else {
                 point = CGPoint(x: self.position.x+400, y: self.position.y)
             }
-            let node = Node(id: button.name!, position: point,  json: self.tangibleData![button.name!], view: self.view!)
+            let node = Node(id: button.name!, position: point,  json: self.tangibleData![button.name!])
             (self.scene as! GameScene).graph?.addNode(node: node)
         }
     }

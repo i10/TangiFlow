@@ -30,17 +30,33 @@ class MiniMap: SKNode {
     
     fileprivate func setupUI() {
         // MiniMap Box
-        let boxNode = SKShapeNode(rectOf: CGSize(width: 200.0, height: 100.0))
-        boxNode.position = CGPoint(x: boxNode.frame.width, y: boxNode.frame.height)
+        let screenSize = NSScreen.screens[1].frame.size
+        let boxNode = SKShapeNode(rectOf: CGSize(width: screenSize.width / 5, height: screenSize.height / 5))
+        boxNode.position = CGPoint(x: boxNode.frame.width / 1.6, y: boxNode.frame.height / 1.6)
+        boxNode.zPosition = 1000
         boxNode.fillColor = .brown
         self.addChild(boxNode)
         
-        // Button
-        let button = MTKButton(size: CGSize(width: 50.0, height: 30.0), label: "H")
-        button.set(color: .red)
-        button.position = .zero
-        button.add(target: self, action: #selector(self.tap))
-        boxNode.addChild(button)
+        var json: JSON!
+        guard let restoreJSONPath = Bundle.main.path(forResource: "restore", ofType: "json") else { return }
+        
+        do {
+            let data = try Data(contentsOf: URL(fileURLWithPath: restoreJSONPath), options: .mappedIfSafe)
+            
+            json = try JSON(data: data)
+            
+            for j in json {
+                let x = CGFloat(j.1["x"].floatValue)
+                let y = CGFloat(j.1["y"].floatValue)
+                
+                let point = CGPoint(x: x, y: y)
+                
+                let node = Node(id: j.0, position: point, json: j.1, isSmall: true)
+                boxNode.addChild(node)
+            }
+        } catch {
+            print("Error: ", error.localizedDescription)
+        }
     }
     
     @objc fileprivate func tap() {
