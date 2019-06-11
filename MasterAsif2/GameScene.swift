@@ -20,7 +20,7 @@ class GameScene: MTKScene, MTKButtonDelegate {
         guard let fromNodeArc = fromNode.arcManager?.outputArcs.first, let toNodeArc = toNode.arcManager?.inputArcs.first else { return }
         
         let edge = Edge.init(from: fromNodeArc.globalPos!, to: toNodeArc.globalPos!)
-//        fromNode.arcManager!.outputArcs.first!.addEdge(edge: edge)
+        fromNode.arcManager!.outputArcs.first!.addEdge(edge: edge)
         fromNodeArc.addEdge(edge: edge)
         toNodeArc.addEdge(edge: edge)
         
