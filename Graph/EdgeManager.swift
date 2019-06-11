@@ -15,6 +15,7 @@ class EdgeManager{
      var scene:SKScene? = nil
 
     func addEdge(edge:Edge){
+         Logger.shared.logWrite(message: "Add edge \(edge.id!) ")
             EdgeManager.edgeList.insert(edge)
             self.scene?.addChild(edge)
     }
@@ -26,7 +27,7 @@ class EdgeManager{
     
     class func removeEdge(with id:String?){
         if let id = id {
-            
+            Logger.shared.logWrite(message: "Remove edge id")
             let edge = getEdge(by: id)
             TraceToActivity.removeActivity(activity: TraceToActivity.getActivity(by: edge.from))
             TraceToActivity.removeActivity(activity: TraceToActivity.getActivity(by: edge.to))

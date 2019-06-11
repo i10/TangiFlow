@@ -80,6 +80,7 @@ class ArcManager:MTKButtonDelegate{
     
     func addOutputArc(){
         if self.outputArcsAmount < 6{
+             Logger.shared.logWrite(message: "Add arc to Node \(self.node)")
             self.outputArcsAmount += 1
             let section = Arc(angle: CGFloat(self.outputOffset), radius: 140, isInput: false, parentNode: self.node!)
             self.outputArcs.append(section)
@@ -101,7 +102,7 @@ class ArcManager:MTKButtonDelegate{
         self.outputArcsAmount -= 1
         var arc = self.outputArcs.filter{$0.id == button.name!}[0]
         if let activity = TraceToActivity.getActivity(by: arc){
-            
+            Logger.shared.logWrite(message: "Remove arc \(arc.id!). Node \(self.node)")
             activity.to?.parentNode?.inArgs[activity.to!.name!] = nil
             //arc.edges[0].to?.parentNode
             TraceToActivity.removeActivity(activity: activity)

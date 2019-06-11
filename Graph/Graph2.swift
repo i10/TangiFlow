@@ -54,7 +54,7 @@ class Graph2{
     
     
     func touchDown(trace:MTKTrace){
-    
+        Logger.shared.logWrite(message: "Touch down event with trace id \(trace.uuid)")
         if let scene = self.scene{
             var allNodes = scene.nodes(at:trace.position!).filter{$0 is Node}
             var sliderButton = scene.nodes(at: trace.position!).filter{$0.name == "sliderButton"}
@@ -124,6 +124,7 @@ class Graph2{
     
     
     func touchUp(trace:MTKTrace) {
+        Logger.shared.logWrite(message: "Touch up event with trace id \(trace.uuid)")
         //TraceToNode.removeActivity(id: trace.uuid)
         guard let scene = self.scene as? GameScene else {return}
         guard let activity = TraceToActivity.getActivity(by: trace.uuid) else{return}
@@ -163,6 +164,7 @@ class Graph2{
     
     
     func touchMove(trace:MTKTrace){
+        Logger.shared.logWrite(message: "Touch move event with trace id \(trace.uuid)")
         guard let scene = self.scene else {return}
         var allNodes = scene.nodes(at:trace.position!).filter{$0 is Node}
         
@@ -204,6 +206,7 @@ class Graph2{
 
     
     func putEdge(trace:MTKTrace) throws{
+        Logger.shared.logWrite(message: "Put edge with trace id \(trace.uuid)")
         guard let scene = self.scene as? GameScene else {return}
         var allNodes = scene.nodes(at: trace.position!).filter{($0 is Arc)}
         guard let activity = TraceToActivity.getActivity(by: (allNodes[0] as! Arc).id!) else { return }
@@ -220,6 +223,7 @@ class Graph2{
     }
     
     func moveNode(node:Node, trace:MTKTrace){
+        Logger.shared.logWrite(message: "Move node \(node.id!) with trace id \(trace.uuid)")
         guard let activity = TraceToNode.getActivity(by: trace.uuid) else {return}
         let deltaX = activity.oldX - activity.trace!.position!.x
         let deltaY = activity.oldY - activity.trace!.position!.y

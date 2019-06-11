@@ -17,6 +17,7 @@ class NodeManager{
     var scene:SKScene?
     
     func addNode(node:Node){
+        
         if self.copies.keys.contains(node.id!){
             self.copies[node.id!] =  self.copies[node.id!]! + 1
             
@@ -43,7 +44,7 @@ class NodeManager{
         //node.arcManager?.scene = self.scene
         
         
-        
+        Logger.shared.logWrite(message: "Adding node \(node.id!)")
         self.scene?.addChild(node)
     }
     
@@ -57,6 +58,7 @@ class NodeManager{
     }
     
     class func removeNode(with id:String){
+        Logger.shared.logWrite(message: "Remove node id")
         FileHandler.shared.removeFile(at: URL(fileURLWithPath: FileHandler.shared.resultFolderPath + "/\(id).json"))
         let node = NodeManager.getNode(with: id)
         if let textFields = node?.controlElements?.textFields{

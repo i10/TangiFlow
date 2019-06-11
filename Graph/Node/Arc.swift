@@ -138,6 +138,7 @@ class Arc:SKShapeNode{
         if !self.edges.contains(edge){
             if self.edges.count == 0 {
                 self.edges.append(edge)
+                Logger.shared.logWrite(message: "Add edge \(edge.id!) to \(self.id!). Node \(self.parentNode)")
             }else{
                 NSException(name:NSExceptionName(rawValue: "CanNotPutEdge"), reason:"Arc can not accept more edge", userInfo:nil).raise()
             }
@@ -145,7 +146,9 @@ class Arc:SKShapeNode{
     }
     
     func removeEdge(edge:Edge?){
+        
         guard let edge = edge else {return}
+        Logger.shared.logWrite(message: "Remove edge \(edge.id!) to \(self.id!). Node \(self.parentNode)")
         self.edges = self.edges.filter{$0.id != edge.id}
         self.changeArcColor()
     }
