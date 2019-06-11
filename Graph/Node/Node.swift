@@ -44,7 +44,9 @@ class Node: SKNode,MTKButtonDelegate {
     }
     
     @objc func add(button:MTKButton){
-        self.arcManager?.addOutputArc()
+//        self.arcManager?.addOutputArc()
+        let miniMap = MiniMap(node: self)
+        self.addChild(miniMap)
     }
     
     convenience init(id:String,position:CGPoint,json:JSON,view:SKView) {

@@ -39,7 +39,6 @@ class ScriptRunner{
         var projData:JSON = [:]
         var argData:JSON = [:]
         for node in NodeManager.nodeList{
-            
             var allArgs:JSON = [:]
             allArgs["main_args"] = JSON(node.inArgs)
             allArgs["controled_args"] =  (node.controlElements?.retrieveJSON()) ?? [:]
