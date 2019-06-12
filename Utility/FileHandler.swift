@@ -16,7 +16,7 @@ class FileHandler{
         //Code Process
     }
     var projectDataPath =  "/Users/ppi/Documents/Code/MasterAsif/RestoreJSON/restore.json"
-    var graphDataPath = "/Users/ppi/Documents/Code/MasterAsifPythonBackEnd/Files/graph.json"
+    var graphDataPath = "/Users/ppi/Documents/Code/MasterAsif/ProjectFiles/graph.json"
     var resultFolderPath = "/Users/ppi/Documents/Code/MasterAsifPythonBackEnd/Files/Result"
     var imagesFolderPath = "/Users/ppi/Documents/Code/MasterAsifPythonBackEnd/Files/Images"
     var mainScriptpath = "/Users/ppi/Documents/Code/MasterAsifPythonBackEnd/main.py"

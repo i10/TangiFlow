@@ -146,7 +146,6 @@ class MiniMap: SKNode {
                     trace.to?.addEdge(edge: trace.edge!)
                     trace.edge?.from = arc
                     trace.edge?.to = toNodeArc
-                    trace.to?.parentNode?.inArgs[trace.to!.name!] = trace.from?.parentNode?.id
                     trace.edge?.redrawEdge(from: arc.globalPos!, to: toNodeArc.globalPos!)
                     trace.currentTrace = nil
                     toNodeArc.changeArcColor()

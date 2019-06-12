@@ -106,6 +106,8 @@ class Node: SKNode,MTKButtonDelegate {
     
     @objc fileprivate func disconnectButtonTapped(_ sender: MTKButton) {
         print("Disconnect Button Tapped")
+        let disconnect = Disconnect(node: self)
+        self.addChild(disconnect)
     }
     
     required init?(coder aDecoder: NSCoder) {
