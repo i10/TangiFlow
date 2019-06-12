@@ -38,12 +38,10 @@ class ArcManager:MTKButtonDelegate{
     }
     
     func drawInputArcs(){
-        let radius: CGFloat = self.node!.isSmall ? 21.0 : 86.0
-        
         for index in 0..<self.inputArcsAmount{
             let rotateAngle = CGFloat.pi + ( CGFloat(self.inputOffset) + CGFloat(spacing))*CGFloat(index)
             let section = Arc(angle: CGFloat(self.inputOffset),
-                              radius: radius,
+                              radius: 86.0,
                               isInput: true,
                               rotation:CGFloat(rotateAngle),
                               name:Array(self.node?.mainArgDicts.keys ?? [:].keys)[index],
@@ -57,12 +55,10 @@ class ArcManager:MTKButtonDelegate{
     
     
     func drawOutputArcs(){
-        let radius: CGFloat = self.node!.isSmall ? 21.0 : 86.0
-        
         for index in 0..<self.outputArcsAmount{
                 let rotateAngle =  ( CGFloat(self.outputOffset) + CGFloat(spacing))*CGFloat(index)
                 let section = Arc(angle: CGFloat(self.outputOffset),
-                                  radius: radius, isInput: false,
+                                  radius: 86.0, isInput: false,
                                   rotation: CGFloat(rotateAngle),
                                   parentNode: self.node!)
                 self.node?.addChild(section)
@@ -80,11 +76,9 @@ class ArcManager:MTKButtonDelegate{
     
     
     func addOutputArc(){
-        let radius: CGFloat = self.node!.isSmall ? 21.0 : 86.0
-        
         if self.outputArcsAmount < 6 {
             self.outputArcsAmount += 1
-            let section = Arc(angle: CGFloat(self.outputOffset), radius: radius, isInput: false, parentNode: self.node!)
+            let section = Arc(angle: CGFloat(self.outputOffset), radius: 86.0, isInput: false, parentNode: self.node!)
             self.outputArcs.append(section)
             for index in 0..<self.outputArcs.count{
                 self.outputArcs[index].zRotation = ( CGFloat(self.outputOffset) + CGFloat(spacing))*CGFloat(index)

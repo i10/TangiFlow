@@ -91,8 +91,6 @@ class GameScene: MTKScene, MTKButtonDelegate {
             print("Error: ", error.localizedDescription)
         }
         
-        
-        
         guard let graphJSONPath = Bundle.main.path(forResource: "graph", ofType: "json") else { return }
         
         do {
@@ -113,45 +111,14 @@ class GameScene: MTKScene, MTKButtonDelegate {
                     let toY = CGFloat(json[toTitle]["y"].floatValue)
                     
                     let fromNode = scene?.nodes(at: CGPoint(x: fromX, y: fromY))[1] as! Node
-//                    let fromNodeArc = fromNode.arcManager!.outputArcs.first!
                     let toNode = scene?.nodes(at: CGPoint(x: toX, y: toY))[1] as! Node
-//                    let toNodeArc = toNode.arcManager!.inputArcs.first!
-                    
-//                    let edge = Edge.init(from: fromNode.arcManager!.outputArcs.first!.globalPos!, to: toNode.arcManager!.inputArcs.first!.globalPos!)
-//                    fromNode.arcManager!.outputArcs.first!.addEdge(edge: edge)
-//                    fromNodeArc.addEdge(edge: edge)
-//                    toNodeArc.addEdge(edge: edge)
-                    
-//                    let fromNode = Node.init(id: title, position: fromPos, json: json[title], view: self.view!)
-//                    let toNode = Node.init(id: toTitle, position: toPos, json: json[toTitle], view: self.view!)
                     setEdge(from: fromNode, to: toNode)
                 }
             }
         } catch {
             print("Error: ", error.localizedDescription)
         }
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-
     }
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
     
     func setActivity(activity:TraceToActivity,trace:MTKTrace,to:Arc?,from:Arc?,arc:Arc){
         activity.currentTrace = trace.uuid

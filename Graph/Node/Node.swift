@@ -30,7 +30,6 @@ class Node: SKNode,MTKButtonDelegate {
     var keyboard:Keyboard = Keyboard()
     var playButton: MTKButton = MTKButton(size: CGSize(width: 20, height: 20),image: "playGlyph")
     var base:SKShapeNode = SKShapeNode(circleOfRadius: 60)
-    var isSmall: Bool = false
     var status = SKLabelNode(text: "RUNNING")
     override init() {
         super.init()
@@ -50,13 +49,8 @@ class Node: SKNode,MTKButtonDelegate {
         self.addChild(miniMap)
     }
     
-    convenience init(id:String,position:CGPoint,json:JSON, isSmall: Bool = false) {
+    convenience init(id:String,position:CGPoint,json:JSON) {
         self.init()
-        
-        self.isSmall = isSmall
-        if isSmall {
-            base = SKShapeNode(circleOfRadius: 10)
-        }
         
         status.fontColor = .black
         status.fontSize = 20

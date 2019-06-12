@@ -20,11 +20,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Graph/Node/Node.swift"
-            timestampString = "581955150.182567"
+            timestampString = "582037165.424952"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "142"
-            endingLineNumber = "142"
+            startingLineNumber = "136"
+            endingLineNumber = "136"
             landmarkName = "play(button:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -116,27 +116,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Graph/Node/Arc.swift"
-            timestampString = "581955150.18282"
+            timestampString = "582037165.4251111"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "74"
-            endingLineNumber = "74"
-            landmarkName = "init(angle:radius:isInput:rotation:name:parentNode:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Graph/Node/Arc.swift"
-            timestampString = "581955150.183129"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "94"
-            endingLineNumber = "94"
+            startingLineNumber = "91"
+            endingLineNumber = "91"
             landmarkName = "redrawArc(with:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -148,11 +132,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Graph/Node/Arc.swift"
-            timestampString = "581955150.183303"
+            timestampString = "582037165.425148"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "98"
-            endingLineNumber = "98"
+            startingLineNumber = "95"
+            endingLineNumber = "95"
             landmarkName = "redrawArc(with:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -164,12 +148,92 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Graph/Node/Arc.swift"
-            timestampString = "581955150.183476"
+            timestampString = "582037165.425179"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "126"
-            endingLineNumber = "126"
+            startingLineNumber = "123"
+            endingLineNumber = "123"
             landmarkName = "drawArc(angle:radius:isInput:rotation:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Graph/Node/Node.swift"
+            timestampString = "582037165.425209"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "49"
+            endingLineNumber = "49"
+            landmarkName = "add(button:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "MiniMap/MiniMap.swift"
+            timestampString = "582037165.425244"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "107"
+            endingLineNumber = "107"
+            landmarkName = "nodeTapped(node:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "MasterAsif2.MiniMap.(nodeTapped in _81375E0B6D88012313CE006F148F093D)(node: MultiTouchKitSwift.MTKButton) -&gt; ()"
+                  moduleName = "MasterAsif2"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/ppi/Documents/Code/MasterAsif/MiniMap/MiniMap.swift"
+                  timestampString = "582036097.633056"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "78"
+                  endingLineNumber = "78"
+                  offsetFromSymbolStart = "3013">
+               </Location>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (__C.SKNode) -&gt; Swift.Bool in MasterAsif2.MiniMap.(nodeTapped in _81375E0B6D88012313CE006F148F093D)(node: MultiTouchKitSwift.MTKButton) -&gt; ()"
+                  moduleName = "MasterAsif2"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/ppi/Documents/Code/MasterAsif/MiniMap/MiniMap.swift"
+                  timestampString = "582036097.634499"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "78"
+                  endingLineNumber = "78"
+                  offsetFromSymbolStart = "41">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "MiniMap/MiniMap.swift"
+            timestampString = "582037165.425523"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "109"
+            endingLineNumber = "109"
+            landmarkName = "nodeTapped(node:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

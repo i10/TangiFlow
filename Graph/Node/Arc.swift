@@ -69,10 +69,7 @@ class Arc:SKShapeNode{
         self.name = name
         self.parentNode = parentNode
         self.setLocation()
-        
-        let radius: CGFloat = (self.parentNode as! Node).isSmall ? 1.0 : 16.0
-        segmentRadius = radius
-        
+                
 //        var close = MTKButton(size: CGSize(width: 10, height: 10), image: "close")
 //        close.position = CoordinateConverter.polarToDecart(radius: self.radius! + 40, angle: self.polarAngle)
 //        close.zPosition = 20
