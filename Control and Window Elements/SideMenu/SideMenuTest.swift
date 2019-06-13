@@ -226,12 +226,13 @@ class SideMenuTest:SKNode,MTKButtonDelegate{
         if self.right{
             x = -370
             
-        }else{ x = 370}
+        }else{
+            x = 540}
         y = (button.parent?.position.y)! + 50
         image.position = CGPoint(x: 0, y: 0)
         self.infoNode?.position = CGPoint(x: x-80, y: y)
         self.infoNode?.addChild(image)
-        var close = MTKButton(size: CGSize(width: 20, height: 20), image: "close")
+        var close = MTKButton(size: CGSize(width: 20, height: 20), image: "close.png")
         close.set(color: NSColor.red)
         self.infoNode?.addChild(close)
         self.addChild(self.infoNode!)

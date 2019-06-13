@@ -84,13 +84,13 @@ class ImageTypeResultNode:SKSpriteNode{
        // self.position = self.position
         self.slider.position.y = self.size.height/2+50
         if zoom == 1.0{
-            self.position.y = -350
+            self.position.y = -400
             return
         }
         
         
        
-        self.position.y =  -350 - (self.size.height/2 - self.originalHeight/2)
+        self.position.y =  -400 - (self.size.height/2 - self.originalHeight/2)
         
     }
     

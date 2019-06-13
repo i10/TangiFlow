@@ -46,7 +46,7 @@ class ResultVisualization{
                     node.status.removeFromParent()
                 } else {
                     resultNode = GenericTypeResultNode(data: data["data"].stringValue)
-                    node.changeBaseColor(color: .red)
+                    node.changeBaseColor(color: SKColor(calibratedRed: 248/255.0, green: 48/255.0, blue: 56/255.0, alpha: 1.0))
                 }
                 if let result = resultNode, nil == node.controlElements?.button{
 
@@ -59,7 +59,7 @@ class ResultVisualization{
                         (result as! ImageTypeResultNode).reloadImage(zoom: node.zoomValue)
                         (result as! ImageTypeResultNode).setSlider()
                     } else {
-                        result.position = CGPoint(x: 0, y: -350)
+                        result.position = CGPoint(x: 0, y: -370)
                     }
                     node.status.removeFromParent()
                 }
