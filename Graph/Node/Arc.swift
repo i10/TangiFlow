@@ -151,7 +151,7 @@ class Arc:SKShapeNode{
     func changeArcColor(){
         if isInput{
             
-            self.strokeColor = .black
+            self.strokeColor = inColors[self.canAdd]!
             self.fillColor = inColors[self.canAdd]!
             self.fillColor = self.inColors[self.canAdd]!
         }else{

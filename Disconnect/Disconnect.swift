@@ -73,9 +73,22 @@ class Disconnect: SKNode {
     }
     
     @objc fileprivate func nodeTapped(node: MTKButton) {
-        guard let fromNode = node.parent?.parent?.parent as? Node, let scene = self.scene else { return }
+        guard let fromNode = node.parent?.parent as? Node, let toNodeID = fromNode.inArgs.values.first, let edge = fromNode.arcManager?.inputArcs.first?.edges.first, let toNode = NodeManager.getNode(with: toNodeID) else { return }
         
-        // Disconnect from here
+        let activity = TraceToActivity.getActivity(by: toNode.arcManager!.inputArcs.first!)
+        EdgeManager.removeEdge(with: edge.id)
+        edge.removeFromParent()
+        TraceToActivity.removeActivity( activity:activity)
+        toNode.arcManager!.removeArc(edge.from!, activity!)
+        
+        self.removeFromParent()
+        
+        fromNode.inArgs.removeAll()
+        
+        let scr = ScriptRunner(from: fromNode)
+        scr.script(id: fromNode.id!)
+//        let resultMaker = ResultVisualization(from: fromNode)
+//        resultMaker.getResults()
     }
     
     @objc fileprivate func closeMiniMap() {

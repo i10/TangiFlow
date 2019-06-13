@@ -163,8 +163,8 @@ class MiniMap: SKNode {
     }
     
     func setActivity(activity:TraceToActivity,trace:MTKTrace,to:Arc?,from:Arc?,arc:Arc){
-        activity.currentTrace = trace.uuid
-        activity.edge = Edge(from: CGPoint.zero, to: CGPoint.zero)
+//        activity.currentTrace = trace.uuid
+//        activity.edge = Edge(from: CGPoint.zero, to: CGPoint.zero)
         activity.edge!.zPosition = -2
         activity.edge?.to = to
         activity.edge?.from = from

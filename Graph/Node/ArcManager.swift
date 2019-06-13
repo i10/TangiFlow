@@ -56,22 +56,14 @@ class ArcManager:MTKButtonDelegate{
     
     func drawOutputArcs(){
         for index in 0..<self.outputArcsAmount{
-                let rotateAngle =  ( CGFloat(self.outputOffset) + CGFloat(spacing))*CGFloat(index)
-                let section = Arc(angle: CGFloat(self.outputOffset),
-                                  radius: 86.0, isInput: false,
-                                  rotation: CGFloat(rotateAngle),
-                                  parentNode: self.node!)
-                self.node?.addChild(section)
-                self.outputArcs.append(section)
-            let close = MTKButton(size: CGSize(width: 20, height: 20), image: "close")
-            close.add(target: self, action: #selector(self.removeArc(button:)))
-            if self.outputArcs.count != 1 {
-                section.drawX(angle: section.polarAngle,button: close)
-                
-            }
+            let rotateAngle =  ( CGFloat(self.outputOffset) + CGFloat(spacing))*CGFloat(index)
+            let section = Arc(angle: CGFloat(self.outputOffset),
+                              radius: 86.0, isInput: false,
+                              rotation: CGFloat(rotateAngle),
+                              parentNode: self.node!)
+            self.node?.addChild(section)
+            self.outputArcs.append(section)
         }
-        
-        
     }
     
     
@@ -83,40 +75,24 @@ class ArcManager:MTKButtonDelegate{
             for index in 0..<self.outputArcs.count{
                 self.outputArcs[index].zRotation = ( CGFloat(self.outputOffset) + CGFloat(spacing))*CGFloat(index)
                 self.outputArcs[index].redrawArc(with: CGFloat(self.outputOffset))
-                let close = MTKButton(size: CGSize(width: 20, height: 20), image: "close")
-                
-                close.add(target: self, action: #selector(self.removeArc(button:)))
-                self.outputArcs[index].drawX(angle: self.outputArcs[index].polarAngle ,button: close)
-                }
-            
+            }
         }
-        //section.drawX(angle: section.angle!)
     }
     
-    @objc func removeArc(button:MTKButton){
+    func removeArc(_ arc: Arc, _ activity: TraceToActivity){
         self.outputArcsAmount -= 1
-        var arc = self.outputArcs.filter{$0.id == button.name!}[0]
-        if let activity = TraceToActivity.getActivity(by: arc){
-            
+//        if let activity = TraceToActivity.getActivity(by: arc){
             activity.to?.parentNode?.inArgs[activity.to!.name!] = nil
-            //arc.edges[0].to?.parentNode
             TraceToActivity.removeActivity(activity: activity)
-        }
+//        }
         
-        
-        arc.closeButton?.removeFromParent()
         arc.removeFromParent()
-        self.outputArcs = self.outputArcs.filter{$0.id != button.name!}
-        
+        self.outputArcs = self.outputArcs.filter{$0.id != arc.id!}
+
         for index in 0..<self.outputArcs.count{
             self.outputArcs[index].zRotation = ( CGFloat(self.outputOffset) + CGFloat(spacing))*CGFloat(index)
             self.outputArcs[index].redrawArc(with: CGFloat(self.outputOffset))
-            self.outputArcs[index].closeButton?.removeFromParent()
-            if self.outputArcs.count != 1 {
-                let close = MTKButton(size: CGSize(width: 20, height: 20), image: "close")
-                
-                close.add(target: self, action: #selector(self.removeArc(button:)))
-                    self.outputArcs[index].drawX(angle: self.outputArcs[index].polarAngle ,button: close)}
         }
     }
+    
 }
