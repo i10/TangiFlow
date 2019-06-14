@@ -15,7 +15,6 @@ class GameScene: MTKScene, MTKButtonDelegate {
     var traceCall:[Int:Int] = [:]
     var projectManager:ProjectFilesManager?
 
-    
     fileprivate func setEdge(from fromNode: Node, to toNode: Node) {
         guard let fromNodeArc = fromNode.arcManager?.outputArcs.first, let toNodeArc = toNode.arcManager?.inputArcs.first else { return }
         
@@ -51,7 +50,6 @@ class GameScene: MTKScene, MTKButtonDelegate {
         self.setActivity(activity: trace, trace: MTKTrace.init(), to: toNodeArc, from: fromNodeArc, arc: fromNodeArc)
         EdgeManager().addEdge(edge: trace.edge!)
         fromNodeArc.redrawArc(with: 1)
-//        fromNodeArc.addEdge(edge: trace.edge!)
     }
     
     override func didMove(to view: SKView) {
@@ -59,16 +57,6 @@ class GameScene: MTKScene, MTKButtonDelegate {
         graph = Graph2(scene: self)
         self.projectManager = ProjectFilesManager()
         self.projectManager?.openJson()
-//        let projectJson = self.projectManager?.projectFileJson
-//        var sideMenu = SideMenuTest(json: projectJson ?? [:],view:view,scene:self)
-//        sideMenu.right = false
-//        var sideMenuRight = SideMenuTest(json: projectJson ?? [:],view:view,scene:self)
-//        sideMenuRight.position = CGPoint(x:self.size.width - 180,y:550)
-//        self.addChild(sideMenu)
-//        self.addChild(sideMenuRight)
-        
-        // Place all required nodes here
-        // 1. Open and read restore.json
         
         var json: JSON!
         guard let restoreJSONPath = Bundle.main.path(forResource: "restore", ofType: "json") else { return }
@@ -121,22 +109,11 @@ class GameScene: MTKScene, MTKButtonDelegate {
     }
     
     func setActivity(activity:TraceToActivity,trace:MTKTrace,to:Arc?,from:Arc?,arc:Arc){
-        activity.currentTrace = trace.uuid
-        activity.edge = Edge(from: CGPoint.zero, to: CGPoint.zero)
         activity.edge!.zPosition = -2
         activity.edge?.to = to
         activity.edge?.from = from
         activity.fulcrum = arc
     }
-    
-    
-    
-    
-    
-    
-    
-    
-    
     
     override func setupScene() {
         FileHandler.shared.cleanContent(of:FileHandler.shared.imagesFolderPath)
@@ -166,45 +143,29 @@ class GameScene: MTKScene, MTKButtonDelegate {
                 for textField in textFields{
                     if textField.frame.origin.x < trace.position!.x && trace.position!.x < textField.frame.origin.x + 200 &&
                         textField.frame.origin.y < trace.position!.y && trace.position!.y < textField.frame.origin.y + 80{
-                      
-                       // textField.isEnabled = true
+                        
                         textField.isEditable = true
-                        //textField.becomeFirstResponder()
                         textField.window?.makeFirstResponder(textField)
-                        //textField.stringValue = ""
-                       // print(textField.stringValue)
-
-                            textField.parent?.keyboard.removeFromParent()
-                            textField.parent?.addChild(textField.parent!.keyboard)
-                            textField.parent!.keyboard.drawKeys()
-                            textField.parent?.keyboard.position = CGPoint(x: 600, y: 200)
-                            
+                        
+                        textField.parent?.keyboard.removeFromParent()
+                        textField.parent?.addChild(textField.parent!.keyboard)
+                        textField.parent!.keyboard.drawKeys()
+                        textField.parent?.keyboard.position = CGPoint(x: 600, y: 200)
+                        
                         textField.parent!.keyboard.activeTextInput = textField
                     }
                 }
-                //print(tf)
             }
-                self.nodes(at: trace.position!)
-                
+            self.nodes(at: trace.position!)
+            
         }
         
         return traceSet
     }
     
-
-    
     override func update(_ currentTime: TimeInterval) {
         super.update(currentTime)
         
     }
-   
-//    @objc func run(button:MTKButton,id:String){
-//        let scr = ScriptRunner()
-//        scr.script(id:id)
-//        let resultMaker = ResultVisualization()
-//        resultMaker.getResults()
-//    }
     
 }
-
-

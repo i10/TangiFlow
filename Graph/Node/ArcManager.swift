@@ -41,7 +41,7 @@ class ArcManager:MTKButtonDelegate{
         for index in 0..<self.inputArcsAmount{
             let rotateAngle = CGFloat.pi + ( CGFloat(self.inputOffset) + CGFloat(spacing))*CGFloat(index)
             let section = Arc(angle: CGFloat(self.inputOffset),
-                              radius: 86.0,
+                              radius: 76.0,
                               isInput: true,
                               rotation:CGFloat(rotateAngle),
                               name:Array(self.node?.mainArgDicts.keys ?? [:].keys)[index],
@@ -58,7 +58,7 @@ class ArcManager:MTKButtonDelegate{
         for index in 0..<self.outputArcsAmount{
             let rotateAngle =  ( CGFloat(self.outputOffset) + CGFloat(spacing))*CGFloat(index)
             let section = Arc(angle: CGFloat(self.outputOffset),
-                              radius: 86.0, isInput: false,
+                              radius: 76.0, isInput: false,
                               rotation: CGFloat(rotateAngle),
                               parentNode: self.node!)
             self.node?.addChild(section)
@@ -70,7 +70,7 @@ class ArcManager:MTKButtonDelegate{
     func addOutputArc(){
         if self.outputArcsAmount < 6 {
             self.outputArcsAmount += 1
-            let section = Arc(angle: CGFloat(self.outputOffset), radius: 86.0, isInput: false, parentNode: self.node!)
+            let section = Arc(angle: CGFloat(self.outputOffset), radius: 76.0, isInput: false, parentNode: self.node!)
             self.outputArcs.append(section)
             for index in 0..<self.outputArcs.count{
                 self.outputArcs[index].zRotation = ( CGFloat(self.outputOffset) + CGFloat(spacing))*CGFloat(index)

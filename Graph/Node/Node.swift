@@ -29,7 +29,7 @@ class Node: SKNode,MTKButtonDelegate {
     var filePicker:MTKFileManager = MTKFileManager()
     var keyboard:Keyboard = Keyboard()
     var playButton: MTKButton = MTKButton(size: CGSize(width: 20, height: 20),image: "playGlyph")
-    var base:SKShapeNode = SKShapeNode(circleOfRadius: 60)
+    var base:SKShapeNode = SKShapeNode(circleOfRadius: 50)
     var status = SKLabelNode(text: "RUNNING")
     override init() {
         super.init()
@@ -72,9 +72,9 @@ class Node: SKNode,MTKButtonDelegate {
         let deleteButton = MTKButton(size: CGSize(width: 20, height: 20), image:"trashGlyph")
         playButton.add(target: self, action: #selector(self.play(button:)))
         
-        playButton.position = CGPoint(x: 0, y: 110)
-        deleteButton.position = CGPoint(x: -84, y: 70)
-        addButton.position = CGPoint(x: 110, y: 0)
+        playButton.position = CGPoint(x: 0, y: 100)
+        deleteButton.position = CGPoint(x: -79, y: 65)
+        addButton.position = CGPoint(x: 100, y: 0)
         self.addChild(deleteButton)
         self.addChild(addButton)
         
@@ -87,12 +87,12 @@ class Node: SKNode,MTKButtonDelegate {
         }
         
         let assignButton = MTKButton(size: CGSize(width: 20.0, height: 20.0), image: "assignGlyph")
-        assignButton.position = CGPoint(x: -110.0, y: 0.0)
+        assignButton.position = CGPoint(x: -105.0, y: 0.0)
         assignButton.add(target: self, action: #selector(self.assignButtonTapped(_:)))
         self.addChild(assignButton)
         
         let disconnectButton = MTKButton(size: CGSize(width: 20.0, height: 20.0), image: "disconnectGlyph")
-        disconnectButton.position = CGPoint(x: -84.0, y: -70.0)
+        disconnectButton.position = CGPoint(x: -79.0, y: -65.0)
         disconnectButton.add(target: self, action: #selector(self.disconnectButtonTapped(_:)))
         self.addChild(disconnectButton)
         
