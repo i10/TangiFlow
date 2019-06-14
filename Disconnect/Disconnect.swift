@@ -31,13 +31,6 @@ class Disconnect: SKNode {
     }
     
     fileprivate func setupUI() {
-        // Disconnect TableView
-//        let row = MTKButton(size: CGSize(width: 200.0, height: 80.0), label: "AAA")
-//        row.set(color: .brown)
-//        row.position = CGPoint(x: 0, y: 0)
-//        self.scene!.addChild(row)
-        
-        
         guard let restoreJSONPath = Bundle.main.path(forResource: "restore", ofType: "json") else { return }
         
         do {
@@ -49,8 +42,6 @@ class Disconnect: SKNode {
         }
         
         
-        // graph
-//        guard let graphJSONPath = Bundle.main.path(forResource: "graph", ofType: "json") else { return }
         guard let graphJSONPath =  URL(string: "file:///Users/ppi/Documents/Code/MasterAsif/ProjectFiles/graph.json") else { return }
         
         do {
@@ -83,46 +74,11 @@ class Disconnect: SKNode {
         
         self.removeFromParent()
         
-        
-        
-        
-        
-        
-//        if let sibling1 = (NodeManager.getNode(with: fromNode.id!)?.arcManager?.inputArcs.first?.edges.first?.from?.parentNode)?.id {
-            for (k, v) in NodeManager.getNode(with: fromNode.id!)!.inArgs {
-                if v == node.name! {
-                    NodeManager.getNode(with: fromNode.id!)!.inArgs[k] = nil
-                }
+        for (k, v) in NodeManager.getNode(with: fromNode.id!)!.inArgs {
+            if v == node.name! {
+                NodeManager.getNode(with: fromNode.id!)!.inArgs[k] = nil
             }
-//        }
-//        if let sibling2 = (NodeManager.getNode(with: id)?.arcManager?.outputArcs.first?.edges.first?.to?.parentNode)?.id {
-//            for (k, v) in NodeManager.getNode(with: sibling2)!.inArgs {
-//                if v == id {
-//                    NodeManager.getNode(with: sibling2)!.inArgs[k] = nil
-//                }
-//            }
-//        }
-//
-//        for (k, v) in NodeManager.getNode(with: id)!.inArgs {
-//            if let sibling1 = (NodeManager.getNode(with: id)?.arcManager?.inputArcs.first?.edges.first?.from?.parentNode)?.id {
-//                if v == sibling1 {
-//                    NodeManager.getNode(with: id)!.inArgs[k] = nil
-//                }
-//            }
-//
-//            if let sibling2 = (NodeManager.getNode(with: id)?.arcManager?.outputArcs.first?.edges.first?.to?.parentNode)?.id {
-//                if v == sibling2 {
-//                    NodeManager.getNode(with: id)!.inArgs[k] = nil
-//                }
-//            }
-//        }
-        
-        
-        
-        
-        
-        
-        
+        }
         
         let scr = ScriptRunner(from: fromNode)
         scr.script(id: fromNode.id!)
