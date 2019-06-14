@@ -21,7 +21,7 @@ class SideMenu:SKNode,MTKButtonDelegate{
 //    var scene:GameScene?
     override init() {
         super.init()
-        let frame = SKShapeNode(rectOf: CGSize(width: 365, height: 1100))
+        let frame = SKShapeNode(rectOf: CGSize(width: 365, height: 1500))
         let openButton = MTKButton(size: CGSize(width: 50, height: 50), label: ">")
         
         //openButton.add(target: self, action: #selector(self.buttonTapped(button:)))

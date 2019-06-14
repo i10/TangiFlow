@@ -55,6 +55,9 @@ class Keyboard:SKNode,MTKButtonDelegate{
         case "ABC":
             self.capsLock = false
             self.drawKeys()
+            
+        case "Clear text":
+            self.activeTextInput!.string = ""
         default:
             if self.capsLock{
                 self.activeTextInput!.string = self.activeTextInput!.string + button.titleLabel!.text!.uppercased()
@@ -137,11 +140,18 @@ class Keyboard:SKNode,MTKButtonDelegate{
 //        }
         
         
-        var button = MTKButton(size: CGSize(width: 550, height: keyHeight),label: "Close keyboard")
+        var button = MTKButton(size: CGSize(width: 550, height: keyHeight),label: "Clear text")
         button.position = CGPoint(x: x-150, y: y - 80)
         self.keys.append(button)
         self.addChild(button)
         button.add(target: self, action: #selector(self.buttonTapped(button:)))
+        
+        var button1 = MTKButton(size: CGSize(width: 40, height: 40),image: "close.png")
+        
+        button1.position = CGPoint(x: x+270, y: -2*y+40)
+        self.keys.append(button1)
+        self.addChild(button1)
+        button1.add(target: self, action: #selector(self.close(button:)))
     }
     
     
@@ -284,5 +294,11 @@ class Keyboard:SKNode,MTKButtonDelegate{
         //            testButton.add(target: self, action: #selector(self.buttonTapped(button:)))
         //            x = x + 3*70
         //        }
+    }
+    
+    
+    @objc func close(button:MTKButton){
+        self.activeTextInput = nil
+        self.removeFromParent()
     }
 }

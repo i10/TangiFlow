@@ -21,11 +21,11 @@ class GenericTypeResultNode:SKShapeNode{
         self.position = CGPoint(x:80,y:0)
         self.fillColor = SKColor(calibratedRed: 248/255.0, green: 48/255.0, blue: 56/255.0, alpha: 1.0)
         let titleLabel = SKLabelNode(text:"Result")
-        titleLabel.fontSize = 40
+        titleLabel.fontSize = 70
         self.addChild(titleLabel)
         titleLabel.position = CGPoint(x:0,y:self.frame.height/2 - titleLabel.frame.height - 5)
         let resultLabel = SKLabelNode(text:String(data))
-        resultLabel.fontSize = 30
+        resultLabel.fontSize = 50
         resultLabel.numberOfLines = 2
         resultLabel.lineBreakMode = .byWordWrapping
         resultLabel.fontSize = 20

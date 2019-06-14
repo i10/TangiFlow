@@ -65,7 +65,7 @@ class ArcManager:MTKButtonDelegate{
                                   parentNode: self.node!)
                 self.node?.addChild(section)
                 self.outputArcs.append(section)
-            var close = MTKButton(size: CGSize(width: 20, height: 20), image: "close")
+            var close = MTKButton(size: CGSize(width: 20, height: 20), image: "close.png")
             close.add(target: self, action: #selector(self.removeArc(button:)))
             if self.outputArcs.count != 1 {
                 section.drawX(angle: section.polarAngle,button: close)
@@ -87,7 +87,7 @@ class ArcManager:MTKButtonDelegate{
             for index in 0..<self.outputArcs.count{
                 self.outputArcs[index].zRotation = ( CGFloat(self.outputOffset) + CGFloat(spacing))*CGFloat(index)
                 self.outputArcs[index].redrawArc(with: CGFloat(self.outputOffset))
-                var close = MTKButton(size: CGSize(width: 20, height: 20), image: "close")
+                var close = MTKButton(size: CGSize(width: 20, height: 20), image: "close.png")
                 
                 close.add(target: self, action: #selector(self.removeArc(button:)))
                 self.outputArcs[index].drawX(angle: self.outputArcs[index].polarAngle ,button: close)
@@ -118,7 +118,7 @@ class ArcManager:MTKButtonDelegate{
             self.outputArcs[index].redrawArc(with: CGFloat(self.outputOffset))
             self.outputArcs[index].closeButton?.removeFromParent()
             if self.outputArcs.count != 1 {
-                var close = MTKButton(size: CGSize(width: 20, height: 20), image: "close")
+                var close = MTKButton(size: CGSize(width: 20, height: 20), image: "close.png")
                 
                 close.add(target: self, action: #selector(self.removeArc(button:)))
                     self.outputArcs[index].drawX(angle: self.outputArcs[index].polarAngle ,button: close)}

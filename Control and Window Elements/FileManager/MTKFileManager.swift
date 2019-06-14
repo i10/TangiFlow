@@ -79,14 +79,14 @@ class MTKFileManager:SKNode,MTKButtonDelegate{
         for index in 0 ..< images.count{
             let i = index
             let x = -300 + (i%3)*300
-            let y = 140 - (i/3)*280
+            let y = 140 - (i/3)*250
            // self.position = CGPoint.zero
             let button = MTKButton(size: CGSize(width: 200, height: 200), image: "ffolder.png")
             self.folders.append(button)
             button.name = images[index].path
             let label = SKLabelNode(text: images[index].lastPathComponent)
             button.addChild(label)
-            label.position.y = -140
+            label.position.y = -120
             self.addChild(button)
             button.position = CGPoint(x: x, y: y)
             button.add(target: self, action: #selector(self.buttonTapped(button:)))

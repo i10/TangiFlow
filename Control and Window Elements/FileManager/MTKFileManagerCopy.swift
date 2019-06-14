@@ -26,7 +26,7 @@ class MTKFileManagerCopy:SKNode,MTKButtonDelegate{
             
             var i = index - 1
             var x = -300 + (i%3)*300
-            var y = 140 - (i/3)*280
+            var y = 140 - (i/3)*200
             var buttonHeight = 0
             var buttonWidth = 0
             let imageFile = NSImage(byReferencing: URL(fileURLWithPath: images[index].path))
