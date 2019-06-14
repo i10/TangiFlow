@@ -71,10 +71,10 @@ class MiniMap: SKNode {
         
         
         // graph
-        guard let graphJSONPath = Bundle.main.path(forResource: "graph", ofType: "json") else { return }
+        guard let graphJSONPath =  URL(string: "file:///Users/ppi/Documents/Code/MasterAsif/ProjectFiles/graph.json") else { return }
         
         do {
-            let data = try Data(contentsOf: URL(fileURLWithPath: graphJSONPath), options: .mappedIfSafe)
+            let data = try Data(contentsOf: graphJSONPath, options: .mappedIfSafe)
             
             let json2 = try JSON(data: data)
             
@@ -108,6 +108,7 @@ class MiniMap: SKNode {
             toNode.arcManager!.addOutputArc()
             setEdge(from: toNode, to: fromNode)
         }
+        self.removeFromParent()
     }
     
     @objc fileprivate func closeMiniMap() {
