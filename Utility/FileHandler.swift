@@ -67,4 +67,16 @@ class FileHandler{
             file.write(dataToWrite)
         }
     }
+    
+    func saveToFile(json: JSON, to path: URL){
+        do {
+            let str = json.description
+            let dataToWrite = str.data(using: String.Encoding.utf8)!
+            
+            try dataToWrite.write(to: path)
+        }
+        catch {
+            print(error.localizedDescription)
+        }
+    }
 }

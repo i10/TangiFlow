@@ -1,869 +1,800 @@
 {
-    "config" : {
-        "type" : "image",
-        "tool_type" : "pil"
-    },
-    
-    "PT-127.99.01": {
-        "x": "284.0",
-        "y": "1062.0",
-        "alias": "Load image",
-        "function": "image_source",
-        "arguments": {
-            "main_args": {},
-            "controled_args": {
-                "controled_value":{"type":"button","alias":"Load image"}
-            }
+  "PT-127.99.08" : {
+    "arguments" : {
+      "controled_args" : {
+        "controled_value" : {
+          "min" : "0",
+          "type" : "slider",
+          "default" : "0",
+          "max" : "10",
+          "step" : "0.1"
         }
+      },
+      "main_args" : {
+        "image" : "Image input"
+      }
     },
-    
-    "PT-127.99.02" : {
-        "x": "690.0",
-        "y": "1893.0",
-        "alias": "Change brightness",
-        "function": "change_brightness",
-        "arguments": {
-            "main_args": {
-                "image": "Image input"
-            },
-            "controled_args": {
-                "controled_value": {
-                    "type": "slider",
-                    "min": "0",
-                    "max": "10",
-                    "step": "0.1",
-                    "default": "0"
-                }
-            }
-        },
-        "group_id": "Change image parameters"
+    "function" : "change_saturation",
+    "group_id" : "Change image parameters",
+    "alias" : "Change saturation",
+    "y" : "1893.0",
+    "x" : "3660.0"
+  },
+  "config" : {
+    "type" : "image",
+    "tool_type" : "pil"
+  },
+  "PT-127.99.20" : {
+    "arguments" : {
+      "main_args" : {
+        "image" : "Image input"
+      },
+      "controled_args" : {
+        "controled_value" : {
+          "min" : "0",
+          "default" : "0",
+          "type" : "slider",
+          "max" : "10",
+          "step" : "0.1"
+        }
+      }
     },
-    
-    
-    
-    
-    
-   
-   
-   
-    
-    "PT-127.99.40" : {
-        "x": "2866.0",
-        "y": "100.0",
-        "alias": "Change brightness",
-        "function": "change_brightness",
-        "arguments": {
-            "main_args": {
-                "image": "Image input"
-            },
-            "controled_args": {
-                "controled_value": {
-                    "type": "slider",
-                    "min": "0",
-                    "max": "10",
-                    "step": "0.1",
-                    "default": "0"
-                }
-            }
-        },
-        "group_id": "Change image parameters"
+    "function" : "change_brightness",
+    "group_id" : "Change image parameters",
+    "alias" : "Change brightness",
+    "y" : "1150.0",
+    "x" : "2690.0"
+  },
+  "PT-127.99.26" : {
+    "arguments" : {
+      "main_args" : {
+        "image" : "Image input"
+      },
+      "controled_args" : {
+        "controled_value" : {
+          "min" : "0",
+          "step" : "0.1",
+          "default" : "0",
+          "max" : "10",
+          "type" : "slider"
+        }
+      }
     },
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    "PT-118.122.03" : {
-        "x": "1190.0",
-        "y": "1893.0",
-        "alias" : "Change contrast",
-        "function" : "change_contrast",
-        "arguments" : {
-            "main_args" :{
-                "image":"Image input"
-            },
-            "controled_args": {
-                "controled_value": {
-                    "type": "slider",
-                    "min": "0",
-                    "max": "10",
-                    "step": "0.1",
-                    "default": "0"
-                }
-            }
-        },
-        "group_id": "Change image parameters"
+    "function" : "change_sharpness",
+    "group_id" : "Change image parameters",
+    "alias" : "Change sharpness",
+    "y" : "664.0",
+    "x" : "1950.0"
+  },
+  "PT-118.122.17" : {
+    "arguments" : {
+      "main_args" : {
+        "image" : "Image input"
+      },
+      "controled_args" : {
+        "controled_value" : {
+          "max" : "10",
+          "min" : "0",
+          "step" : "0.1",
+          "type" : "slider",
+          "default" : "0"
+        }
+      }
     },
-    
-    "PT-127.99.04" : {
-        "x": "1690.0",
-        "y": "1893.0",
-        "alias" : "Change saturation",
-        "function" : "change_saturation",
-        "arguments" : {
-            "main_args" : {
-                "image":"Image input"
-            },
-            "controled_args": {
-                "controled_value": {
-                    "type": "slider",
-                    "min": "0",
-                    "max": "10",
-                    "step": "0.1",
-                    "default": "0"
-                }
-            }
-        },
-        "group_id": "Change image parameters"
+    "function" : "change_contrast",
+    "group_id" : "Change image parameters",
+    "alias" : "Change contrast",
+    "y" : "1150.0",
+    "x" : "1190.0"
+  },
+  "PT-127.99.15" : {
+    "arguments" : {
+      "main_args" : {
+        "image" : "Image input"
+      },
+      "controled_args" : {
+        "controled_value" : {
+          "type" : "slider",
+          "min" : "0",
+          "max" : "10",
+          "step" : "0.1",
+          "default" : "0"
+        }
+      }
     },
-    
-    "PT-127.99.05" : {
-        "x": "2190.0",
-        "y": "1893.0",
-        "alias" : "Change sharpness",
-        "function" : "change_sharpness",
-        "arguments" : {
-            "main_args" : {
-                "image":"Image input"
-            },
-            "controled_args" : {
-                "controled_value":{"type":"slider","min":"0","max":"10","step":"0.1","default":"0"}
-            }
-        },
-        "group_id": "Change image parameters"
+    "function" : "change_saturation",
+    "group_id" : "Change image parameters",
+    "alias" : "Change saturation",
+    "y" : "1528.0",
+    "x" : "3450.0"
+  },
+  "PT-118.122.28" : {
+    "arguments" : {
+      "main_args" : {
+        "image" : "Image input"
+      },
+      "controled_args" : {
+        "controled_value" : {
+          "step" : "0.1",
+          "max" : "10",
+          "type" : "slider",
+          "default" : "0",
+          "min" : "0"
+        }
+      }
     },
-    
-    "PT-127.99.06" : {
-        "x": "2690.0",
-        "y": "1893.0",
-        "alias": "Change brightness",
-        "function": "change_brightness",
-        "arguments": {
-            "main_args": {
-                "image": "Image input"
-            },
-            "controled_args": {
-                "controled_value": {
-                    "type": "slider",
-                    "min": "0",
-                    "max": "10",
-                    "step": "0.1",
-                    "default": "0"
-                }
-            }
-        },
-        "group_id": "Change image parameters"
+    "function" : "change_contrast",
+    "group_id" : "Change image parameters",
+    "alias" : "Change contrast",
+    "y" : "664.0",
+    "x" : "2950.0"
+  },
+  "PT-127.99.04" : {
+    "arguments" : {
+      "main_args" : {
+        "image" : "Image input"
+      },
+      "controled_args" : {
+        "controled_value" : {
+          "step" : "0.1",
+          "type" : "slider",
+          "default" : "0",
+          "max" : "10",
+          "min" : "0"
+        }
+      }
     },
-    
-    "PT-118.122.07" : {
-        "x": "3190.0",
-        "y": "1893.0",
-        "alias" : "Change contrast",
-        "function" : "change_contrast",
-        "arguments" : {
-            "main_args" :{
-                "image":"Image input"
-            },
-            "controled_args": {
-                "controled_value": {
-                    "type": "slider",
-                    "min": "0",
-                    "max": "10",
-                    "step": "0.1",
-                    "default": "0"
-                }
-            }
-        },
-        "group_id": "Change image parameters"
+    "function" : "change_saturation",
+    "group_id" : "Change image parameters",
+    "alias" : "Change saturation",
+    "y" : "1893.0",
+    "x" : "1690.0"
+  },
+  "PT-127.99.16" : {
+    "arguments" : {
+      "main_args" : {
+        "image" : "Image input"
+      },
+      "controled_args" : {
+        "controled_value" : {
+          "default" : "0",
+          "min" : "0",
+          "type" : "slider",
+          "max" : "10",
+          "step" : "0.1"
+        }
+      }
     },
-    
-    "PT-127.99.08" : {
-        "x": "3660.0",
-        "y": "1893.0",
-        "alias" : "Change saturation",
-        "function" : "change_saturation",
-        "arguments" : {
-            "main_args" : {
-                "image":"Image input"
-            },
-            "controled_args": {
-                "controled_value": {
-                    "type": "slider",
-                    "min": "0",
-                    "max": "10",
-                    "step": "0.1",
-                    "default": "0"
-                }
-            }
-        },
-        "group_id": "Change image parameters"
+    "function" : "change_brightness",
+    "group_id" : "Change image parameters",
+    "alias" : "Change brightness",
+    "y" : "1150.0",
+    "x" : "690.0"
+  },
+  "PT-118.122.24" : {
+    "arguments" : {
+      "main_args" : {
+        "image" : "Image input"
+      },
+      "controled_args" : {
+        "controled_value" : {
+          "default" : "0",
+          "min" : "0",
+          "max" : "10",
+          "step" : "0.1",
+          "type" : "slider"
+        }
+      }
     },
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    "PT-127.99.09" : {
-        "x": "380.0",
-        "y": "1528.0",
-        "alias": "Change brightness",
-        "function": "change_brightness",
-        "arguments": {
-            "main_args": {
-                "image": "Image input"
-            },
-            "controled_args": {
-                "controled_value": {
-                    "type": "slider",
-                    "min": "0",
-                    "max": "10",
-                    "step": "0.1",
-                    "default": "0"
-                }
-            }
-        },
-        "group_id": "Change image parameters"
+    "function" : "change_contrast",
+    "group_id" : "Change image parameters",
+    "alias" : "Change contrast",
+    "y" : "664.0",
+    "x" : "950.0"
+  },
+  "PT-118.122.36" : {
+    "arguments" : {
+      "main_args" : {
+        "image" : "Image input"
+      },
+      "controled_args" : {
+        "controled_value" : {
+          "min" : "0",
+          "type" : "slider",
+          "default" : "0",
+          "max" : "10",
+          "step" : "0.1"
+        }
+      }
     },
-    
-    "PT-118.122.10" : {
-        "x": "950.0",
-        "y": "1528.0",
-        "alias" : "Change contrast",
-        "function" : "change_contrast",
-        "arguments" : {
-            "main_args" :{
-                "image":"Image input"
-            },
-            "controled_args": {
-                "controled_value": {
-                    "type": "slider",
-                    "min": "0",
-                    "max": "10",
-                    "step": "0.1",
-                    "default": "0"
-                }
-            }
-        },
-        "group_id": "Change image parameters"
+    "function" : "change_contrast",
+    "group_id" : "Change image parameters",
+    "alias" : "Change contrast",
+    "y" : "211.0",
+    "x" : "3190.0"
+  },
+  "PT-127.99.18" : {
+    "arguments" : {
+      "main_args" : {
+        "image" : "Image input"
+      },
+      "controled_args" : {
+        "controled_value" : {
+          "type" : "slider",
+          "step" : "0.1",
+          "max" : "10",
+          "min" : "0",
+          "default" : "0"
+        }
+      }
     },
-    
-    "PT-127.99.11" : {
-        "x": "1450.0",
-        "y": "1528.0",
-        "alias" : "Change saturation",
-        "function" : "change_saturation",
-        "arguments" : {
-            "main_args" : {
-                "image":"Image input"
-            },
-            "controled_args": {
-                "controled_value": {
-                    "type": "slider",
-                    "min": "0",
-                    "max": "10",
-                    "step": "0.1",
-                    "default": "0"
-                }
-            }
-        },
-        "group_id": "Change image parameters"
+    "function" : "change_saturation",
+    "group_id" : "Change image parameters",
+    "alias" : "Change saturation",
+    "y" : "1150.0",
+    "x" : "1690.0"
+  },
+  "PT-127.99.01" : {
+    "arguments" : {
+      "controled_args" : {
+        "controled_value" : {
+          "alias" : "Load image",
+          "type" : "button"
+        }
+      },
+      "main_args" : {
+
+      }
     },
-    
-    "PT-127.99.12" : {
-        "x": "1950.0",
-        "y": "1528.0",
-        "alias" : "Change sharpness",
-        "function" : "change_sharpness",
-        "arguments" : {
-            "main_args" : {
-                "image":"Image input"
-            },
-            "controled_args" : {
-                "controled_value":{"type":"slider","min":"0","max":"10","step":"0.1","default":"0"}
-            }
-        },
-        "group_id": "Change image parameters"
+    "function" : "image_source",
+    "alias" : "Load image",
+    "y" : "1062.0",
+    "x" : "284.0"
+  },
+  "PT-127.99.35" : {
+    "arguments" : {
+      "main_args" : {
+        "image" : "Image input"
+      },
+      "controled_args" : {
+        "controled_value" : {
+          "max" : "10",
+          "default" : "0",
+          "type" : "slider",
+          "step" : "0.1",
+          "min" : "0"
+        }
+      }
     },
-    
-    "PT-127.99.13" : {
-        "x": "2450.0",
-        "y": "1528.0",
-        "alias": "Change brightness",
-        "function": "change_brightness",
-        "arguments": {
-            "main_args": {
-                "image": "Image input"
-            },
-            "controled_args": {
-                "controled_value": {
-                    "type": "slider",
-                    "min": "0",
-                    "max": "10",
-                    "step": "0.1",
-                    "default": "0"
-                }
-            }
-        },
-        "group_id": "Change image parameters"
+    "function" : "change_brightness",
+    "group_id" : "Change image parameters",
+    "alias" : "Change brightness",
+    "y" : "211.0",
+    "x" : "2690.0"
+  },
+  "PT-127.99.19" : {
+    "arguments" : {
+      "main_args" : {
+        "image" : "Image input"
+      },
+      "controled_args" : {
+        "controled_value" : {
+          "step" : "0.1",
+          "type" : "slider",
+          "max" : "10",
+          "min" : "0",
+          "default" : "0"
+        }
+      }
     },
-    
-    "PT-118.122.14" : {
-        "x": "2950.0",
-        "y": "1528.0",
-        "alias" : "Change contrast",
-        "function" : "change_contrast",
-        "arguments" : {
-            "main_args" :{
-                "image":"Image input"
-            },
-            "controled_args": {
-                "controled_value": {
-                    "type": "slider",
-                    "min": "0",
-                    "max": "10",
-                    "step": "0.1",
-                    "default": "0"
-                }
-            }
-        },
-        "group_id": "Change image parameters"
+    "function" : "change_sharpness",
+    "group_id" : "Change image parameters",
+    "alias" : "Change sharpness",
+    "y" : "1150.0",
+    "x" : "2190.0"
+  },
+  "PT-127.99.40" : {
+    "x" : "1260.0",
+    "arguments" : {
+      "controled_args" : {
+        "controled_value" : {
+          "min" : "0",
+          "type" : "slider",
+          "step" : "0.1",
+          "max" : "10",
+          "default" : "0"
+        }
+      },
+      "main_args" : {
+        "image" : "Image input"
+      }
     },
-    
-    "PT-127.99.15" : {
-        "x": "3450.0",
-        "y": "1528.0",
-        "alias" : "Change saturation",
-        "function" : "change_saturation",
-        "arguments" : {
-            "main_args" : {
-                "image":"Image input"
-            },
-            "controled_args": {
-                "controled_value": {
-                    "type": "slider",
-                    "min": "0",
-                    "max": "10",
-                    "step": "0.1",
-                    "default": "0"
-                }
-            }
-        },
-        "group_id": "Change image parameters"
+    "alias" : "Change brightness",
+    "y" : "728.0",
+    "function" : "change_brightness",
+    "group_id" : "Change image parameters"
+  },
+  "PT-118.122.10" : {
+    "arguments" : {
+      "main_args" : {
+        "image" : "Image input"
+      },
+      "controled_args" : {
+        "controled_value" : {
+          "step" : "0.1",
+          "min" : "0",
+          "max" : "10",
+          "default" : "0",
+          "type" : "slider"
+        }
+      }
     },
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    "PT-127.99.16" : {
-        "x": "690.0",
-        "y": "1150.0",
-        "alias": "Change brightness",
-        "function": "change_brightness",
-        "arguments": {
-            "main_args": {
-                "image": "Image input"
-            },
-            "controled_args": {
-                "controled_value": {
-                    "type": "slider",
-                    "min": "0",
-                    "max": "10",
-                    "step": "0.1",
-                    "default": "0"
-                }
-            }
-        },
-        "group_id": "Change image parameters"
+    "function" : "change_contrast",
+    "group_id" : "Change image parameters",
+    "alias" : "Change contrast",
+    "y" : "1528.0",
+    "x" : "950.0"
+  },
+  "PT-127.99.22" : {
+    "arguments" : {
+      "main_args" : {
+        "image" : "Image input"
+      },
+      "controled_args" : {
+        "controled_value" : {
+          "default" : "0",
+          "min" : "0",
+          "max" : "10",
+          "type" : "slider",
+          "step" : "0.1"
+        }
+      }
     },
-    
-    "PT-118.122.17" : {
-        "x": "1190.0",
-        "y": "1150.0",
-        "alias" : "Change contrast",
-        "function" : "change_contrast",
-        "arguments" : {
-            "main_args" :{
-                "image":"Image input"
-            },
-            "controled_args": {
-                "controled_value": {
-                    "type": "slider",
-                    "min": "0",
-                    "max": "10",
-                    "step": "0.1",
-                    "default": "0"
-                }
-            }
-        },
-        "group_id": "Change image parameters"
+    "function" : "change_saturation",
+    "group_id" : "Change image parameters",
+    "alias" : "Change saturation",
+    "y" : "1150.0",
+    "x" : "3660.0"
+  },
+  "PT-127.99.09" : {
+    "arguments" : {
+      "main_args" : {
+        "image" : "Image input"
+      },
+      "controled_args" : {
+        "controled_value" : {
+          "step" : "0.1",
+          "max" : "10",
+          "min" : "0",
+          "type" : "slider",
+          "default" : "0"
+        }
+      }
     },
-    
-    "PT-127.99.18" : {
-        "x": "1690.0",
-        "y": "1150.0",
-        "alias" : "Change saturation",
-        "function" : "change_saturation",
-        "arguments" : {
-            "main_args" : {
-                "image":"Image input"
-            },
-            "controled_args": {
-                "controled_value": {
-                    "type": "slider",
-                    "min": "0",
-                    "max": "10",
-                    "step": "0.1",
-                    "default": "0"
-                }
-            }
-        },
-        "group_id": "Change image parameters"
+    "function" : "change_brightness",
+    "group_id" : "Change image parameters",
+    "alias" : "Change brightness",
+    "y" : "1528.0",
+    "x" : "380.0"
+  },
+  "PT-127.99.27" : {
+    "arguments" : {
+      "main_args" : {
+        "image" : "Image input"
+      },
+      "controled_args" : {
+        "controled_value" : {
+          "step" : "0.1",
+          "type" : "slider",
+          "max" : "10",
+          "min" : "0",
+          "default" : "0"
+        }
+      }
     },
-    
-    "PT-127.99.19" : {
-        "x": "2190.0",
-        "y": "1150.0",
-        "alias" : "Change sharpness",
-        "function" : "change_sharpness",
-        "arguments" : {
-            "main_args" : {
-                "image":"Image input"
-            },
-            "controled_args" : {
-                "controled_value":{"type":"slider","min":"0","max":"10","step":"0.1","default":"0"}
-            }
-        },
-        "group_id": "Change image parameters"
+    "function" : "change_brightness",
+    "group_id" : "Change image parameters",
+    "alias" : "Change brightness",
+    "y" : "664.0",
+    "x" : "2450.0"
+  },
+  "PT-127.99.02" : {
+    "arguments" : {
+      "main_args" : {
+        "image" : "Image input"
+      },
+      "controled_args" : {
+        "controled_value" : {
+          "min" : "0",
+          "type" : "slider",
+          "max" : "10",
+          "default" : "0",
+          "step" : "0.1"
+        }
+      }
     },
-    
-    "PT-127.99.20" : {
-        "x": "2690.0",
-        "y": "1150.0",
-        "alias": "Change brightness",
-        "function": "change_brightness",
-        "arguments": {
-            "main_args": {
-                "image": "Image input"
-            },
-            "controled_args": {
-                "controled_value": {
-                    "type": "slider",
-                    "min": "0",
-                    "max": "10",
-                    "step": "0.1",
-                    "default": "0"
-                }
-            }
-        },
-        "group_id": "Change image parameters"
+    "function" : "change_brightness",
+    "group_id" : "Change image parameters",
+    "alias" : "Change brightness",
+    "y" : "1893.0",
+    "x" : "690.0"
+  },
+  "PT-127.99.23" : {
+    "arguments" : {
+      "main_args" : {
+        "image" : "Image input"
+      },
+      "controled_args" : {
+        "controled_value" : {
+          "type" : "slider",
+          "min" : "0",
+          "default" : "0",
+          "step" : "0.1",
+          "max" : "10"
+        }
+      }
     },
-    
-    "PT-118.122.21" : {
-        "x": "3190.0",
-        "y": "1150.0",
-        "alias" : "Change contrast",
-        "function" : "change_contrast",
-        "arguments" : {
-            "main_args" :{
-                "image":"Image input"
-            },
-            "controled_args": {
-                "controled_value": {
-                    "type": "slider",
-                    "min": "0",
-                    "max": "10",
-                    "step": "0.1",
-                    "default": "0"
-                }
-            }
-        },
-        "group_id": "Change image parameters"
+    "function" : "change_brightness",
+    "group_id" : "Change image parameters",
+    "alias" : "Change brightness",
+    "y" : "664.0",
+    "x" : "380.0"
+  },
+  "PT-118.122.07" : {
+    "arguments" : {
+      "main_args" : {
+        "image" : "Image input"
+      },
+      "controled_args" : {
+        "controled_value" : {
+          "default" : "0",
+          "max" : "10",
+          "min" : "0",
+          "type" : "slider",
+          "step" : "0.1"
+        }
+      }
     },
-    
-    "PT-127.99.22" : {
-        "x": "3660.0",
-        "y": "1150.0",
-        "alias" : "Change saturation",
-        "function" : "change_saturation",
-        "arguments" : {
-            "main_args" : {
-                "image":"Image input"
-            },
-            "controled_args": {
-                "controled_value": {
-                    "type": "slider",
-                    "min": "0",
-                    "max": "10",
-                    "step": "0.1",
-                    "default": "0"
-                }
-            }
-        },
-        "group_id": "Change image parameters"
+    "function" : "change_contrast",
+    "group_id" : "Change image parameters",
+    "alias" : "Change contrast",
+    "y" : "1893.0",
+    "x" : "3190.0"
+  },
+  "PT-127.99.31" : {
+    "arguments" : {
+      "main_args" : {
+        "image" : "Image input"
+      },
+      "controled_args" : {
+        "controled_value" : {
+          "default" : "0",
+          "type" : "slider",
+          "step" : "0.1",
+          "min" : "0",
+          "max" : "10"
+        }
+      }
     },
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    "PT-127.99.23" : {
-        "x": "380.0",
-        "y": "664.0",
-        "alias": "Change brightness",
-        "function": "change_brightness",
-        "arguments": {
-            "main_args": {
-                "image": "Image input"
-            },
-            "controled_args": {
-                "controled_value": {
-                    "type": "slider",
-                    "min": "0",
-                    "max": "10",
-                    "step": "0.1",
-                    "default": "0"
-                }
-            }
-        },
-        "group_id": "Change image parameters"
+    "function" : "change_brightness",
+    "group_id" : "Change image parameters",
+    "alias" : "Change brightness",
+    "y" : "211.0",
+    "x" : "690.0"
+  },
+  "PT-127.99.29" : {
+    "arguments" : {
+      "controled_args" : {
+        "controled_value" : {
+          "default" : "0",
+          "step" : "0.1",
+          "min" : "0",
+          "max" : "10",
+          "type" : "slider"
+        }
+      },
+      "main_args" : {
+        "image" : "Image input"
+      }
     },
-    
-    "PT-118.122.24" : {
-        "x": "950.0",
-        "y": "664.0",
-        "alias" : "Change contrast",
-        "function" : "change_contrast",
-        "arguments" : {
-            "main_args" :{
-                "image":"Image input"
-            },
-            "controled_args": {
-                "controled_value": {
-                    "type": "slider",
-                    "min": "0",
-                    "max": "10",
-                    "step": "0.1",
-                    "default": "0"
-                }
-            }
-        },
-        "group_id": "Change image parameters"
+    "function" : "change_saturation",
+    "group_id" : "Change image parameters",
+    "alias" : "Change saturation",
+    "y" : "664.0",
+    "x" : "3450.0"
+  },
+  "PT-127.99.06" : {
+    "arguments" : {
+      "controled_args" : {
+        "controled_value" : {
+          "max" : "10",
+          "default" : "0",
+          "step" : "0.1",
+          "type" : "slider",
+          "min" : "0"
+        }
+      },
+      "main_args" : {
+        "image" : "Image input"
+      }
     },
-    
-    "PT-127.99.25" : {
-        "x": "1450.0",
-        "y": "664.0",
-        "alias" : "Change saturation",
-        "function" : "change_saturation",
-        "arguments" : {
-            "main_args" : {
-                "image":"Image input"
-            },
-            "controled_args": {
-                "controled_value": {
-                    "type": "slider",
-                    "min": "0",
-                    "max": "10",
-                    "step": "0.1",
-                    "default": "0"
-                }
-            }
-        },
-        "group_id": "Change image parameters"
+    "function" : "change_brightness",
+    "group_id" : "Change image parameters",
+    "alias" : "Change brightness",
+    "y" : "1893.0",
+    "x" : "2690.0"
+  },
+  "PT-127.99.12" : {
+    "arguments" : {
+      "main_args" : {
+        "image" : "Image input"
+      },
+      "controled_args" : {
+        "controled_value" : {
+          "type" : "slider",
+          "step" : "0.1",
+          "default" : "0",
+          "max" : "10",
+          "min" : "0"
+        }
+      }
     },
-    
-    "PT-127.99.26" : {
-        "x": "1950.0",
-        "y": "664.0",
-        "alias" : "Change sharpness",
-        "function" : "change_sharpness",
-        "arguments" : {
-            "main_args" : {
-                "image":"Image input"
-            },
-            "controled_args" : {
-                "controled_value":{"type":"slider","min":"0","max":"10","step":"0.1","default":"0"}
-            }
-        },
-        "group_id": "Change image parameters"
+    "function" : "change_sharpness",
+    "group_id" : "Change image parameters",
+    "alias" : "Change sharpness",
+    "y" : "1528.0",
+    "x" : "1950.0"
+  },
+  "PT-118.122.21" : {
+    "arguments" : {
+      "controled_args" : {
+        "controled_value" : {
+          "min" : "0",
+          "max" : "10",
+          "step" : "0.1",
+          "type" : "slider",
+          "default" : "0"
+        }
+      },
+      "main_args" : {
+        "image" : "Image input"
+      }
     },
-    
-    "PT-127.99.27" : {
-        "x": "2450.0",
-        "y": "664.0",
-        "alias": "Change brightness",
-        "function": "change_brightness",
-        "arguments": {
-            "main_args": {
-                "image": "Image input"
-            },
-            "controled_args": {
-                "controled_value": {
-                    "type": "slider",
-                    "min": "0",
-                    "max": "10",
-                    "step": "0.1",
-                    "default": "0"
-                }
-            }
-        },
-        "group_id": "Change image parameters"
+    "function" : "change_contrast",
+    "group_id" : "Change image parameters",
+    "alias" : "Change contrast",
+    "y" : "1150.0",
+    "x" : "3190.0"
+  },
+  "PT-118.122.14" : {
+    "arguments" : {
+      "controled_args" : {
+        "controled_value" : {
+          "type" : "slider",
+          "step" : "0.1",
+          "max" : "10",
+          "min" : "0",
+          "default" : "0"
+        }
+      },
+      "main_args" : {
+        "image" : "Image input"
+      }
     },
-    
-    "PT-118.122.28" : {
-        "x": "2950.0",
-        "y": "664.0",
-        "alias" : "Change contrast",
-        "function" : "change_contrast",
-        "arguments" : {
-            "main_args" :{
-                "image":"Image input"
-            },
-            "controled_args": {
-                "controled_value": {
-                    "type": "slider",
-                    "min": "0",
-                    "max": "10",
-                    "step": "0.1",
-                    "default": "0"
-                }
-            }
-        },
-        "group_id": "Change image parameters"
+    "function" : "change_contrast",
+    "group_id" : "Change image parameters",
+    "alias" : "Change contrast",
+    "y" : "1528.0",
+    "x" : "2950.0"
+  },
+  "PT-127.99.05" : {
+    "arguments" : {
+      "controled_args" : {
+        "controled_value" : {
+          "default" : "0",
+          "step" : "0.1",
+          "max" : "10",
+          "type" : "slider",
+          "min" : "0"
+        }
+      },
+      "main_args" : {
+        "image" : "Image input"
+      }
     },
-    
-    "PT-127.99.29" : {
-        "x": "3450.0",
-        "y": "664.0",
-        "alias" : "Change saturation",
-        "function" : "change_saturation",
-        "arguments" : {
-            "main_args" : {
-                "image":"Image input"
-            },
-            "controled_args": {
-                "controled_value": {
-                    "type": "slider",
-                    "min": "0",
-                    "max": "10",
-                    "step": "0.1",
-                    "default": "0"
-                }
-            }
-        },
-        "group_id": "Change image parameters"
+    "function" : "change_sharpness",
+    "group_id" : "Change image parameters",
+    "alias" : "Change sharpness",
+    "y" : "1893.0",
+    "x" : "2190.0"
+  },
+  "PT-127.99.37" : {
+    "arguments" : {
+      "controled_args" : {
+        "controled_value" : {
+          "max" : "10",
+          "min" : "0",
+          "step" : "0.1",
+          "default" : "0",
+          "type" : "slider"
+        }
+      },
+      "main_args" : {
+        "image" : "Image input"
+      }
     },
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    "PT-127.99.30" : {
-        "x": "227.0",
-        "y": "211.0",
-        "alias": "Change brightness",
-        "function": "change_brightness",
-        "arguments": {
-            "main_args": {
-                "image": "Image input"
-            },
-            "controled_args": {
-                "controled_value": {
-                    "type": "slider",
-                    "min": "0",
-                    "max": "10",
-                    "step": "0.1",
-                    "default": "0"
-                }
-            }
-        },
-        "group_id": "Change image parameters"
+    "function" : "change_saturation",
+    "group_id" : "Change image parameters",
+    "alias" : "Change saturation",
+    "y" : "211.0",
+    "x" : "3660.0"
+  },
+  "PT-118.122.03" : {
+    "arguments" : {
+      "controled_args" : {
+        "controled_value" : {
+          "min" : "0",
+          "step" : "0.1",
+          "default" : "0",
+          "max" : "10",
+          "type" : "slider"
+        }
+      },
+      "main_args" : {
+        "image" : "Image input"
+      }
     },
-    
-    "PT-127.99.31" : {
-        "x": "690.0",
-        "y": "211.0",
-        "alias": "Change brightness",
-        "function": "change_brightness",
-        "arguments": {
-            "main_args": {
-                "image": "Image input"
-            },
-            "controled_args": {
-                "controled_value": {
-                    "type": "slider",
-                    "min": "0",
-                    "max": "10",
-                    "step": "0.1",
-                    "default": "0"
-                }
-            }
-        },
-        "group_id": "Change image parameters"
+    "function" : "change_contrast",
+    "group_id" : "Change image parameters",
+    "alias" : "Change contrast",
+    "y" : "1893.0",
+    "x" : "1190.0"
+  },
+  "PT-127.99.25" : {
+    "arguments" : {
+      "controled_args" : {
+        "controled_value" : {
+          "step" : "0.1",
+          "type" : "slider",
+          "default" : "0",
+          "max" : "10",
+          "min" : "0"
+        }
+      },
+      "main_args" : {
+        "image" : "Image input"
+      }
     },
-    
-    "PT-118.122.32" : {
-        "x": "1190.0",
-        "y": "211.0",
-        "alias" : "Change contrast",
-        "function" : "change_contrast",
-        "arguments" : {
-            "main_args" :{
-                "image":"Image input"
-            },
-            "controled_args": {
-                "controled_value": {
-                    "type": "slider",
-                    "min": "0",
-                    "max": "10",
-                    "step": "0.1",
-                    "default": "0"
-                }
-            }
-        },
-        "group_id": "Change image parameters"
+    "function" : "change_saturation",
+    "group_id" : "Change image parameters",
+    "alias" : "Change saturation",
+    "y" : "664.0",
+    "x" : "1450.0"
+  },
+  "PT-127.99.34" : {
+    "arguments" : {
+      "controled_args" : {
+        "controled_value" : {
+          "type" : "slider",
+          "max" : "10",
+          "default" : "0",
+          "min" : "0",
+          "step" : "0.1"
+        }
+      },
+      "main_args" : {
+        "image" : "Image input"
+      }
     },
-    
-    "PT-127.99.33" : {
-        "x": "1690.0",
-        "y": "211.0",
-        "alias" : "Change saturation",
-        "function" : "change_saturation",
-        "arguments" : {
-            "main_args" : {
-                "image":"Image input"
-            },
-            "controled_args": {
-                "controled_value": {
-                    "type": "slider",
-                    "min": "0",
-                    "max": "10",
-                    "step": "0.1",
-                    "default": "0"
-                }
-            }
-        },
-        "group_id": "Change image parameters"
+    "function" : "change_sharpness",
+    "group_id" : "Change image parameters",
+    "alias" : "Change sharpness",
+    "y" : "211.0",
+    "x" : "2190.0"
+  },
+  "PT-127.99.30" : {
+    "arguments" : {
+      "controled_args" : {
+        "controled_value" : {
+          "default" : "0",
+          "type" : "slider",
+          "min" : "0",
+          "step" : "0.1",
+          "max" : "10"
+        }
+      },
+      "main_args" : {
+        "image" : "Image input"
+      }
     },
-    
-    "PT-127.99.34" : {
-        "x": "2190.0",
-        "y": "211.0",
-        "alias" : "Change sharpness",
-        "function" : "change_sharpness",
-        "arguments" : {
-            "main_args" : {
-                "image":"Image input"
-            },
-            "controled_args" : {
-                "controled_value":{"type":"slider","min":"0","max":"10","step":"0.1","default":"0"}
-            }
-        },
-        "group_id": "Change image parameters"
+    "function" : "change_brightness",
+    "group_id" : "Change image parameters",
+    "alias" : "Change brightness",
+    "y" : "211.0",
+    "x" : "227.0"
+  },
+  "PT-127.99.11" : {
+    "arguments" : {
+      "controled_args" : {
+        "controled_value" : {
+          "max" : "10",
+          "type" : "slider",
+          "step" : "0.1",
+          "min" : "0",
+          "default" : "0"
+        }
+      },
+      "main_args" : {
+        "image" : "Image input"
+      }
     },
-    
-    "PT-127.99.35" : {
-        "x": "2690.0",
-        "y": "211.0",
-        "alias": "Change brightness",
-        "function": "change_brightness",
-        "arguments": {
-            "main_args": {
-                "image": "Image input"
-            },
-            "controled_args": {
-                "controled_value": {
-                    "type": "slider",
-                    "min": "0",
-                    "max": "10",
-                    "step": "0.1",
-                    "default": "0"
-                }
-            }
-        },
-        "group_id": "Change image parameters"
+    "function" : "change_saturation",
+    "group_id" : "Change image parameters",
+    "alias" : "Change saturation",
+    "y" : "1528.0",
+    "x" : "1450.0"
+  },
+  "PT-127.99.13" : {
+    "arguments" : {
+      "controled_args" : {
+        "controled_value" : {
+          "max" : "10",
+          "min" : "0",
+          "default" : "0",
+          "step" : "0.1",
+          "type" : "slider"
+        }
+      },
+      "main_args" : {
+        "image" : "Image input"
+      }
     },
-    
-    "PT-118.122.36" : {
-        "x": "3190.0",
-        "y": "211.0",
-        "alias" : "Change contrast",
-        "function" : "change_contrast",
-        "arguments" : {
-            "main_args" :{
-                "image":"Image input"
-            },
-            "controled_args": {
-                "controled_value": {
-                    "type": "slider",
-                    "min": "0",
-                    "max": "10",
-                    "step": "0.1",
-                    "default": "0"
-                }
-            }
-        },
-        "group_id": "Change image parameters"
+    "function" : "change_brightness",
+    "group_id" : "Change image parameters",
+    "alias" : "Change brightness",
+    "y" : "1528.0",
+    "x" : "2450.0"
+  },
+  "PT-127.99.33" : {
+    "arguments" : {
+      "controled_args" : {
+        "controled_value" : {
+          "default" : "0",
+          "min" : "0",
+          "step" : "0.1",
+          "type" : "slider",
+          "max" : "10"
+        }
+      },
+      "main_args" : {
+        "image" : "Image input"
+      }
     },
-    
-    "PT-127.99.37" : {
-        "x": "3660.0",
-        "y": "211.0",
-        "alias" : "Change saturation",
-        "function" : "change_saturation",
-        "arguments" : {
-            "main_args" : {
-                "image":"Image input"
-            },
-            "controled_args": {
-                "controled_value": {
-                    "type": "slider",
-                    "min": "0",
-                    "max": "10",
-                    "step": "0.1",
-                    "default": "0"
-                }
-            }
-        },
-        "group_id": "Change image parameters"
-    }
+    "function" : "change_saturation",
+    "group_id" : "Change image parameters",
+    "alias" : "Change saturation",
+    "y" : "211.0",
+    "x" : "1690.0"
+  },
+  "PT-118.122.32" : {
+    "arguments" : {
+      "controled_args" : {
+        "controled_value" : {
+          "type" : "slider",
+          "min" : "0",
+          "max" : "10",
+          "step" : "0.1",
+          "default" : "0"
+        }
+      },
+      "main_args" : {
+        "image" : "Image input"
+      }
+    },
+    "function" : "change_contrast",
+    "group_id" : "Change image parameters",
+    "alias" : "Change contrast",
+    "y" : "211.0",
+    "x" : "1190.0"
+  }
 }

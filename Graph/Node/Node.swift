@@ -31,6 +31,8 @@ class Node: SKNode,MTKButtonDelegate {
     var playButton: MTKButton = MTKButton(size: CGSize(width: 20, height: 20),image: "playGlyph")
     var base:SKShapeNode = SKShapeNode(circleOfRadius: 50)
     var status = SKLabelNode(text: "RUNNING")
+    var assignedTo: Node?
+    let assignButton = MTKButton(size: CGSize(width: 20.0, height: 20.0), image: "assignGlyph")
     override init() {
         super.init()
         
@@ -86,7 +88,7 @@ class Node: SKNode,MTKButtonDelegate {
             self.inputArcNames = Array((args["main_args"]?.dictionaryValue.keys)!)
         }
         
-        let assignButton = MTKButton(size: CGSize(width: 20.0, height: 20.0), image: "assignGlyph")
+//        let assignButton = MTKButton(size: CGSize(width: 20.0, height: 20.0), image: "assignGlyph")
         assignButton.position = CGPoint(x: -105.0, y: 0.0)
         assignButton.add(target: self, action: #selector(self.assignButtonTapped(_:)))
         self.addChild(assignButton)
@@ -101,7 +103,16 @@ class Node: SKNode,MTKButtonDelegate {
     }
     
     @objc fileprivate func assignButtonTapped(_ sender: MTKButton) {
-        print("Assign Button Tapped")
+        if self.assignedTo != nil { // already assigned
+            self.base.fillColor = .white
+            self.assignedTo!.base.fillColor = .white
+            
+            self.assignedTo = nil
+            self.assignButton.zRotation = 2 * CGFloat.pi
+        } else {
+            let miniMap = AssignMap(node: self)
+            self.addChild(miniMap)
+        }
     }
     
     @objc fileprivate func disconnectButtonTapped(_ sender: MTKButton) {
@@ -133,17 +144,28 @@ class Node: SKNode,MTKButtonDelegate {
     }
     
     @objc func play(button:MTKButton){
-        self.addChild(status)
-        button.set(size: CGSize(width: 30, height: 30), image:"playGlyph")
-        let scr = ScriptRunner(from: self)
-        scr.script(id:button.name!)
-        let resultMaker = ResultVisualization(from: self)
-        resultMaker.getResults()
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) { // Change `2.0` to the desired number of seconds.
-            // Code you want to be delayed
-            button.set(size: CGSize(width: 20, height: 20), image:"playGlyph")
+        if self.assignedTo == nil {
+            self.addChild(status)
+            button.set(size: CGSize(width: 30, height: 30), image:"playGlyph")
+            let scr = ScriptRunner(from: self)
+            scr.script(id:button.name!)
+            let resultMaker = ResultVisualization(from: self)
+            resultMaker.getResults()
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) { // Change `2.0` to the desired number of seconds.
+                // Code you want to be delayed
+                button.set(size: CGSize(width: 20, height: 20), image:"playGlyph")
+            }
+        } else {
+            self.assignedTo!.addChild(status)
+            self.assignedTo!.playButton.set(size: CGSize(width: 30, height: 30), image:"playGlyph")
+            let scr = ScriptRunner(from: self.assignedTo!)
+            scr.script(id: self.assignedTo!.playButton.name!)
+            let resultMaker = ResultVisualization(from: self.assignedTo!)
+            resultMaker.getResults()
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) { // Change `2.0` to the desired number of seconds.
+                self.assignedTo!.playButton.set(size: CGSize(width: 20, height: 20), image:"playGlyph")
+            }
         }
-        
     }
     
     func changeBaseColor(color:NSColor){

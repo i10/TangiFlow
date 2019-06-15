@@ -14,6 +14,7 @@ class GameScene: MTKScene, MTKButtonDelegate {
     var graph:Graph2?
     var traceCall:[Int:Int] = [:]
     var projectManager:ProjectFilesManager?
+    let tangibleManager = TangibleManager()
 
     fileprivate func setEdge(from fromNode: Node, to toNode: Node) {
         guard let fromNodeArc = fromNode.arcManager?.outputArcs.first, let toNodeArc = toNode.arcManager?.inputArcs.first else { return }
@@ -58,11 +59,17 @@ class GameScene: MTKScene, MTKButtonDelegate {
         self.projectManager = ProjectFilesManager()
         self.projectManager?.openJson()
         
+        setupNodes()
+    }
+    
+    fileprivate func setupNodes() {
+        self.scene?.removeAllChildren()
+        
         var json: JSON!
-        guard let restoreJSONPath = Bundle.main.path(forResource: "restore", ofType: "json") else { return }
+        guard let restoreJSONPath =  URL(string: "file:///Users/ppi/Documents/Code/MasterAsif/ProjectFiles/restore.json") else { return }
         
         do {
-            let data = try Data(contentsOf: URL(fileURLWithPath: restoreJSONPath), options: .mappedIfSafe)
+            let data = try Data(contentsOf: restoreJSONPath, options: .mappedIfSafe)
             
             json = try JSON(data: data)
             
@@ -124,42 +131,58 @@ class GameScene: MTKScene, MTKButtonDelegate {
         MTKHub.sharedHub.traceDelegate = self
     }
     
+    fileprivate func getRestoreJSON() -> JSON? {
+        guard let restoreJSONPath =  URL(string: "file:///Users/ppi/Documents/Code/MasterAsif/ProjectFiles/restore.json") else { return nil }
+        
+        do {
+            let data = try Data(contentsOf: restoreJSONPath, options: .mappedIfSafe)
+            
+            let json = try JSON(data: data)
+            
+            return json
+        } catch {
+            print("Error: ", error.localizedDescription)
+        }
+        
+        return nil
+    }
+    
+    fileprivate func appendNewNode(to json: JSON, at position: CGPoint) {
+        guard let restoreJSONPath =  URL(string: "file:///Users/ppi/Documents/Code/MasterAsif/ProjectFiles/restore.json") else { return }
+        
+        let newNode = "{\"PT-127.99.40\" : { \"x\": \"\(position.x)\", \"y\": \"\(position.y)\", \"alias\": \"Change brightness\", \"function\": \"change_brightness\", \"arguments\": { \"main_args\": { \"image\": \"Image input\" }, \"controled_args\": { \"controled_value\": { \"type\": \"slider\", \"min\": \"0\", \"max\": \"10\", \"step\": \"0.1\", \"default\": \"0\" } } }, \"group_id\": \"Change image parameters\" }}"
+        
+        let newJSON = JSON.init(parseJSON: newNode)
+        
+        let merge = json.myMerged(other: newJSON)
+        FileHandler.shared.saveToFile(json: merge, to: restoreJSONPath)
+        setupNodes()
+    }
+    
     func preProcessTraceSet(traceSet: Set<MTKTrace>, node: SKNode, timestamp: TimeInterval) -> Set<MTKTrace> {
+        
         for trace in traceSet{
             if trace.state == MTKUtils.MTKTraceState.beginningTrace{
                 self.graph?.touchDown(trace: trace)
+                
+//                if traceSet.count == 3 {
+//                    if !tangibleManager.isExisting(id: "PT-127.99.40") {
+//                        tangibleManager.addTangible(with: "PT-127.99.40")
+//
+//                        guard let json = getRestoreJSON() else { return [] }
+//                        appendNewNode(to: json, at: traceSet.first!.position!)
+//                    }
+//                }
             }else if trace.state == MTKUtils.MTKTraceState.movingTrace{
-                self.graph?.touchMove(trace: trace)
+//                if traceSet.count > 2 {
+                    self.graph?.touchMove(trace: trace)
+//                }
             }else{
                 self.graph?.touchUp(trace: trace)
                 print("Line: #74, File: GameScene ::: ", trace.position)
-                
-                let allNodes = NodeManager.nodeList
-                var textFields:[CustomTextFields] = []
-                for node in allNodes{
-                    if let controlElements = node.controlElements {
-                        textFields += textFields + controlElements.textFields
-                    }
-                    
-                }
-                for textField in textFields{
-                    if textField.frame.origin.x < trace.position!.x && trace.position!.x < textField.frame.origin.x + 200 &&
-                        textField.frame.origin.y < trace.position!.y && trace.position!.y < textField.frame.origin.y + 80{
-                        
-                        textField.isEditable = true
-                        textField.window?.makeFirstResponder(textField)
-                        
-                        textField.parent?.keyboard.removeFromParent()
-                        textField.parent?.addChild(textField.parent!.keyboard)
-                        textField.parent!.keyboard.drawKeys()
-                        textField.parent?.keyboard.position = CGPoint(x: 600, y: 200)
-                        
-                        textField.parent!.keyboard.activeTextInput = textField
-                    }
-                }
             }
-            self.nodes(at: trace.position!)
             
+            self.nodes(at: trace.position!)
         }
         
         return traceSet
@@ -170,4 +193,18 @@ class GameScene: MTKScene, MTKButtonDelegate {
         
     }
     
+}
+
+extension JSON {
+    mutating func myMerge(other: JSON) {
+        for (key, subJson) in other {
+            self[key] = subJson
+        }
+    }
+    
+    func myMerged(other: JSON) -> JSON {
+        var merged = self
+        merged.myMerge(other: other)
+        return merged
+    }
 }

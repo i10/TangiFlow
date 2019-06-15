@@ -176,6 +176,15 @@ class Graph2{
                         activity.slider!.button.position.x = activity.slider!.button.position.x - deltaX
                         (activity.slider as! Slider).countValue()
                         
+                        if let node = (activity.slider!.parent as? Node), let assignedTo = node.assignedTo {
+                            for sub in assignedTo.children {
+                                if sub is Slider {
+                                    (sub as! Slider).button.position.x = activity.slider!.button.position.x
+                                    (sub as! Slider).countValue()
+                                }
+                            }
+                        }
+                        
                     }
                     
                     //sliderButton[0].position.y = sliderButton[0].position.y - deltaY
