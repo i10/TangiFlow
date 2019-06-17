@@ -104,6 +104,9 @@ class ImageTypeResultNode:SKSpriteNode{
                 }
         
         slider.image = self
+        var label = SKLabelNode(text: "Zoom")
+        slider.addChild(label)
+        label.position = CGPoint(x: -220, y: -10)
         self.addChild(slider)
 //        if let node = self.parent as? Node{
 //            node.zoomSlider?.removeFromParent()
