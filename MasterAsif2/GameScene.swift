@@ -161,9 +161,19 @@ class GameScene: MTKScene, MTKButtonDelegate {
     
     func preProcessTraceSet(traceSet: Set<MTKTrace>, node: SKNode, timestamp: TimeInterval) -> Set<MTKTrace> {
         
+//        if traceSet.count == 2 {
+//            let trace1 = Array(traceSet)[0]
+//            let trace2 = Array(traceSet)[1]
+//
+//            let simultaneousTouch = SimultaneousTouch(with: trace1.position!, and: trace2.position!, self.scene!)
+//            print(simultaneousTouch)
+//        }
+        
         for trace in traceSet{
             if trace.state == MTKUtils.MTKTraceState.beginningTrace{
                 self.graph?.touchDown(trace: trace)
+                
+                
                 
 //                if traceSet.count == 3 {
 //                    if !tangibleManager.isExisting(id: "PT-127.99.40") {
@@ -178,6 +188,14 @@ class GameScene: MTKScene, MTKButtonDelegate {
                     self.graph?.touchMove(trace: trace)
 //                }
             }else{
+                if traceSet.count == 2 {
+                    let trace1 = Array(traceSet)[0]
+                    let trace2 = Array(traceSet)[1]
+                    
+                    let simultaneousTouch = SimultaneousTouch(with: trace1.position!, and: trace2.position!, self.scene!)
+                    print(simultaneousTouch)
+                }
+                
                 self.graph?.touchUp(trace: trace)
                 print("Line: #74, File: GameScene ::: ", trace.position)
             }
