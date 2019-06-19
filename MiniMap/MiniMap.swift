@@ -47,6 +47,8 @@ class MiniMap: SKNode {
             json = try JSON(data: data)
             
             for j in json {
+                if j.0 == "config" { continue }
+                
                 let x = CGFloat(j.1["x"].floatValue)
                 let y = CGFloat(j.1["y"].floatValue)
                 
