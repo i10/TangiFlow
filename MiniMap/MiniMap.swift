@@ -32,7 +32,7 @@ class MiniMap: SKNode {
     fileprivate func setupUI() {
         // MiniMap Box
         let screenSize = NSScreen.screens[1].frame.size
-        let boxNode = SKShapeNode(rectOf: CGSize(width: screenSize.width / 5, height: screenSize.height / 5))
+        let boxNode = SKShapeNode(rectOf: CGSize(width: screenSize.width / 10, height: screenSize.height / 10))
         boxNode.position = CGPoint(x: boxNode.frame.width / 1.6, y: boxNode.frame.height / 1.6)
         boxNode.zPosition = 1000
         boxNode.fillColor = #colorLiteral(red: 0.1490033567, green: 0.1490303278, blue: 0.148994863, alpha: 1)
@@ -50,11 +50,11 @@ class MiniMap: SKNode {
                 let x = CGFloat(j.1["x"].floatValue)
                 let y = CGFloat(j.1["y"].floatValue)
                 
-                var point = CGPoint(x: x / 5, y: y / 5)
+                var point = CGPoint(x: x / 10, y: y / 10)
                 point.x = point.x - boxNode.frame.width / 2
                 point.y = point.y - boxNode.frame.height / 2
                 
-                let node = MTKButton(size: CGSize(width: 44.0, height: 40.0), image: "circle")
+                let node = MTKButton(size: CGSize(width: 29.0, height: 25.0), image: "circle")
                 node.add(target: self, action: #selector(self.nodeTapped(node:)))
                 node.name = j.0
                 node.position = point
@@ -83,12 +83,12 @@ class MiniMap: SKNode {
                 let jsonPart = j.1
                 
                 if jsonPart.count > 0 {
-                    let fromX = CGFloat(json[title]["x"].floatValue) / 5 - (boxNode.frame.width / 2)
-                    let fromY = CGFloat(json[title]["y"].floatValue) / 5 - (boxNode.frame.height / 2)
+                    let fromX = CGFloat(json[title]["x"].floatValue) / 10 - (boxNode.frame.width / 2)
+                    let fromY = CGFloat(json[title]["y"].floatValue) / 10 - (boxNode.frame.height / 2)
                     
                     let toTitle = jsonPart.first!.1.stringValue
-                    let toX = CGFloat(json[toTitle]["x"].floatValue) / 5 - (boxNode.frame.width / 2)
-                    let toY = CGFloat(json[toTitle]["y"].floatValue) / 5 - (boxNode.frame.height / 2)
+                    let toX = CGFloat(json[toTitle]["x"].floatValue) / 10 - (boxNode.frame.width / 2)
+                    let toY = CGFloat(json[toTitle]["y"].floatValue) / 10 - (boxNode.frame.height / 2)
                     
                     let edge = Edge(from: CGPoint(x: fromX, y: fromY), to: CGPoint(x: toX, y: toY))
                     boxNode.addChild(edge)
