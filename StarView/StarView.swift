@@ -89,7 +89,7 @@ class StarView: SKNode {
         let x = CGFloat(json[title]["x"].floatValue)
         let y = CGFloat(json[title]["y"].floatValue)
         
-        if let toNode = scene.nodes(at: CGPoint(x: x, y: y)).first?.parent as? Node {
+        if let toNode = scene.nodes(at: CGPoint(x: x, y: y)).first?.parent?.parent as? Node {
             toNode.arcManager!.addOutputArc()
             setEdge(from: toNode, to: self.node)
             

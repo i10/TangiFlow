@@ -76,9 +76,41 @@ class Node: SKNode,MTKButtonDelegate {
         self.maxInput = Array(json["arguments"]["main_args"].dictionaryValue.keys).count
         self.funcName = json["function"].stringValue
         self.alias = json["alias"].stringValue
-        self.drawTitleLabel(text: json["alias"].stringValue + " ::: \(self.id!.split(separator: ".").last ?? "")")
+        
+        if !id.contains(".40") {
+            self.drawTitleLabel(text: "\(self.id!.split(separator: ".").last ?? "")")
+        }
+        
         self.position = CGPoint(x: CGFloat(json["x"].floatValue), y: CGFloat(json["y"].floatValue))
         playButton.add(target: self, action: #selector(self.play(button:)))
+        
+        if !id.contains(".40") {
+            if json["alias"].stringValue.contains("contrast") {
+                let texture = SKTexture.init(image: #imageLiteral(resourceName: "contrast"))
+                let spriteNode = SKSpriteNode(texture: texture)
+                spriteNode.position = .zero
+                spriteNode.size = CGSize(width: 30.0, height: 30.0)
+                self.base.addChild(spriteNode)
+            } else if json["alias"].stringValue.contains("brightness") {
+                let texture = SKTexture.init(image: #imageLiteral(resourceName: "brightness"))
+                let spriteNode = SKSpriteNode(texture: texture)
+                spriteNode.position = .zero
+                spriteNode.size = CGSize(width: 30.0, height: 30.0)
+                self.base.addChild(spriteNode)
+            } else if json["alias"].stringValue.contains("sharpness") {
+                let texture = SKTexture.init(image: #imageLiteral(resourceName: "sharpness"))
+                let spriteNode = SKSpriteNode(texture: texture)
+                spriteNode.position = .zero
+                spriteNode.size = CGSize(width: 30.0, height: 30.0)
+                self.base.addChild(spriteNode)
+            } else if json["alias"].stringValue.contains("saturation") {
+                let texture = SKTexture.init(image: #imageLiteral(resourceName: "saturation"))
+                let spriteNode = SKSpriteNode(texture: texture)
+                spriteNode.position = .zero
+                spriteNode.size = CGSize(width: 30.0, height: 30.0)
+                self.base.addChild(spriteNode)
+            }
+        }
         
         playButton.position = CGPoint(x: 0, y: 100)
         deleteButton.position = CGPoint(x: -79, y: 65)
@@ -107,7 +139,7 @@ class Node: SKNode,MTKButtonDelegate {
         listButton.add(target: self, action: #selector(self.listButtonTapped(_:)))
         self.addChild(listButton)
         
-        starButton.position = CGPoint(x: -110.0, y: -40.0)
+        starButton.position = CGPoint(x: 79, y: 65)
         starButton.add(target: self, action: #selector(self.starButtonTapped(_:)))
         self.addChild(starButton)
         

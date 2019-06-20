@@ -49,8 +49,8 @@ class Edge:SKShapeNode{
     func drawLineBasic(from:CGPoint,to:CGPoint){
         self.path = pathToDraw
         self.fillColor = NSColor.white
-        self.strokeColor = NSColor.white
-        self.lineWidth = 2
+//        self.strokeColor = NSColor.white
+        self.lineWidth = 0.1
         self.pathToDraw.move(to: from)
         self.pathToDraw.addLine(to: to)
         self.path = self.pathToDraw

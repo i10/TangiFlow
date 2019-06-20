@@ -172,7 +172,7 @@ class Graph2{
                 activity.oldY = activity.trace!.position!.y
                 activity.trace = trace
                 if (abs(deltaX) > 0 ) {
-                    if activity.slider!.button.position.x - deltaX > -80 && activity.slider!.button.position.x - deltaX < 80{
+                    if activity.slider!.button.position.x - deltaX > -60 && activity.slider!.button.position.x - deltaX < 60{
                         activity.slider!.button.position.x = activity.slider!.button.position.x - deltaX
                         (activity.slider as! Slider).countValue()
                         

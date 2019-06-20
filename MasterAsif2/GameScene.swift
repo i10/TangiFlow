@@ -107,8 +107,8 @@ class GameScene: MTKScene, MTKButtonDelegate {
                     let toX = CGFloat(json[toTitle]["x"].floatValue)
                     let toY = CGFloat(json[toTitle]["y"].floatValue)
                     
-                    let fromNode = scene?.nodes(at: CGPoint(x: fromX, y: fromY))[1] as! Node
-                    let toNode = scene?.nodes(at: CGPoint(x: toX, y: toY))[1] as! Node
+                    let fromNode = scene?.nodes(at: CGPoint(x: fromX, y: fromY)).filter({ $0 is Node }).first as! Node
+                    let toNode = scene?.nodes(at: CGPoint(x: toX, y: toY)).filter({ $0 is Node }).first as! Node
                     setEdge(from: fromNode, to: toNode)
                 }
             }
