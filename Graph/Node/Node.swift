@@ -28,11 +28,19 @@ class Node: SKNode,MTKButtonDelegate {
     var controledArgDicts:[String:String] = [:]
     var filePicker:MTKFileManager = MTKFileManager()
     var keyboard:Keyboard = Keyboard()
+    
+    // Control Buttons
     var playButton: MTKButton = MTKButton(size: CGSize(width: 20, height: 20),image: "playGlyph")
+    let listButton = MTKButton(size: CGSize(width: 20.0, height: 20.0), image: "listGlyph")
+    let assignButton = MTKButton(size: CGSize(width: 20.0, height: 20.0), image: "assignGlyph")
+    let starButton = MTKButton(size: CGSize(width: 20.0, height: 20.0), image: "starGlyph")
+    let addButton = MTKButton(size: CGSize(width: 20, height: 20), image:"branchGlyph")
+    let deleteButton = MTKButton(size: CGSize(width: 20, height: 20), image:"trashGlyph")
+    
     var base:SKShapeNode = SKShapeNode(circleOfRadius: 50)
     var status = SKLabelNode(text: "RUNNING")
     var assignedTo: Node?
-    let assignButton = MTKButton(size: CGSize(width: 20.0, height: 20.0), image: "assignGlyph")
+    
     override init() {
         super.init()
         
@@ -70,8 +78,6 @@ class Node: SKNode,MTKButtonDelegate {
         self.alias = json["alias"].stringValue
         self.drawTitleLabel(text: json["alias"].stringValue + " ::: \(self.id!.split(separator: ".").last ?? "")")
         self.position = CGPoint(x: CGFloat(json["x"].floatValue), y: CGFloat(json["y"].floatValue))
-        let addButton = MTKButton(size: CGSize(width: 20, height: 20), image:"branchGlyph")
-        let deleteButton = MTKButton(size: CGSize(width: 20, height: 20), image:"trashGlyph")
         playButton.add(target: self, action: #selector(self.play(button:)))
         
         playButton.position = CGPoint(x: 0, y: 100)
@@ -97,14 +103,22 @@ class Node: SKNode,MTKButtonDelegate {
 //        disconnectButton.add(target: self, action: #selector(self.disconnectButtonTapped(_:)))
 //        self.addChild(disconnectButton)
 
-        let listButton = MTKButton(size: CGSize(width: 20.0, height: 20.0), image: "listGlyph")
         listButton.position = CGPoint(x: -110.0, y: 0.0)
         listButton.add(target: self, action: #selector(self.listButtonTapped(_:)))
         self.addChild(listButton)
-
+        
+        starButton.position = CGPoint(x: -110.0, y: -40.0)
+        starButton.add(target: self, action: #selector(self.starButtonTapped(_:)))
+        self.addChild(starButton)
         
         self.arcManager?.drawArcs()
         self.drawBase()
+    }
+    
+    @objc fileprivate func starButtonTapped(_ sender: MTKButton) {
+        let starView = StarView(with: self)
+        self.addChild(starView)
+        
     }
     
     @objc fileprivate func listButtonTapped(_ sender: MTKButton) {
