@@ -68,8 +68,7 @@ class Node: SKNode,MTKButtonDelegate {
         self.maxInput = Array(json["arguments"]["main_args"].dictionaryValue.keys).count
         self.funcName = json["function"].stringValue
         self.alias = json["alias"].stringValue
-//        self.drawTitleLabel(text: json["alias"].stringValue + " ::: \(self.id!)")
-        self.drawTitleLabel(text: json["alias"].stringValue)
+        self.drawTitleLabel(text: json["alias"].stringValue + " ::: \(self.id!.split(separator: ".").last ?? "")")
         self.position = CGPoint(x: CGFloat(json["x"].floatValue), y: CGFloat(json["y"].floatValue))
         let addButton = MTKButton(size: CGSize(width: 20, height: 20), image:"branchGlyph")
         let deleteButton = MTKButton(size: CGSize(width: 20, height: 20), image:"trashGlyph")
@@ -89,8 +88,6 @@ class Node: SKNode,MTKButtonDelegate {
             self.inputArcNames = Array((args["main_args"]?.dictionaryValue.keys)!)
         }
         
-//        let assignButton = MTKButton(size: CGSize(width: 20.0, height: 20.0), image: "assignGlyph")
-//        assignButton.position = CGPoint(x: -105.0, y: 0.0)
         assignButton.position = CGPoint(x: -79.0, y: -65.0)
         assignButton.add(target: self, action: #selector(self.assignButtonTapped(_:)))
         self.addChild(assignButton)
@@ -99,9 +96,22 @@ class Node: SKNode,MTKButtonDelegate {
 //        disconnectButton.position = CGPoint(x: -79.0, y: -65.0)
 //        disconnectButton.add(target: self, action: #selector(self.disconnectButtonTapped(_:)))
 //        self.addChild(disconnectButton)
+
+        let listButton = MTKButton(size: CGSize(width: 20.0, height: 20.0), image: "listGlyph")
+        listButton.position = CGPoint(x: -110.0, y: 0.0)
+        listButton.add(target: self, action: #selector(self.listButtonTapped(_:)))
+        self.addChild(listButton)
+
         
         self.arcManager?.drawArcs()
         self.drawBase()
+    }
+    
+    @objc fileprivate func listButtonTapped(_ sender: MTKButton) {
+        guard let node = sender.parent as? Node else { return }
+        
+        let listView = ListView(node: node)
+        self.addChild(listView)
     }
     
     @objc fileprivate func assignButtonTapped(_ sender: MTKButton) {
