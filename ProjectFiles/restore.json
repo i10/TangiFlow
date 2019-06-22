@@ -294,7 +294,7 @@
     "x" : "2190.0"
   },
   "PT-127.99.40" : {
-    "x" : "1260.0",
+    "x" : "2471.0",
     "arguments" : {
       "controled_args" : {
         "controled_value" : {
@@ -310,7 +310,7 @@
       }
     },
     "alias" : "Change brightness",
-    "y" : "728.0",
+    "y" : "362.0",
     "function" : "change_brightness",
     "group_id" : "Change image parameters"
   },

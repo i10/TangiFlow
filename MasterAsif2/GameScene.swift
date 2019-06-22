@@ -8,13 +8,27 @@
 
 import SpriteKit
 import SwiftyJSON
-
 import MultiTouchKitSwift
+
 class GameScene: MTKScene, MTKButtonDelegate {
     var graph:Graph2?
     var traceCall:[Int:Int] = [:]
     var projectManager:ProjectFilesManager?
     let tangibleManager = TangibleManager()
+    
+    override func setupScene() {
+        MTKHub.sharedHub.traceDelegate = self
+        
+        FileHandler.shared.cleanContent(of:FileHandler.shared.imagesFolderPath)
+        FileHandler.shared.cleanContent(of:FileHandler.shared.resultFolderPath)
+        
+        self.view?.ignoresSiblingOrder = true
+        graph = Graph2(scene: self)
+        self.projectManager = ProjectFilesManager()
+        self.projectManager?.openJson()
+        
+        setupNodes()
+    }
 
     fileprivate func setEdge(from fromNode: Node, to toNode: Node) {
         guard let fromNodeArc = fromNode.arcManager?.outputArcs.first, let toNodeArc = toNode.arcManager?.inputArcs.first else { return }
@@ -53,14 +67,14 @@ class GameScene: MTKScene, MTKButtonDelegate {
         fromNodeArc.redrawArc(with: 1)
     }
     
-    override func didMove(to view: SKView) {
-        self.view?.ignoresSiblingOrder = true
-        graph = Graph2(scene: self)
-        self.projectManager = ProjectFilesManager()
-        self.projectManager?.openJson()
-        
-        setupNodes()
-    }
+//    override func didMove(to view: SKView) {
+//        self.view?.ignoresSiblingOrder = true
+//        graph = Graph2(scene: self)
+//        self.projectManager = ProjectFilesManager()
+//        self.projectManager?.openJson()
+//
+//        setupNodes()
+//    }
     
     fileprivate func setupNodes() {
         self.scene?.removeAllChildren()
@@ -124,12 +138,12 @@ class GameScene: MTKScene, MTKButtonDelegate {
         activity.fulcrum = arc
     }
     
-    override func setupScene() {
-        FileHandler.shared.cleanContent(of:FileHandler.shared.imagesFolderPath)
-        FileHandler.shared.cleanContent(of:FileHandler.shared.resultFolderPath)
-        graph = Graph2(scene: self)
-        MTKHub.sharedHub.traceDelegate = self
-    }
+//    override func setupScene() {
+//        FileHandler.shared.cleanContent(of:FileHandler.shared.imagesFolderPath)
+//        FileHandler.shared.cleanContent(of:FileHandler.shared.resultFolderPath)
+//        graph = Graph2(scene: self)
+//        MTKHub.sharedHub.traceDelegate = self
+//    }
     
     fileprivate func getRestoreJSON() -> JSON? {
         guard let restoreJSONPath =  URL(string: "file:///Users/ppi/Documents/Code/MasterAsif/ProjectFiles/restore.json") else { return nil }
@@ -161,16 +175,32 @@ class GameScene: MTKScene, MTKButtonDelegate {
     
     func preProcessTraceSet(traceSet: Set<MTKTrace>, node: SKNode, timestamp: TimeInterval) -> Set<MTKTrace> {
         
+        for tangible in self.passiveTangibles {
+            if let position = traceSet.first?.position, let node = self.scene?.nodes(at: position).filter({ $0 is Node }).first as? Node {
+                touchMoved(for: tangible, and: node, position: position.x)
+            }
+        }
+        
         for trace in traceSet{
             if trace.state == MTKUtils.MTKTraceState.beginningTrace{
                 self.graph?.touchDown(trace: trace)
             }else if trace.state == MTKUtils.MTKTraceState.movingTrace{
-                self.graph?.touchMove(trace: trace)
+//                if !self.passiveTangibles.first!.usedTraces.contains(trace) {
+                    self.graph?.touchMove(trace: trace)
+//                }
             }else{
                 if traceSet.count == 2 {
                     let trace1 = Array(traceSet)[0]
                     let trace2 = Array(traceSet)[1]
                     
+                    if let _ = self.scene!.nodes(at: trace1.position!).filter({ $0.name == "TOUCH" }).first {
+                        print("TOUCH 1")
+                    }
+                    
+                    if let _ = self.scene?.nodes(at: trace2.position!).filter({ $0.name == "TOUCH" }).first {
+                        print("TOUCH 2")
+                    }
+
                     let simultaneousTouch = SimultaneousTouch(with: trace1.position!, and: trace2.position!, self.scene!)
                     print(simultaneousTouch)
                 }
@@ -183,6 +213,47 @@ class GameScene: MTKScene, MTKButtonDelegate {
         }
         
         return traceSet
+    }
+    
+    var prevRotation: CGFloat = 0.0
+    var prevSliderPosition: CGFloat = 0.0
+    var value: CGFloat = 0.0
+    fileprivate func touchMoved(for tangible: MTKPassiveTangible, and node: Node, position: CGFloat) {
+        let delta = tangible.zRotation - self.prevRotation
+        if (0.1 <= abs(delta))  {
+            self.value += delta/(CGFloat.pi * 2)
+            
+            if self.value > 1 {
+                self.value = 1
+            } else if self.value < 0 {
+                self.value = 0
+            }
+            
+            print(value)
+            
+            if let assignedTo = node.assignedTo {
+                for sub in node.children {
+                    if sub is Slider {
+                        (sub as! Slider).countValue(with: value * 10)
+                        
+                        let val = Double(round(10*(value * 10))/10)
+                        (sub as! Slider).currentValueLabel?.text = "\(val)"
+                        (sub as! Slider).button.position.x = -60.0 + CGFloat(120 * val / 10.0)
+                    }
+                }
+                
+                for sub in assignedTo.children {
+                    if sub is Slider {
+                        (sub as! Slider).countValue(with: value * 10)
+                        
+                        let val = Double(round(10*(value * 10))/10)
+                        (sub as! Slider).currentValueLabel?.text = "\(val)"
+                        (sub as! Slider).button.position.x = -60.0 + CGFloat(120 * val / 10.0)
+                    }
+                }
+            }
+            self.prevRotation = tangible.zRotation
+        }
     }
     
     override func update(_ currentTime: TimeInterval) {

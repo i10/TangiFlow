@@ -111,6 +111,14 @@ class AssignMap: SKNode {
             fromNode.assignedTo = toNode
             fromNode.assignButton.zRotation = CGFloat.pi
         }
+        
+        if fromNode.id!.contains(".40") {
+            guard let slider = fromNode.children.filter({ $0 is Slider }).first else { return }
+            
+            slider.isHidden = false
+        }
+        
+        
         self.removeFromParent()
     }
     

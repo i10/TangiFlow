@@ -4,8 +4,8 @@ import MultiTouchKitSwift
 import SwiftyJSON
 class Node: SKNode,MTKButtonDelegate {
     var controlElements:ControlElements?
-    var zoomSlider:Slider?
-    var zoomValue:CGFloat = 1.0
+//    var zoomSlider:Slider?
+//    var zoomValue:CGFloat = 1.0
     var view:SKView?
     var button:MTKButton?
     var inputArcNames:[String] = []
@@ -33,6 +33,7 @@ class Node: SKNode,MTKButtonDelegate {
     var playButton: MTKButton = MTKButton(size: CGSize(width: 20, height: 20),image: "playGlyph")
     let listButton = MTKButton(size: CGSize(width: 20.0, height: 20.0), image: "listGlyph")
     let assignButton = MTKButton(size: CGSize(width: 20.0, height: 20.0), image: "assignGlyph")
+    let touchButton = MTKButton(size: CGSize(width: 20.0, height: 20.0), image: "touchGlyph")
     let starButton = MTKButton(size: CGSize(width: 20.0, height: 20.0), image: "starGlyph")
     let addButton = MTKButton(size: CGSize(width: 20, height: 20), image:"branchGlyph")
     let deleteButton = MTKButton(size: CGSize(width: 20, height: 20), image:"trashGlyph")
@@ -79,6 +80,12 @@ class Node: SKNode,MTKButtonDelegate {
         
         if !id.contains(".40") {
             self.drawTitleLabel(text: "\(self.id!.split(separator: ".").last ?? "")")
+        }
+        
+        if id.contains(".40") {
+            guard let slider = self.children.filter({ $0 is Slider }).first else { return }
+            
+            slider.isHidden = true
         }
         
         self.position = CGPoint(x: CGFloat(json["x"].floatValue), y: CGFloat(json["y"].floatValue))
@@ -130,6 +137,10 @@ class Node: SKNode,MTKButtonDelegate {
         assignButton.add(target: self, action: #selector(self.assignButtonTapped(_:)))
         self.addChild(assignButton)
         
+        touchButton.position = CGPoint(x: 79.0, y: -65.0)
+        touchButton.add(target: self, action: #selector(self.touchButtonTapped(_:)))
+        self.addChild(touchButton)
+        
 //        let disconnectButton = MTKButton(size: CGSize(width: 20.0, height: 20.0), image: "disconnectGlyph")
 //        disconnectButton.position = CGPoint(x: -79.0, y: -65.0)
 //        disconnectButton.add(target: self, action: #selector(self.disconnectButtonTapped(_:)))
@@ -150,6 +161,9 @@ class Node: SKNode,MTKButtonDelegate {
     @objc fileprivate func starButtonTapped(_ sender: MTKButton) {
         let starView = StarView(with: self)
         self.addChild(starView)
+    }
+    
+    @objc fileprivate func touchButtonTapped(_ sender: MTKButton) {
         
     }
     
@@ -169,10 +183,24 @@ class Node: SKNode,MTKButtonDelegate {
             self.assignedTo = nil
             
             self.assignButton.zRotation = 2 * CGFloat.pi
+            
+            if self.id!.contains(".40") {
+                guard let slider = self.children.filter({ $0 is Slider }).first else { return }
+                
+                slider.isHidden = true
+            }
         } else {
             let miniMap = AssignMap(node: self)
             self.addChild(miniMap)
         }
+        
+//        if self.id!.contains(".40") {
+//            for sub in self.children {
+//                if sub is Slider {
+//                    (sub as! Slider).isHidden = self.assignedTo == nil
+//                }
+//            }
+//        }
     }
     
     @objc fileprivate func disconnectButtonTapped(_ sender: MTKButton) {

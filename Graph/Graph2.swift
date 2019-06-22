@@ -199,14 +199,14 @@ class Graph2{
         if !allNodes.isEmpty{
             position = allNodes[0].position
         }
-        if let activity = TraceToNode.getActivity(by: trace.uuid){
-            self.moveNode(node: activity.node!, trace: trace)
-        }
-//        if !self.inCircle(center: position, point: trace.position, radius: 60){
+//        if let activity = TraceToNode.getActivity(by: trace.uuid){
+//            self.moveNode(node: activity.node!, trace: trace)
+//        }
+        if !self.inCircle(center: position, point: trace.position, radius: 60){
             if let activity = TraceToActivity.getActivity(by: trace.uuid) {
                 activity.edge?.redrawEdge(from: activity.fulcrum?.globalPos, to: trace.position)
             }
-//        }
+        }
     }
 
     

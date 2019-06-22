@@ -14,7 +14,7 @@ class MTKFileManager:SKNode,MTKButtonDelegate{
     var backButton = MTKButton(size: CGSize(width: 140, height: 40), label: "← Back")
     override init() {
         super.init()
-        self.zPosition = 10
+        self.zPosition = 2000
         var frame = SKShapeNode(rectOf: CGSize(width: 600, height: 300))
         frame.position.y = 160.0
         frame.fillColor = SKColor.gray
@@ -39,13 +39,14 @@ class MTKFileManager:SKNode,MTKButtonDelegate{
         
         self.node?.sourceData?.removeFromParent()
         self.node?.sourceData = ImageTypeResultNode(url:button.name!)
-        (self.node?.sourceData as! ImageTypeResultNode).reloadImage(zoom: self.node!.zoomValue)
-        (self.node?.sourceData as! ImageTypeResultNode).setSlider()
+//        (self.node?.sourceData as! ImageTypeResultNode).reloadImage(zoom: self.node!.zoomValue)
+//        (self.node?.sourceData as! ImageTypeResultNode).setSlider()
         (self.node?.sourceData as! ImageTypeResultNode).url = button.name!
         self.node?.sourceData?.position = CGPoint(x: 0, y: -220)
+        self.node!.sourceData!.zPosition = 2000
         self.node?.addChild(self.node!.sourceData!)
         self.node!.sourceUrl = button.name!
-        (self.node?.sourceData as! ImageTypeResultNode).setSlider()
+//        (self.node?.sourceData as! ImageTypeResultNode).setSlider()
         self.removeFromParent()
     }
     
@@ -79,8 +80,8 @@ class MTKFileManager:SKNode,MTKButtonDelegate{
        
         for index in 0 ..< images.count{
             let i = index
-            let x = -200 + (i%3)*300
-            let y = 240 - (i/3)*280
+            let x = -200 + (i%3)*200
+            let y = 240 - (i/3)*140
            // self.position = CGPoint.zero
             let button = MTKButton(size: CGSize(width: 100, height: 100), image: "ffolder.png")
             self.folders.append(button)

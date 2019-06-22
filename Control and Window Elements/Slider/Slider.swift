@@ -55,6 +55,7 @@ class Slider: SKNode {
             self.pixelValues.append(CGFloat(index)*pixelsPerStep-60)
         }
         self.currentValue = "\(self.defaultVal)"
+        self.zPosition = 1000
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -76,6 +77,18 @@ class Slider: SKNode {
         self.button.addChild(self.currentValueLabel!)
         self.button.fillColor = SKColor.black
         self.bar.addChild(self.button)
+        self.button.name = "sliderButton"
+    }
+    
+    func drawSliderButton2(){
+        self.currentValueLabel = SKLabelNode(text: "\(self.defaultVal)")
+        self.currentValueLabel?.fontSize = 20.0
+        self.currentValueLabel!.position = CGPoint(x: 0, y: 30)
+        self.button.position = CGPoint(x: self.countPosition(), y: 0)
+        print(CGPoint(x: self.countPosition(), y: 0))
+//        self.button.addChild(self.currentValueLabel!)
+        self.button.fillColor = SKColor.black
+//        self.bar.addChild(self.button)
         self.button.name = "sliderButton"
     }
     
@@ -110,8 +123,30 @@ class Slider: SKNode {
         }
         
         if let image = self.image{
-            (self.parent?.parent as! Node).zoomValue = CGFloat((currentValue as NSString).doubleValue )
-            image.reloadImage(zoom: CGFloat((currentValue as NSString).doubleValue ))
+//            (self.parent?.parent as! Node).zoomValue = CGFloat((currentValue as NSString).doubleValue )
+//            image.reloadImage(zoom: CGFloat((currentValue as NSString).doubleValue ))
+        }
+    }
+    
+    func countValue(with distance: CGFloat) {
+        if let parent = self.parent as? Node {
+            if parent.funcName  != "image_source"{
+                parent.changeBaseColor(color: NSColor(calibratedRed: 255.0/255.0, green: 230.0/255.0, blue: 77.0/255.0, alpha: 1.0))
+                
+            }
+        }
+        
+        if self.isInt{
+            self.currentValueLabel!.text = String( Int(round(min + distance)))
+            self.currentValue = String( Int(round(min + distance)))
+        } else{
+            self.currentValueLabel!.text = String(format: "%.1f", min+distance)
+            self.currentValue = String(format: "%.1f", min+distance)
+        }
+        
+        if let image = self.image{
+//            (self.parent?.parent as! Node).zoomValue = CGFloat((currentValue as NSString).doubleValue )
+//            image.reloadImage(zoom: CGFloat((currentValue as NSString).doubleValue ))
         }
     }
     

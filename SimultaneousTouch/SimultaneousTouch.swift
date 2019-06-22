@@ -47,7 +47,7 @@ class SimultaneousTouch: SKNode {
         }
         
         
-        guard let node1 = self.theScene.nodes(at: touch1).first?.parent as? Node, let node2 = self.theScene.nodes(at: touch2).first?.parent as? Node else { return }
+        guard let node1 = self.theScene.nodes(at: touch1).first?.parent?.parent as? Node, let node2 = self.theScene.nodes(at: touch2).first?.parent?.parent as? Node else { return }
         
         setEdge(from: node1, to: node2)
         

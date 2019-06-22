@@ -56,14 +56,15 @@ class ResultVisualization{
                     node.changeBaseColor(color: .red)
                 }
                 if let result = resultNode, nil == node.controlElements?.button{
+                    result.zPosition = 2000
                     ResultVisualization.globalResultNodes.append(result)
                     
                     node.addChild(result)
                     
                     if result is ImageTypeResultNode{
                         
-                        (result as! ImageTypeResultNode).reloadImage(zoom: node.zoomValue)
-                        (result as! ImageTypeResultNode).setSlider()
+//                        (result as! ImageTypeResultNode).reloadImage(zoom: node.zoomValue)
+//                        (result as! ImageTypeResultNode).setSlider()
                         result.position = CGPoint(x: 0, y: -220)
                     } else {
                         result.position = CGPoint(x: 0, y: -220)

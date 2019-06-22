@@ -82,7 +82,7 @@ class MTKFileManagerCopy:SKNode,MTKButtonDelegate{
         //self.node?.sourceData?.position = CGPoint(x: 0, y: -370)
         self.node?.addChild(self.node!.sourceData!)
         self.node!.sourceUrl = button.name!
-        (self.node?.sourceData as! ImageTypeResultNode).setSlider()
+//        (self.node?.sourceData as! ImageTypeResultNode).setSlider()
         self.removeFromParent()
     }
     
