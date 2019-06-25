@@ -39,6 +39,7 @@ class StarView: SKNode {
         self.node.listButton.isHidden = true
         self.node.assignButton.isHidden = true
         self.node.starButton.isHidden = true
+        self.node.touchButton.isHidden = true
         
         for sub in self.node.children {
             if sub is Slider {
@@ -101,6 +102,7 @@ class StarView: SKNode {
             self.node.listButton.isHidden = false
             self.node.assignButton.isHidden = false
             self.node.starButton.isHidden = false
+            self.node.touchButton.isHidden = false
             
             for sub in self.node.children {
                 if sub is Slider {
