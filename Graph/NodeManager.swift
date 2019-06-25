@@ -22,7 +22,7 @@ class NodeManager{
             self.copies[node.id!] =  self.copies[node.id!]! + 1
             
             
-            node.label?.text = "\(node.alias)copy\(self.copies[node.id!]!)"
+            node.label?.text = "\(node.alias)\(self.copies[node.id!]!)"
             node.id = "\(node.id!)_copy\(self.copies[node.id!]!)"
             //node.playButton.name = node.id
             if var contentOfProj = FileHandler.shared.getJsonContent(of: FileHandler.shared.projectDataPath){

@@ -47,6 +47,7 @@ class Keyboard:SKNode,MTKButtonDelegate{
             self.activeTextInput!.string = String(self.activeTextInput!.string.dropLast())
         case "Caps":
             self.capsLock = !self.capsLock
+            self.drawKeys()
         case "123":
             //self.children.removeAll()
             self.drawSpecialKeys1()
@@ -69,6 +70,7 @@ class Keyboard:SKNode,MTKButtonDelegate{
     }
 
     func drawKeys(){
+        var exclude = ["Caps","123","Space","Ret","Del"]
         for key in self.keys {
             key.removeFromParent()
         }
@@ -78,8 +80,10 @@ class Keyboard:SKNode,MTKButtonDelegate{
         let keyHeight:CGFloat = 70
         let keyWidth:CGFloat = 70
         for key in KeyDictionary.layout1[0]{
-            
-            let testButton = MTKButton(size: CGSize(width: keyWidth, height: keyHeight), label: key)
+            var testButton = MTKButton(size: CGSize(width: keyWidth, height: keyHeight), label: key)
+            if capsLock && !exclude.contains(key) {
+                testButton = MTKButton(size: CGSize(width: keyWidth, height: keyHeight), label: key.uppercased())
+            }
             testButton.position = CGPoint(x: x, y: y)
             self.addChild(testButton)
             self.keys.append(testButton)
@@ -89,7 +93,10 @@ class Keyboard:SKNode,MTKButtonDelegate{
         x = -395 + 70
         y = 65
         for key in KeyDictionary.layout1[1]{
-            let testButton = MTKButton(size: CGSize(width: keyWidth, height: keyHeight), label: key)
+            var testButton = MTKButton(size: CGSize(width: keyWidth, height: keyHeight), label: key)
+            if capsLock && !exclude.contains(key)  {
+                testButton = MTKButton(size: CGSize(width: keyWidth, height: keyHeight), label: key.uppercased())
+            }
             testButton.position = CGPoint(x: x, y: y)
             self.keys.append(testButton)
             self.addChild(testButton)
@@ -99,7 +106,10 @@ class Keyboard:SKNode,MTKButtonDelegate{
         x = -405 + 80
         y = -10
         for key in KeyDictionary.layout1[2]{
-            let testButton = MTKButton(size: CGSize(width: keyWidth, height: keyHeight), label: key)
+            var testButton = MTKButton(size: CGSize(width: keyWidth, height: keyHeight), label: key)
+            if capsLock && !exclude.contains(key) {
+                testButton = MTKButton(size: CGSize(width: keyWidth, height: keyHeight), label: key.uppercased())
+            }
             testButton.position = CGPoint(x: x, y: y)
             self.keys.append(testButton)
             self.addChild(testButton)
@@ -217,6 +227,13 @@ class Keyboard:SKNode,MTKButtonDelegate{
         returnkey.add(target: self, action: #selector(self.buttonTapped(button:)))
         x = x + 2*70
         
+        var button1 = MTKButton(size: CGSize(width: 40, height: 40),image: "close.png")
+        
+        button1.position = CGPoint(x: x+270, y: -2*y+40)
+        self.keys.append(button1)
+        self.addChild(button1)
+        button1.add(target: self, action: #selector(self.close(button:)))
+        
         //        for key in KeyDictionary.layOut1[3]{
         //            let testButton = MTKButton(size: CGSize(width: keyWidth, height: keyHeight), label: key)
         //            testButton.position = CGPoint(x: x, y: y)
@@ -294,6 +311,13 @@ class Keyboard:SKNode,MTKButtonDelegate{
         //            testButton.add(target: self, action: #selector(self.buttonTapped(button:)))
         //            x = x + 3*70
         //        }
+        
+        var button1 = MTKButton(size: CGSize(width: 40, height: 40),image: "close.png")
+        
+        button1.position = CGPoint(x: x+270, y: -2*y+40)
+        self.keys.append(button1)
+        self.addChild(button1)
+        button1.add(target: self, action: #selector(self.close(button:)))
     }
     
     

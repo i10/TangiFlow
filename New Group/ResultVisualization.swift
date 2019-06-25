@@ -51,8 +51,16 @@ class ResultVisualization{
                 if let result = resultNode, nil == node.controlElements?.button{
 
                     ResultVisualization.globalResultNodes.append(result)
-                    
+                    node.result = result
                     node.addChild(result)
+                    if node.preview{
+                        node.result?.isHidden = false
+                        
+                    } else {
+                        node.result?.isHidden = true
+                    }
+                    
+                    
                     
                     if result is ImageTypeResultNode{
                         

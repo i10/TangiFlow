@@ -97,12 +97,11 @@ class ImageTypeResultNode:SKSpriteNode{
     func setSlider(){
         
         self.slider.removeFromParent()
-                if let node = self.parent as? Node{
-                    node.zoomSlider?.removeFromParent()
-                    node.zoomSlider = self.slider
-                    self.slider = Slider(min: 1, max: 10, step: 0.2, defaultVal: node.zoomValue)
-                }
-        
+        if let node = self.parent as? Node{
+            node.zoomSlider?.removeFromParent()
+            node.zoomSlider = self.slider
+            self.slider = Slider(min: 1, max: 10, step: 0.2, defaultVal: node.zoomValue)
+        }
         slider.image = self
         var label = SKLabelNode(text: "Zoom")
         slider.addChild(label)

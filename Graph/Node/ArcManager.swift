@@ -39,12 +39,13 @@ class ArcManager:MTKButtonDelegate{
     
     func drawInputArcs(){
         for index in 0..<self.inputArcsAmount{
+            var list = Array(self.node?.mainArgDicts.keys ?? [:].keys).sorted()
             let rotateAngle = CGFloat.pi + ( CGFloat(self.inputOffset) + CGFloat(spacing))*CGFloat(index)
             let section = Arc(angle: CGFloat(self.inputOffset),
                               radius: 140,
                               isInput: true,
                               rotation:CGFloat(rotateAngle),
-                              name:Array(self.node?.mainArgDicts.keys ?? [:].keys)[index],
+                              name:list[index],
                               parentNode:self.node!)
             self.node?.addChild(section)
             self.inputArcs.append(section)

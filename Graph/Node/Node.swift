@@ -3,6 +3,16 @@ import SpriteKit
 import MultiTouchKitSwift
 import SwiftyJSON
 class Node: SKNode,MTKButtonDelegate {
+    var preview:Bool = true
+    var hideButton = MTKButton(size: CGSize(width: 190, height: 40), label: "Hide preview")
+    var result:SKNode? = nil {
+        didSet{
+            hideButton.removeFromParent()
+            self.addChild(hideButton)
+            hideButton.position = CGPoint(x: 0, y: -190)
+            hideButton.add(target: self, action: #selector(self.tapHide(button:)))
+        }
+    }
     var controlElements:ControlElements?
     var zoomSlider:Slider?
     var zoomValue:CGFloat = 1.0
@@ -155,5 +165,18 @@ class Node: SKNode,MTKButtonDelegate {
             item.changeBaseColor(color: NSColor(calibratedRed: 144/255.0, green: 238.0/255.0, blue: 144/255.0, alpha: 1.0))
         }
         print("=============")
+    }
+    
+    
+    @objc func tapHide(button:MTKButton){
+        if button.titleLabel?.text == "Hide preview"{
+            self.result?.isHidden = true
+            self.preview = false
+            button.titleLabel?.text = "Show preview"
+        }else{
+            self.result?.isHidden = false
+            self.preview = true
+             button.titleLabel?.text = "Hide preview"
+        }
     }
 }
