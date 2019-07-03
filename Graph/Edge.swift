@@ -15,6 +15,7 @@ class Edge:SKShapeNode{
     var toPoint:CGPoint?
     var id:String?
     var pathToDraw:CGMutablePath = CGMutablePath()
+    var offset: CGPoint?
     
     override  init(){
         super.init()
@@ -28,10 +29,15 @@ class Edge:SKShapeNode{
     
     
     func redrawEdge(from:CGPoint?,to:CGPoint?){
-        if let from = from, let to = to{
+        if var from = from, let to = to{
             let parent = self.parent
             self.removeFromParent()
             self.pathToDraw  = CGMutablePath()
+            
+            if let offset = self.offset {
+                from = CGPoint(x: from.x + offset.x, y: from.y + offset.y)
+            }
+            
             self.drawLineBasic(from: from, to: to)
             parent?.addChild(self)
         }

@@ -199,9 +199,12 @@ class Graph2{
         if !allNodes.isEmpty{
             position = allNodes[0].position
         }
-//        if let activity = TraceToNode.getActivity(by: trace.uuid){
-//            self.moveNode(node: activity.node!, trace: trace)
-//        }
+        if let activity = TraceToNode.getActivity(by: trace.uuid){
+            for edge in self.scene!.children.filter({$0.name == "StarEdge"}) {
+                (edge as! Edge).redrawEdge(from: activity.node!.position, to: (edge as! Edge).toPoint!)
+            }
+            self.moveNode(node: activity.node!, trace: trace)
+        }
         if !self.inCircle(center: position, point: trace.position, radius: 60){
             if let activity = TraceToActivity.getActivity(by: trace.uuid) {
                 activity.edge?.redrawEdge(from: activity.fulcrum?.globalPos, to: trace.position)

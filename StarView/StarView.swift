@@ -13,15 +13,17 @@ class StarView: SKNode {
     
     var json: JSON!
     var node: Node!
+    var theScene: SKScene!
     
     override init() {
         super.init()
     }
     
-    convenience init(with node: Node) {
+    convenience init(with node: Node, and scene: SKScene) {
         self.init()
         
         self.node = node
+        self.theScene = scene
         
         setupUI()
     }
@@ -77,7 +79,17 @@ class StarView: SKNode {
                 starNode.name = j.0
                 starNode.add(target: self, action: #selector(self.nodeTapped(_:)))
                 starNode.position = newPosition
+                
                 self.addChild(starNode)
+                
+                if let originalNode = self.theScene.nodes(at: CGPoint(x: x, y: y)).filter({ $0 is Node }).first {
+//                    let base = originalNode.childNode(withName: "BASE") as! SKShapeNode
+                    let edge = Edge(from: node.position + starNode.position, to: originalNode.position)
+                    edge.offset = starNode.position
+                    edge.name = "StarEdge"
+                    edge.strokeColor = .yellow
+                    self.theScene.addChild(edge)
+                }
             }
         } catch {
             print("Error: ", error.localizedDescription)
@@ -109,6 +121,10 @@ class StarView: SKNode {
                     sub.isHidden = false
                 }
             }
+        }
+        
+        for e in self.theScene.children.filter({ $0.name == "StarEdge" }) {
+            e.removeFromParent()
         }
     }
     

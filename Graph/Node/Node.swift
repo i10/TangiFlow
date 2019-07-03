@@ -65,6 +65,7 @@ class Node: SKNode,MTKButtonDelegate {
         
         status.fontColor = .black
         status.fontSize = 20
+        status.name = "Status"
         self.zPosition = 5
         self.position = position
         self.id = id
@@ -159,7 +160,7 @@ class Node: SKNode,MTKButtonDelegate {
     }
     
     @objc fileprivate func starButtonTapped(_ sender: MTKButton) {
-        let starView = StarView(with: self)
+        let starView = StarView(with: self, and: self.scene!)
         self.addChild(starView)
     }
     
@@ -176,6 +177,8 @@ class Node: SKNode,MTKButtonDelegate {
     
     @objc fileprivate func assignButtonTapped(_ sender: MTKButton) {
         if self.assignedTo != nil { // already assigned
+            self.assignedTo!.childNode(withName: "Status")!.removeFromParent()
+            
             self.base.fillColor = .white
             self.assignedTo!.base.fillColor = .white
             
@@ -216,6 +219,7 @@ class Node: SKNode,MTKButtonDelegate {
     func drawBase(){
         
         self.base.fillColor = NSColor.white
+        self.base.name = "BASE"
         self.addChild(self.base)
     }
     
