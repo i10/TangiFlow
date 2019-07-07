@@ -35,6 +35,7 @@ class GameScene: MTKScene, MTKButtonDelegate {
         FileHandler.shared.cleanContent(of:FileHandler.shared.resultFolderPath)
         graph = Graph2(scene: self)
         MTKHub.sharedHub.traceDelegate = self
+        //Tangible.view = self.view
         
        
         
@@ -84,6 +85,14 @@ class GameScene: MTKScene, MTKButtonDelegate {
             }
                 self.nodes(at: trace.position!)
                 
+        }
+        
+        
+        for tangible in self.passiveTangibles{
+            if tangible.state == .initializedAndRecognized {
+                TangibleInteraction.view = self.view
+                TangibleInteraction.addTangible(id:tangible.identifier,scene:self,position: tangible.position)
+            }
         }
         
         return traceSet

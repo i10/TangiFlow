@@ -10,7 +10,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Control and Window Elements/SideMenu/SideMenu.swift"
-            timestampString = "582208693.2961299"
+            timestampString = "584031583.6881911"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "23"
@@ -26,7 +26,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Control and Window Elements/SideMenu/SideMenu.swift"
-            timestampString = "582208693.296183"
+            timestampString = "584031583.688279"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "24"
@@ -42,7 +42,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Graph/Node/ControlElements.swift"
-            timestampString = "581943574.371594"
+            timestampString = "584034155.982716"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "148"
@@ -134,16 +134,16 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "New Group/ResultNode/ImageTypeResultNode.swift"
-            timestampString = "583154901.095443"
+            filePath = "Control and Window Elements/SideMenu/SideMenu.swift"
+            timestampString = "584031583.688395"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "99"
-            endingLineNumber = "99"
-            landmarkName = "setSlider()"
+            startingLineNumber = "89"
+            endingLineNumber = "89"
+            landmarkName = "drawMenu()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -153,13 +153,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "New Group/ResultNode/ImageTypeResultNode.swift"
-            timestampString = "583154901.095503"
+            filePath = "Graph/Node/Node.swift"
+            timestampString = "584187467.550102"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "101"
-            endingLineNumber = "101"
-            landmarkName = "setSlider()"
+            startingLineNumber = "92"
+            endingLineNumber = "92"
+            landmarkName = "init(id:position:json:view:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -169,13 +169,61 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "New Group/ResultNode/ImageTypeResultNode.swift"
-            timestampString = "583154901.09554"
+            filePath = "Graph/Node/Node.swift"
+            timestampString = "584187467.550269"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "102"
-            endingLineNumber = "102"
-            landmarkName = "setSlider()"
+            startingLineNumber = "93"
+            endingLineNumber = "93"
+            landmarkName = "init(id:position:json:view:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "MasterAsif2.Node.__allocating_init(id: Swift.String, position: __C.CGPoint, json: MasterAsif2.JSON, view: __C.SKView) -&gt; MasterAsif2.Node"
+                  moduleName = "MasterAsif2"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/ppi/Documents/Code/MasterAsif/Graph/Node/Node.swift"
+                  timestampString = "584033790.382025"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "93"
+                  endingLineNumber = "93"
+                  offsetFromSymbolStart = "6736">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "MasterAsif2.Node.__allocating_init(id: Swift.String, position: __C.CGPoint, json: MasterAsif2.JSON, view: __C.SKView) -&gt; MasterAsif2.Node"
+                  moduleName = "MasterAsif2"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/ppi/Documents/Code/MasterAsif/Graph/Node/Node.swift"
+                  timestampString = "584033790.3833359"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "93"
+                  endingLineNumber = "93"
+                  offsetFromSymbolStart = "8787">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Graph/Node/Node.swift"
+            timestampString = "584187467.550316"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "61"
+            endingLineNumber = "61"
+            landmarkName = "init(id:position:json:view:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

@@ -32,6 +32,7 @@ class Keyboard:SKNode,MTKButtonDelegate{
     
     @objc func buttonTapped(button: MTKButton) {
         //print(button.titleLabel?.text)
+        button.setScale(0.6)
         switch button.titleLabel!.text {
         case "Space":
             self.activeTextInput!.string = self.activeTextInput!.string + " "
@@ -67,6 +68,8 @@ class Keyboard:SKNode,MTKButtonDelegate{
                 
             }
         }
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+            button.setScale(1)}
     }
 
     func drawKeys(){

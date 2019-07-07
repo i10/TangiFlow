@@ -90,7 +90,7 @@ class Node: SKNode,MTKButtonDelegate {
         deleteButton.add(target: self, action: #selector(self.delete(button:)))
         self.arcManager = ArcManager(node:self,json:json)
         if let args = json["arguments"].dictionary{
-            self.arcManager?.inputArcNames = Array((args["main_args"]?.dictionaryValue.keys)!)
+            self.arcManager?.inputArcNames = Array(((args["main_args"]?.dictionaryValue.keys)!))
             self.inputArcNames = Array((args["main_args"]?.dictionaryValue.keys)!)
         }
         self.arcManager?.drawArcs()
