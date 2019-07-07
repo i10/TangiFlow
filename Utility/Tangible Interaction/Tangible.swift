@@ -45,6 +45,7 @@ class Tangible: SKNode,MTKButtonDelegate {
     
     func addCopy(nodes:[SKNode]){
         self.cloneButton.removeFromParent()
+        self.copyButton.removeFromParent()
         self.copyButton = MTKButton(size: CGSize(width: 120, height: 40), label: "copy")
         self.copyButton.add(target: self, action: #selector(self.copyImage(button:)))
         self.copyButton.name = (nodes[0] as! ImageTypeResultNode).url
@@ -56,6 +57,7 @@ class Tangible: SKNode,MTKButtonDelegate {
     
     func addClone(){
          self.copyButton.removeFromParent()
+        self.cloneButton.removeFromParent()
         if let name = copyButton.name{
        
             self.cloneButton = MTKButton(size: CGSize(width: 120, height: 40), label: "clone")

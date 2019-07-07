@@ -42,49 +42,58 @@ class GameScene: MTKScene, MTKButtonDelegate {
     }
     
     func preProcessTraceSet(traceSet: Set<MTKTrace>, node: SKNode, timestamp: TimeInterval) -> Set<MTKTrace> {
+        var TangibleTraces:[MTKTrace] = []
         
-
-        for trace in traceSet{
-            if trace.state == MTKUtils.MTKTraceState.beginningTrace{
-                self.graph?.touchDown(trace: trace)
-            }else if trace.state == MTKUtils.MTKTraceState.movingTrace{
-                self.graph?.touchMove(trace: trace)
-            }else{
-                self.graph?.touchUp(trace: trace)
-
-                
-                let allNodes = NodeManager.nodeList
-                var textFields:[CustomTextFields] = []
-                for node in allNodes{
-                    if let controlElements = node.controlElements {
-                        textFields += textFields + controlElements.textFields
-                    }
-                    
-                }
-                for textField in textFields{
-                    if textField.frame.origin.x < trace.position!.x && trace.position!.x < textField.frame.origin.x + 200 &&
-                        textField.frame.origin.y < trace.position!.y && trace.position!.y < textField.frame.origin.y + 80{
-//                        print(textFererwerewrerewrwerwerwerwerwerwewererewield)
-                      
-                       // textField.isEnabled = true
-                        textField.isEditable = true
-                        //textField.becomeFirstResponder()
-                        textField.window?.makeFirstResponder(textField)
-                        //textField.stringValue = ""
-                       // print(textField.stringValue)
-
-                            textField.parent?.keyboard.removeFromParent()
-                            textField.parent?.addChild(textField.parent!.keyboard)
-                            textField.parent!.keyboard.drawKeys()
-                            textField.parent?.keyboard.position = CGPoint(x: 600, y: 200)
-                            
-                        textField.parent!.keyboard.activeTextInput = textField
-                    }
-                }
-                //print(tf)
+        for tangible in self.passiveTangibles{
+            if tangible.state == .initializedAndRecognized {
+                TangibleInteraction.view = self.view
+                TangibleInteraction.addTangible(id:tangible.identifier,scene:self,position: tangible.position)
             }
-                self.nodes(at: trace.position!)
-                
+            TangibleTraces = TangibleTraces + tangible.usedTraces
+        }
+        
+        for trace in traceSet{
+            if !TangibleTraces.contains(trace){
+                if trace.state == MTKUtils.MTKTraceState.beginningTrace{
+                    self.graph?.touchDown(trace: trace)
+                }else if trace.state == MTKUtils.MTKTraceState.movingTrace{
+                    self.graph?.touchMove(trace: trace)
+                }else{
+                    self.graph?.touchUp(trace: trace)
+
+                    
+                    let allNodes = NodeManager.nodeList
+                    var textFields:[CustomTextFields] = []
+                    for node in allNodes{
+                        if let controlElements = node.controlElements {
+                            textFields += textFields + controlElements.textFields
+                        }
+                        
+                    }
+                    for textField in textFields{
+                        if textField.frame.origin.x < trace.position!.x && trace.position!.x < textField.frame.origin.x + 200 &&
+                            textField.frame.origin.y < trace.position!.y && trace.position!.y < textField.frame.origin.y + 80{
+    //                        print(textFererwerewrerewrwerwerwerwerwerwewererewield)
+                          
+                           // textField.isEnabled = true
+                            textField.isEditable = true
+                            //textField.becomeFirstResponder()
+                            textField.window?.makeFirstResponder(textField)
+                            //textField.stringValue = ""
+                           // print(textField.stringValue)
+
+                                textField.parent?.keyboard.removeFromParent()
+                                textField.parent?.addChild(textField.parent!.keyboard)
+                                textField.parent!.keyboard.drawKeys()
+                                textField.parent?.keyboard.position = CGPoint(x: 600, y: 200)
+                            
+                            textField.parent!.keyboard.activeTextInput = textField
+                        }
+                    }
+                    //print(tf)
+                }
+                    self.nodes(at: trace.position!)
+            }
         }
         
         

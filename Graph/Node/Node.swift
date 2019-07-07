@@ -4,7 +4,7 @@ import MultiTouchKitSwift
 import SwiftyJSON
 class Node: SKNode,MTKButtonDelegate {
     var preview:Bool = true
-    var hideButton = MTKButton(size: CGSize(width: 190, height: 40), label: "Hide preview")
+    var hideButton = MTKButton(size: CGSize(width: 190, height: 40), label: "Hide output")
     var result:SKNode? = nil {
         didSet{
             hideButton.removeFromParent()
