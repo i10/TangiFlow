@@ -14,7 +14,7 @@ class GameScene: MTKScene, MTKButtonDelegate {
     var graph:Graph2?
     var traceCall:[Int:Int] = [:]
     var projectManager:ProjectFilesManager?
-    let tangibleManager = TangibleManager()
+//    let tangibleManager = TangibleManager()
     
     override func setupScene() {
         MTKHub.sharedHub.traceDelegate = self

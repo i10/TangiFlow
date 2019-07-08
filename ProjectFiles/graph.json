@@ -1,258 +1,6 @@
 {
-  "graph" : {
-    "PT-127.99.15" : [
-      "PT-118.122.14"
-    ],
-    "PT-127.99.25" : [
-      "PT-118.122.24"
-    ],
-    "PT-127.99.16" : [
-      "PT-118.122.17"
-    ],
-    "PT-127.99.05" : [
-      "PT-127.99.06"
-    ],
-    "PT-127.99.13" : [
-      "PT-127.99.12"
-    ],
-    "PT-118.122.17" : [
-      "PT-127.99.18"
-    ],
-    "PT-118.122.03" : [
-      "PT-127.99.04"
-    ],
-    "PT-127.99.35" : [
-      "PT-118.122.36"
-    ],
-    "PT-127.99.26" : [
-      "PT-127.99.25"
-    ],
-    "PT-118.122.24" : [
-      "PT-127.99.23"
-    ],
-    "PT-118.122.10" : [
-      "PT-127.99.16"
-    ],
-    "PT-127.99.37" : [
-
-    ],
-    "PT-127.99.23" : [
-
-    ],
-    "PT-127.99.34" : [
-
-    ],
-    "PT-118.122.07" : [
-      "PT-127.99.08"
-    ],
-    "PT-127.99.08" : [
-      "PT-127.99.15"
-    ],
-    "PT-127.99.27" : [
-      "PT-127.99.26"
-    ],
-    "PT-127.99.06" : [
-      "PT-118.122.07"
-    ],
-    "PT-127.99.19" : [
-      "PT-127.99.20"
-    ],
-    "PT-127.99.09" : [
-      "PT-127.99.02"
-    ],
-    "PT-127.99.40" : [
-
-    ],
-    "PT-127.99.31" : [
-      "PT-118.122.32"
-    ],
-    "PT-127.99.04" : [
-      "PT-127.99.05"
-    ],
-    "PT-118.122.36" : [
-      "PT-127.99.37"
-    ],
-    "PT-127.99.18" : [
-      "PT-127.99.19"
-    ],
-    "PT-127.99.11" : [
-      "PT-118.122.10"
-    ],
-    "PT-118.122.32" : [
-      "PT-127.99.33"
-    ],
-    "PT-127.99.12" : [
-      "PT-127.99.11"
-    ],
-    "PT-118.122.14" : [
-      "PT-127.99.13"
-    ],
-    "PT-118.122.28" : [
-      "PT-127.99.27"
-    ],
-    "PT-127.99.02" : [
-      "PT-118.122.03"
-    ],
-    "PT-127.99.01" : [
-      "PT-127.99.09"
-    ],
-    "PT-127.99.29" : [
-      "PT-118.122.28"
-    ],
-    "PT-118.122.21" : [
-      "PT-127.99.40",
-      "PT-127.99.22"
-    ],
-    "PT-127.99.20" : [
-      "PT-118.122.21"
-    ],
-    "PT-127.99.30" : [
-      "PT-127.99.31"
-    ],
-    "PT-127.99.33" : [
-      "PT-127.99.34"
-    ],
-    "PT-127.99.22" : [
-      "PT-127.99.29"
-    ]
-  },
+  "caller" : "PT-118.122.03",
   "arg_data" : {
-    "PT-127.99.18" : {
-      "controled_args" : {
-        "controled_value" : "1.0"
-      },
-      "main_args" : {
-        "image" : "PT-118.122.17"
-      }
-    },
-    "PT-127.99.22" : {
-      "controled_args" : {
-        "controled_value" : "1.0"
-      },
-      "main_args" : {
-        "image" : "PT-118.122.21"
-      }
-    },
-    "PT-127.99.35" : {
-      "controled_args" : {
-        "controled_value" : "1.0"
-      },
-      "main_args" : {
-
-      }
-    },
-    "PT-127.99.31" : {
-      "controled_args" : {
-        "controled_value" : "1.0"
-      },
-      "main_args" : {
-        "image" : "PT-127.99.30"
-      }
-    },
-    "PT-127.99.33" : {
-      "controled_args" : {
-        "controled_value" : "1.0"
-      },
-      "main_args" : {
-        "image" : "PT-118.122.32"
-      }
-    },
-    "PT-127.99.06" : {
-      "controled_args" : {
-        "controled_value" : "1.0"
-      },
-      "main_args" : {
-        "image" : "PT-127.99.05"
-      }
-    },
-    "PT-127.99.13" : {
-      "controled_args" : {
-        "controled_value" : "4.2"
-      },
-      "main_args" : {
-        "image" : "PT-118.122.14"
-      }
-    },
-    "PT-118.122.24" : {
-      "controled_args" : {
-        "controled_value" : "1.0"
-      },
-      "main_args" : {
-        "image" : "PT-127.99.25"
-      }
-    },
-    "PT-127.99.37" : {
-      "controled_args" : {
-        "controled_value" : "1.0"
-      },
-      "main_args" : {
-        "image" : "PT-118.122.36"
-      }
-    },
-    "PT-127.99.01" : {
-      "controled_args" : {
-        "controled_value" : "\/Users\/ppi\/Desktop\/ImageSource\/Madagascar\/02.jpg"
-      },
-      "main_args" : {
-
-      }
-    },
-    "PT-127.99.23" : {
-      "controled_args" : {
-        "controled_value" : "1.0"
-      },
-      "main_args" : {
-        "image" : "PT-118.122.24"
-      }
-    },
-    "PT-127.99.11" : {
-      "controled_args" : {
-        "controled_value" : "1.0"
-      },
-      "main_args" : {
-        "image" : "PT-127.99.12"
-      }
-    },
-    "PT-127.99.05" : {
-      "controled_args" : {
-        "controled_value" : "1.0"
-      },
-      "main_args" : {
-        "image" : "PT-127.99.04"
-      }
-    },
-    "PT-127.99.34" : {
-      "controled_args" : {
-        "controled_value" : "1.0"
-      },
-      "main_args" : {
-        "image" : "PT-127.99.33"
-      }
-    },
-    "PT-127.99.25" : {
-      "controled_args" : {
-        "controled_value" : "1.0"
-      },
-      "main_args" : {
-        "image" : "PT-127.99.26"
-      }
-    },
-    "PT-118.122.32" : {
-      "controled_args" : {
-        "controled_value" : "1.0"
-      },
-      "main_args" : {
-        "image" : "PT-127.99.31"
-      }
-    },
-    "PT-118.122.03" : {
-      "controled_args" : {
-        "controled_value" : "1.0"
-      },
-      "main_args" : {
-        "image" : "PT-127.99.02"
-      }
-    },
     "PT-127.99.08" : {
       "controled_args" : {
         "controled_value" : "1.0"
@@ -261,148 +9,20 @@
         "image" : "PT-118.122.07"
       }
     },
-    "PT-127.99.26" : {
+    "PT-118.122.03" : {
       "controled_args" : {
-        "controled_value" : "1.0"
+        "controled_value" : "2.8"
       },
       "main_args" : {
-        "image" : "PT-127.99.27"
+        "image" : "PT-127.99.02"
       }
     },
-    "PT-118.122.07" : {
-      "controled_args" : {
-        "controled_value" : "1.0"
-      },
-      "main_args" : {
-        "image" : "PT-127.99.06"
-      }
-    },
-    "PT-127.99.30" : {
+    "PT-127.99.40" : {
       "controled_args" : {
         "controled_value" : "1.0"
       },
       "main_args" : {
 
-      }
-    },
-    "PT-127.99.19" : {
-      "controled_args" : {
-        "controled_value" : "1.0"
-      },
-      "main_args" : {
-        "image" : "PT-127.99.18"
-      }
-    },
-    "PT-127.99.29" : {
-      "controled_args" : {
-        "controled_value" : "1.0"
-      },
-      "main_args" : {
-        "image" : "PT-127.99.22"
-      }
-    },
-    "PT-118.122.10" : {
-      "controled_args" : {
-        "controled_value" : "1.0"
-      },
-      "main_args" : {
-        "image" : "PT-127.99.11"
-      }
-    },
-    "PT-127.99.20" : {
-      "controled_args" : {
-        "controled_value" : "1.0"
-      },
-      "main_args" : {
-        "image" : "PT-127.99.19"
-      }
-    },
-    "PT-127.99.02" : {
-      "controled_args" : {
-        "controled_value" : "1.0"
-      },
-      "main_args" : {
-        "image" : "PT-127.99.09"
-      }
-    },
-    "PT-118.122.17" : {
-      "controled_args" : {
-        "controled_value" : "1.0"
-      },
-      "main_args" : {
-        "image" : "PT-127.99.16"
-      }
-    },
-    "PT-127.99.12" : {
-      "controled_args" : {
-        "controled_value" : "1.0"
-      },
-      "main_args" : {
-        "image" : "PT-127.99.13"
-      }
-    },
-    "PT-118.122.28" : {
-      "controled_args" : {
-        "controled_value" : "1.1"
-      },
-      "main_args" : {
-        "image" : "PT-127.99.29"
-      }
-    },
-    "PT-127.99.27" : {
-      "controled_args" : {
-        "controled_value" : "1.0"
-      },
-      "main_args" : {
-        "image" : "PT-118.122.28"
-      }
-    },
-    "PT-127.99.04" : {
-      "controled_args" : {
-        "controled_value" : "8.7"
-      },
-      "main_args" : {
-        "image" : "PT-118.122.03"
-      }
-    },
-    "PT-118.122.36" : {
-      "controled_args" : {
-        "controled_value" : "1.0"
-      },
-      "main_args" : {
-        "image" : "PT-127.99.35"
-      }
-    },
-    "PT-127.99.16" : {
-      "controled_args" : {
-        "controled_value" : "1.0"
-      },
-      "main_args" : {
-        "image" : "PT-118.122.10"
-      }
-    },
-    "PT-127.99.09" : {
-      "controled_args" : {
-        "controled_value" : "1.0"
-      },
-      "main_args" : {
-        "image" : "PT-127.99.01"
-      }
-    },
-    "PT-127.99.15" : {
-      "controled_args" : {
-        "controled_value" : "1.0"
-      },
-      "main_args" : {
-        "image" : "PT-127.99.08"
-      }
-    },
-    "PT-127.99.40" : {
-      "controled_args" : {
-        "controled_value" : "4.2"
-      },
-      "main_args" : {
-        "image" : "PT-118.122.21"
       }
     },
     "PT-118.122.21" : {
@@ -413,6 +33,166 @@
         "image" : "PT-127.99.20"
       }
     },
+    "PT-118.122.36" : {
+      "controled_args" : {
+        "controled_value" : "1.0"
+      },
+      "main_args" : {
+        "image" : "PT-127.99.35"
+      }
+    },
+    "PT-127.99.05" : {
+      "controled_args" : {
+        "controled_value" : "1.0"
+      },
+      "main_args" : {
+        "image" : "PT-127.99.04"
+      }
+    },
+    "PT-127.99.19" : {
+      "controled_args" : {
+        "controled_value" : "1.0"
+      },
+      "main_args" : {
+
+      }
+    },
+    "PT-127.99.25" : {
+      "controled_args" : {
+        "controled_value" : "1.0"
+      },
+      "main_args" : {
+        "image" : "PT-127.99.26"
+      }
+    },
+    "PT-127.99.35" : {
+      "controled_args" : {
+        "controled_value" : "1.0"
+      },
+      "main_args" : {
+
+      }
+    },
+    "PT-127.99.20" : {
+      "controled_args" : {
+        "controled_value" : "1.0"
+      },
+      "main_args" : {
+        "image" : "PT-127.99.19"
+      }
+    },
+    "PT-127.99.22" : {
+      "controled_args" : {
+        "controled_value" : "1.0"
+      },
+      "main_args" : {
+        "image" : "PT-118.122.21"
+      }
+    },
+    "PT-127.99.04" : {
+      "controled_args" : {
+        "controled_value" : "1.0"
+      },
+      "main_args" : {
+        "image" : "PT-118.122.03"
+      }
+    },
+    "PT-127.99.29" : {
+      "controled_args" : {
+        "controled_value" : "1.0"
+      },
+      "main_args" : {
+        "image" : "PT-127.99.22"
+      }
+    },
+    "PT-118.122.24" : {
+      "controled_args" : {
+        "controled_value" : "1.0"
+      },
+      "main_args" : {
+        "image" : "PT-127.99.25"
+      }
+    },
+    "PT-127.99.13" : {
+      "controled_args" : {
+        "controled_value" : "1.0"
+      },
+      "main_args" : {
+        "image" : "PT-118.122.14"
+      }
+    },
+    "PT-118.122.10" : {
+      "controled_args" : {
+        "controled_value" : "1.0"
+      },
+      "main_args" : {
+        "image" : "PT-127.99.11"
+      }
+    },
+    "PT-127.99.34" : {
+      "controled_args" : {
+        "controled_value" : "1.0"
+      },
+      "main_args" : {
+        "image" : "PT-127.99.40"
+      }
+    },
+    "PT-127.99.23" : {
+      "controled_args" : {
+        "controled_value" : "1.0"
+      },
+      "main_args" : {
+        "image" : "PT-118.122.24"
+      }
+    },
+    "PT-118.122.17" : {
+      "controled_args" : {
+        "controled_value" : "1.0"
+      },
+      "main_args" : {
+        "image" : "PT-127.99.16"
+      }
+    },
+    "PT-127.99.33" : {
+      "controled_args" : {
+        "controled_value" : "1.0"
+      },
+      "main_args" : {
+
+      }
+    },
+    "PT-127.99.01" : {
+      "controled_args" : {
+        "controled_value" : "\/Users\/ppi\/Desktop\/ImageSource\/Madagascar\/03.jpg"
+      },
+      "main_args" : {
+
+      }
+    },
+    "PT-127.99.26" : {
+      "controled_args" : {
+        "controled_value" : "1.0"
+      },
+      "main_args" : {
+        "image" : "PT-127.99.27"
+      }
+    },
+    "PT-118.122.32" : {
+      "controled_args" : {
+        "controled_value" : "2.8"
+      },
+      "main_args" : {
+
+      }
+    },
+    "PT-127.99.11" : {
+      "controled_args" : {
+        "controled_value" : "1.0"
+      },
+      "main_args" : {
+        "image" : "PT-127.99.12"
+      }
+    },
     "PT-118.122.14" : {
       "controled_args" : {
         "controled_value" : "1.0"
@@ -420,92 +200,193 @@
       "main_args" : {
         "image" : "PT-127.99.15"
       }
+    },
+    "PT-118.122.28" : {
+      "controled_args" : {
+        "controled_value" : "1.0"
+      },
+      "main_args" : {
+        "image" : "PT-127.99.29"
+      }
+    },
+    "PT-127.99.37" : {
+      "controled_args" : {
+        "controled_value" : "1.0"
+      },
+      "main_args" : {
+        "image" : "PT-118.122.36"
+      }
+    },
+    "PT-127.99.15" : {
+      "controled_args" : {
+        "controled_value" : "1.0"
+      },
+      "main_args" : {
+        "image" : "PT-127.99.08"
+      }
+    },
+    "PT-127.99.31" : {
+      "controled_args" : {
+        "controled_value" : "1.0"
+      },
+      "main_args" : {
+        "image" : "PT-127.99.30"
+      }
+    },
+    "PT-127.99.18" : {
+      "controled_args" : {
+        "controled_value" : "1.0"
+      },
+      "main_args" : {
+        "image" : "PT-118.122.17"
+      }
+    },
+    "PT-127.99.02" : {
+      "controled_args" : {
+        "controled_value" : "6.8"
+      },
+      "main_args" : {
+        "image" : "PT-127.99.09"
+      }
+    },
+    "PT-127.99.16" : {
+      "controled_args" : {
+        "controled_value" : "1.0"
+      },
+      "main_args" : {
+
+      }
+    },
+    "PT-127.99.09" : {
+      "controled_args" : {
+        "controled_value" : "1.0"
+      },
+      "main_args" : {
+        "image" : "PT-127.99.01"
+      }
+    },
+    "PT-127.99.30" : {
+      "controled_args" : {
+        "controled_value" : "1.0"
+      },
+      "main_args" : {
+
+      }
+    },
+    "PT-118.122.07" : {
+      "controled_args" : {
+        "controled_value" : "1.0"
+      },
+      "main_args" : {
+        "image" : "PT-127.99.06"
+      }
+    },
+    "PT-127.99.06" : {
+      "controled_args" : {
+        "controled_value" : "1.0"
+      },
+      "main_args" : {
+        "image" : "PT-127.99.05"
+      }
+    },
+    "PT-127.99.27" : {
+      "controled_args" : {
+        "controled_value" : "1.0"
+      },
+      "main_args" : {
+        "image" : "PT-118.122.28"
+      }
+    },
+    "PT-127.99.12" : {
+      "controled_args" : {
+        "controled_value" : "1.0"
+      },
+      "main_args" : {
+        "image" : "PT-127.99.13"
+      }
     }
   },
   "graph_reverse" : {
-    "PT-118.122.17" : [
-      "PT-127.99.16"
+    "PT-127.99.18" : [
+      "PT-118.122.17"
     ],
-    "PT-127.99.19" : [
-      "PT-127.99.18"
+    "PT-127.99.34" : [
+      "PT-127.99.40"
     ],
-    "PT-127.99.22" : [
-      "PT-118.122.21"
+    "PT-127.99.35" : [
+
     ],
-    "PT-127.99.05" : [
-      "PT-127.99.04"
-    ],
-    "PT-127.99.08" : [
-      "PT-118.122.07"
-    ],
-    "PT-127.99.15" : [
-      "PT-127.99.08"
-    ],
-    "PT-127.99.11" : [
-      "PT-127.99.12"
+    "PT-127.99.40" : [
+
     ],
     "PT-127.99.29" : [
       "PT-127.99.22"
     ],
-    "PT-118.122.21" : [
-      "PT-127.99.20"
+    "PT-118.122.17" : [
+      "PT-127.99.16"
     ],
-    "PT-118.122.03" : [
-      "PT-127.99.02"
+    "PT-127.99.11" : [
+      "PT-127.99.12"
     ],
-    "PT-127.99.18" : [
-      "PT-118.122.17"
+    "PT-127.99.05" : [
+      "PT-127.99.04"
+    ],
+    "PT-118.122.10" : [
+      "PT-127.99.11"
+    ],
+    "PT-127.99.30" : [
+
     ],
     "PT-127.99.12" : [
       "PT-127.99.13"
     ],
-    "PT-127.99.31" : [
-      "PT-127.99.30"
+    "PT-127.99.37" : [
+      "PT-118.122.36"
     ],
     "PT-127.99.06" : [
       "PT-127.99.05"
     ],
-    "PT-127.99.34" : [
-      "PT-127.99.33"
+    "PT-118.122.03" : [
+      "PT-127.99.02"
     ],
-    "PT-127.99.37" : [
-      "PT-118.122.36"
+    "PT-118.122.28" : [
+      "PT-127.99.29"
     ],
-    "PT-127.99.13" : [
-      "PT-118.122.14"
+    "PT-127.99.27" : [
+      "PT-118.122.28"
     ],
-    "PT-118.122.14" : [
-      "PT-127.99.15"
+    "PT-118.122.21" : [
+      "PT-127.99.20"
     ],
-    "PT-127.99.35" : [
+    "PT-127.99.16" : [
+
+    ],
+    "PT-127.99.22" : [
+      "PT-118.122.21"
+    ],
+    "PT-118.122.32" : [
+
+    ],
+    "PT-127.99.01" : [
 
     ],
     "PT-127.99.20" : [
       "PT-127.99.19"
     ],
-    "PT-127.99.26" : [
-      "PT-127.99.27"
-    ],
-    "PT-127.99.02" : [
-      "PT-127.99.09"
-    ],
-    "PT-127.99.01" : [
+    "PT-127.99.19" : [
 
     ],
-    "PT-118.122.24" : [
-      "PT-127.99.25"
+    "PT-118.122.14" : [
+      "PT-127.99.15"
     ],
-    "PT-118.122.28" : [
-      "PT-127.99.29"
+    "PT-118.122.07" : [
+      "PT-127.99.06"
     ],
-    "PT-118.122.32" : [
-      "PT-127.99.31"
+    "PT-127.99.13" : [
+      "PT-118.122.14"
     ],
-    "PT-127.99.25" : [
-      "PT-127.99.26"
-    ],
-    "PT-127.99.33" : [
-      "PT-118.122.32"
+    "PT-127.99.08" : [
+      "PT-118.122.07"
     ],
     "PT-127.99.04" : [
       "PT-118.122.03"
@@ -513,31 +394,149 @@
     "PT-118.122.36" : [
       "PT-127.99.35"
     ],
-    "PT-118.122.10" : [
-      "PT-127.99.11"
-    ],
-    "PT-127.99.27" : [
-      "PT-118.122.28"
-    ],
-    "PT-127.99.16" : [
-      "PT-118.122.10"
-    ],
-    "PT-127.99.30" : [
-
-    ],
     "PT-127.99.23" : [
       "PT-118.122.24"
+    ],
+    "PT-127.99.31" : [
+      "PT-127.99.30"
+    ],
+    "PT-127.99.25" : [
+      "PT-127.99.26"
+    ],
+    "PT-127.99.26" : [
+      "PT-127.99.27"
+    ],
+    "PT-127.99.33" : [
+
+    ],
+    "PT-127.99.15" : [
+      "PT-127.99.08"
+    ],
+    "PT-118.122.24" : [
+      "PT-127.99.25"
     ],
     "PT-127.99.09" : [
       "PT-127.99.01"
     ],
-    "PT-127.99.40" : [
-      "PT-118.122.21"
-    ],
-    "PT-118.122.07" : [
-      "PT-127.99.06"
+    "PT-127.99.02" : [
+      "PT-127.99.09"
     ]
   },
-  "type" : "image",
-  "caller" : "PT-127.99.40"
+  "graph" : {
+    "PT-118.122.14" : [
+      "PT-127.99.13"
+    ],
+    "PT-127.99.13" : [
+      "PT-127.99.12"
+    ],
+    "PT-118.122.07" : [
+      "PT-127.99.08"
+    ],
+    "PT-118.122.03" : [
+      "PT-127.99.04"
+    ],
+    "PT-127.99.37" : [
+
+    ],
+    "PT-127.99.11" : [
+      "PT-118.122.10"
+    ],
+    "PT-118.122.17" : [
+      "PT-127.99.18"
+    ],
+    "PT-127.99.02" : [
+      "PT-118.122.03"
+    ],
+    "PT-127.99.15" : [
+      "PT-118.122.14"
+    ],
+    "PT-127.99.33" : [
+
+    ],
+    "PT-118.122.10" : [
+
+    ],
+    "PT-127.99.29" : [
+      "PT-118.122.28"
+    ],
+    "PT-118.122.32" : [
+
+    ],
+    "PT-127.99.27" : [
+      "PT-127.99.26"
+    ],
+    "PT-118.122.24" : [
+      "PT-127.99.23"
+    ],
+    "PT-127.99.04" : [
+      "PT-127.99.05"
+    ],
+    "PT-127.99.19" : [
+      "PT-127.99.20"
+    ],
+    "PT-127.99.23" : [
+
+    ],
+    "PT-127.99.34" : [
+
+    ],
+    "PT-127.99.30" : [
+      "PT-127.99.31"
+    ],
+    "PT-127.99.08" : [
+      "PT-127.99.15"
+    ],
+    "PT-127.99.09" : [
+      "PT-127.99.02"
+    ],
+    "PT-127.99.26" : [
+      "PT-127.99.25"
+    ],
+    "PT-127.99.06" : [
+      "PT-118.122.07"
+    ],
+    "PT-127.99.40" : [
+      "PT-127.99.34"
+    ],
+    "PT-118.122.28" : [
+      "PT-127.99.27"
+    ],
+    "PT-127.99.18" : [
+
+    ],
+    "PT-127.99.31" : [
+
+    ],
+    "PT-127.99.12" : [
+      "PT-127.99.11"
+    ],
+    "PT-118.122.36" : [
+      "PT-127.99.37"
+    ],
+    "PT-127.99.25" : [
+      "PT-118.122.24"
+    ],
+    "PT-127.99.35" : [
+      "PT-118.122.36"
+    ],
+    "PT-127.99.22" : [
+      "PT-127.99.29"
+    ],
+    "PT-118.122.21" : [
+      "PT-127.99.22"
+    ],
+    "PT-127.99.01" : [
+      "PT-127.99.09"
+    ],
+    "PT-127.99.20" : [
+      "PT-118.122.21"
+    ],
+    "PT-127.99.05" : [
+      "PT-127.99.06"
+    ],
+    "PT-127.99.16" : [
+      "PT-118.122.17"
+    ]
+  },
+  "type" : "image"
 }

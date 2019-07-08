@@ -177,7 +177,9 @@ class Node: SKNode,MTKButtonDelegate {
     
     @objc fileprivate func assignButtonTapped(_ sender: MTKButton) {
         if self.assignedTo != nil { // already assigned
-            self.assignedTo!.childNode(withName: "Status")!.removeFromParent()
+            if let statusNode = self.assignedTo!.childNode(withName: "Status") {
+                statusNode.removeFromParent()
+            }
             
             self.base.fillColor = .white
             self.assignedTo!.base.fillColor = .white
@@ -248,6 +250,12 @@ class Node: SKNode,MTKButtonDelegate {
                 button.set(size: CGSize(width: 20, height: 20), image:"playGlyph")
             }
         } else {
+            if self.assignedTo != nil { // already assigned
+                if let statusNode = self.assignedTo!.childNode(withName: "Status") {
+                    statusNode.removeFromParent()
+                }
+            }
+            
             self.assignedTo!.addChild(status)
             self.assignedTo!.playButton.set(size: CGSize(width: 30, height: 30), image:"playGlyph")
             let scr = ScriptRunner(from: self.assignedTo!)
