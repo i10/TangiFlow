@@ -39,7 +39,7 @@ class ImageTypeResultNode:SKSpriteNode{
         self.originalWidth = self.size.width
         self.originalHeight = self.size.height
         //self.position = CGPoint(x: 0, y: -self.size.height  - 100)
-        self.position = CGPoint(x: 0, y: -400)
+        self.position = CGPoint(x: 0, y: -400-100)
         self.reloadImage(zoom: zoom)
     }
     
@@ -54,7 +54,7 @@ class ImageTypeResultNode:SKSpriteNode{
         self.originalWidth = self.frame.width
         self.originalHeight = self.frame.height
         //self.position = CGPoint(x: 0, y: -self.size.height  - 100)
-        self.position = CGPoint(x: 0, y: -400)
+        self.position = CGPoint(x: 0, y: -400-100)
         self.reloadImage(zoom: zoom)
     }
     
@@ -69,7 +69,7 @@ class ImageTypeResultNode:SKSpriteNode{
         self.originalWidth = self.frame.width
         self.originalHeight = self.frame.height
         //self.position = CGPoint(x: 0, y: -self.size.height  - 100)
-        self.position = CGPoint(x: 0, y: -400)
+        self.position = CGPoint(x: 0, y: -400-100)
         self.reloadImage(zoom: zoom)
         
     }
@@ -84,13 +84,13 @@ class ImageTypeResultNode:SKSpriteNode{
        // self.position = self.position
         self.slider.position.y = self.size.height/2+50
         if zoom == 1.0{
-            self.position.y = -400
+            self.position.y = -400-100
             return
         }
         
         
        
-        self.position.y =  -400 - (self.size.height/2 - self.originalHeight/2)
+        self.position.y =  -400-100 - (self.size.height/2 - self.originalHeight/2)
         
     }
     

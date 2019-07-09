@@ -17,9 +17,9 @@ class MTKFileManager:SKNode,MTKButtonDelegate{
         self.zPosition = 10
         var frame = SKShapeNode(rectOf: CGSize(width: 900, height: 500))
         frame.fillColor = SKColor.gray
-        var close = MTKButton(size: CGSize(width: 100, height: 40), label: "Close")
+        var close = MTKButton(size: CGSize(width: 40, height: 40), image: "close.png")
         close.add(target: self, action: #selector(self.close(button:)))
-        close.position = CGPoint(x: 400, y: -230)
+        close.position = CGPoint(x: 450, y: 250)
         close.zPosition = 11
         self.addChild(close)
     
