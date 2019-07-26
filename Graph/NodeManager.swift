@@ -52,7 +52,8 @@ class NodeManager{
     
     class func getNode(with id:String) -> Node?{
         if !self.nodeList.isEmpty{
-            return self.nodeList.filter {$0.id == id}[0]
+            var list = self.nodeList.filter {$0.id == id}
+            if !list.isEmpty {return list[0]}
         }
         return nil
     }

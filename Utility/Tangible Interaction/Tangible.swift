@@ -16,6 +16,7 @@ class Tangible: SKNode,MTKButtonDelegate {
     var cloneButton:MTKButton = MTKButton(size: CGSize(width: 20, height: 20), label: "")
     var image:String = ""
     var view:SKView? = nil
+    var previousPosition:CGPoint? = nil
     override init() {
         super.init()
     }
@@ -37,6 +38,7 @@ class Tangible: SKNode,MTKButtonDelegate {
         closeButton.add(target: self, action: #selector(self.close(button:)))
         self.view = view
         self.addChild(closeButton)
+        
     }
     
     @objc func close(button:MTKButton){
@@ -60,7 +62,7 @@ class Tangible: SKNode,MTKButtonDelegate {
         self.cloneButton.removeFromParent()
         if let name = copyButton.name{
        
-            self.cloneButton = MTKButton(size: CGSize(width: 120, height: 40), label: "clone")
+            self.cloneButton = MTKButton(size: CGSize(width: 120, height: 40), label: "paste")
             self.cloneButton.add(target: self, action: #selector(self.cloneImage(button:)))
             self.cloneButton.name = name
             self.addChild(self.cloneButton)

@@ -52,7 +52,10 @@ class ResultVisualization{
 
                     ResultVisualization.globalResultNodes.append(result)
                     node.result = result
-                    node.addChild(result)
+                    if result.parent == nil {
+                        node.addChild(result)
+                    }
+                    
                     if node.preview{
                         node.result?.isHidden = false
                         

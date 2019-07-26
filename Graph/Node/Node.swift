@@ -119,7 +119,10 @@ class Node: SKNode,MTKButtonDelegate {
     
     @objc func play(button:MTKButton){
         //self.crawl()
-        self.addChild(status)
+        if status.parent == nil {
+            self.addChild(status)
+            
+        }
         button.set(size: CGSize(width: 20, height: 20), image:"fplay.png")
         let scr = ScriptRunner()
         scr.script(id:button.name!)
@@ -169,14 +172,14 @@ class Node: SKNode,MTKButtonDelegate {
     
     
     @objc func tapHide(button:MTKButton){
-        if button.titleLabel?.text == "Hide preview"{
+        if button.titleLabel?.text == "Hide output"{
             self.result?.isHidden = true
             self.preview = false
-            button.titleLabel?.text = "Show preview"
+            button.titleLabel?.text = "Show output"
         }else{
             self.result?.isHidden = false
             self.preview = true
-             button.titleLabel?.text = "Hide preview"
+             button.titleLabel?.text = "Hide output"
         }
     }
 }

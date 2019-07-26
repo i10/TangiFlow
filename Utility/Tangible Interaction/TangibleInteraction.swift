@@ -32,12 +32,29 @@ class TangibleInteraction:MTKButtonDelegate{
             
             
             
+        } else{
+            var tangibles = TangibleInteraction.tangibleEntities.filter{$0.id == id}
+            var nodes = scene.nodes(at: position).filter{$0 is ImageTypeResultNode}
+           tangibles[0].view = TangibleInteraction.view
+            TangibleInteraction.setTangible(tangible: tangibles[0], nodes: nodes,scene: scene,position: position)
         }
     }
     
     
     class func setTangible(tangible:Tangible,nodes:[SKNode],scene:MTKScene,position:CGPoint){
-        tangible.position = position
+        if tangible.previousPosition == nil {
+            tangible.previousPosition = position
+            tangible.position = position
+        } else {
+            if TangibleInteraction.distance(start: tangible.previousPosition, end: position) > 100 {
+                tangible.previousPosition = tangible.position
+                tangible.position = position
+            }
+        }
+        
+//        tangible.previousPosition = tangible.position
+//        tangible.position = position
+        tangible.removeFromParent()
         scene.addChild(tangible)
         if !nodes.isEmpty{
             tangible.addCopy(nodes: nodes)
@@ -70,9 +87,20 @@ class TangibleInteraction:MTKButtonDelegate{
 //        }
 //    }
     @objc func cloneImage(button:MTKButton){
-        var json:JSON = "{\"arguments\" : { \"main_args\" : {}, \"controled_args\" : { \"controled_value\" : { \"alias\" : \"Cloned image\", \"type\" : \"button\"}}}, \"function\" : \"image_source\",\"alias\" :\"Load image\"}"
+        var json:JSON = "{\"arguments\" : { \"main_args\" : {}, \"controled_args\" : { \"controled_value\" : { \"alias\" : \"Pasted image\", \"type\" : \"button\"}}}, \"function\" : \"image_source\",\"alias\" :\"Load image\"}"
         
         var node = Node(id: "PT-127.99.01", position: button.parent!.position, json: json, view: TangibleInteraction.view!)
     }
     
+    
+    class func distance(start:CGPoint?,end:CGPoint?)->CGFloat{
+        if let start = start, let end = end {
+            let deltax = (start.x - end.x)
+            let deltay = (start.y - end.y)
+            let distance =  sqrtf(Float(deltax*deltax + deltay*deltay))
+            return CGFloat(distance)
+        }
+       
+        return 0.0
+    }
 }
