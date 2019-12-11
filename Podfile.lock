@@ -1,0 +1,20 @@
+PODS:
+  - SwiftLog (1.0.0)
+  - SwiftyJSON (4.3.0)
+
+DEPENDENCIES:
+  - SwiftLog (~> 1.0.0)
+  - SwiftyJSON (~> 4.0)
+
+SPEC REPOS:
+  https://github.com/cocoapods/specs.git:
+    - SwiftLog
+    - SwiftyJSON
+
+SPEC CHECKSUMS:
+  SwiftLog: f6c4f9a4ade06263555ab34b2c0f72025ffcda9e
+  SwiftyJSON: 6faa0040f8b59dead0ee07436cbf76b73c08fd08
+
+PODFILE CHECKSUM: 1f1e3992eadf84eea1c22062c0c336e1162a63d7
+
+COCOAPODS: 1.6.1

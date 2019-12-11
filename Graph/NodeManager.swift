@@ -12,51 +12,71 @@ import SpriteKit
 
 
 class NodeManager{
-    var counter = 0
-    var nodeList:[Node] = []
-    var selectedNode:Node?
-    var movingMode:Bool = false
-    var selectedArc:Arc?
+    var copies:[String:Int] = [:]
+    static var nodeList:[Node] = []
     var scene:SKScene?
-    var curEdge:Edge?
-
     
     func addNode(node:Node){
-        self.nodeList.append(node)
-        node.arcManager?.scene = self.scene
+        
+        if self.copies.keys.contains(node.id!){
+            self.copies[node.id!] =  self.copies[node.id!]! + 1
+            
+            
+            node.label?.text = "\(node.alias)\(self.copies[node.id!]!)"
+            node.id = "\(node.id!)_copy\(self.copies[node.id!]!)"
+            //node.playButton.name = node.id
+            if var contentOfProj = FileHandler.shared.getJsonContent(of: FileHandler.shared.projectDataPath){
+                contentOfProj[node.id!] = node.json!
+               
+                FileHandler.shared.writeJsonContent(data: contentOfProj, to: FileHandler.shared.copyProj)
+            }
+            
+        }else{
+            self.copies[node.id!] = 0
+            if var contentOfProj = FileHandler.shared.getJsonContent(of: FileHandler.shared.projectDataPath){
+                contentOfProj[node.id!] = node.json!
+               
+                FileHandler.shared.writeJsonContent(data: contentOfProj, to: FileHandler.shared.copyProj)
+            }
+        }
+        node.playButton.name = node.id
+        NodeManager.nodeList.append(node)
+        //node.arcManager?.scene = self.scene
+        
+        
+        Logger.shared.logWrite(message: "Adding node \(node.id!)")
         self.scene?.addChild(node)
     }
     
-    func removeNode(from pos:CGPoint){
-        let node = getNode(at: pos)
-        node?.removeFromParent()
-        self.nodeList = self.nodeList.filter {$0.id != node?.id}
-    }
     
-    func getNode(with id:String) -> Node?{
+    
+    class func getNode(with id:String) -> Node?{
         if !self.nodeList.isEmpty{
-            return self.nodeList.filter {$0.id == id}[0]
-            
+            var list = self.nodeList.filter {$0.id == id}
+            if !list.isEmpty {return list[0]}
         }
         return nil
     }
     
-    func removeNode(with id:String){
-        let node = getNode(with: id)
-        node?.removeFromParent()
-        self.nodeList = self.nodeList.filter {$0.id != node?.id}
-    }
-    
-    func getNode(at pos:CGPoint)->Node?{
-        if let scene = self.scene {
-            for item in scene.nodes(at:pos){
-                if item.parent is Node {
-                        let node =  item.parent as! Node
-                        return node
+    class func removeNode(with id:String){
+        Logger.shared.logWrite(message: "Remove node id")
+        FileHandler.shared.removeFile(at: URL(fileURLWithPath: FileHandler.shared.resultFolderPath + "/\(id).json"))
+        let node = NodeManager.getNode(with: id)
+        if let textFields = node?.controlElements?.textFields{
+            for item in textFields{
+                item.removeFromSuperview()
+            }
+        }
+        
+        if let input = node?.arcManager?.inputArcs, let output = node?.arcManager?.outputArcs{
+            for arc in input+output{
+                if !arc.edges.isEmpty{
+                    EdgeManager.removeEdge(with: arc.edges[0].id)
                 }
             }
         }
-        return nil
+       // for arc in node?.arcManager?.inputArcs + node?.arcManager?.outputArcs{}
+        node?.removeFromParent()
+        NodeManager.nodeList = NodeManager.nodeList.filter {$0.id != node?.id}
     }
-    
 }

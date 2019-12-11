@@ -8,137 +8,121 @@
 
 import Foundation
 import SpriteKit
-class ArcManager{
-    var counter = 0
+import SwiftyJSON
+import MultiTouchKitSwift
+class ArcManager:MTKButtonDelegate{
+    var inputArcNames:[String] = []
     var inputArcs:[Arc] = []
     var outputArcs:[Arc] = []
     var node:Node?
-    var scene:SKScene?
-    var inputOffset:CGFloat = CGFloat.pi
-    var outputOffset:CGFloat = CGFloat.pi
     var spacing:CGFloat = 0.0523599
-    var rotateAngle:CGFloat = 0
     var outputArcsAmount:Int = 1
     var inputArcsAmount:Int = 1
     var currentArc:Arc?
+    var inputOffset:CGFloat {
+        get { return (CGFloat.pi - CGFloat((self.inputArcsAmount+1))*self.spacing)/CGFloat(self.inputArcsAmount) }
+    }
+    var outputOffset:CGFloat {
+        get { return (CGFloat.pi - CGFloat((self.outputArcsAmount+1))*self.spacing)/CGFloat(self.outputArcsAmount) }
+    }
     
-    init(node:Node){
+    init(node:Node,json:JSON){
         self.node = node
-        if self.node?.maxInput != Int.max{
-            self.inputArcsAmount = (self.node?.maxInput)!
-        }
-        if self.node?.maxOutput != Int.max{
-            self.outputArcsAmount = (self.node?.maxOutput)!
-            
-        }
-        
-        self.inputOffset = (CGFloat.pi - CGFloat((self.inputArcsAmount+1))*self.spacing)/CGFloat(self.inputArcsAmount)
-        self.outputOffset = (CGFloat.pi - CGFloat((self.outputArcsAmount+1))*self.spacing)/CGFloat(self.outputArcsAmount)
-        
+        self.inputArcsAmount = (self.node?.maxInput)!
+        self.outputArcsAmount = (self.node?.maxOutput)!
     }
     
     func drawArcs(){
-        for _ in 0..<self.outputArcsAmount{
-            let section = Arc(angle: CGFloat(self.outputOffset), radius: 110, isInput: false,rotation:CGFloat(rotateAngle))
-            let angle = section.angle!/2.0 + self.rotateAngle + section.startAngle
-            section.localPos = self.polarToDecart(radius: section.radius!, angle: angle)
-            section.globalPos = self.localToGlobal(node: self.node!, coords: section.localPos!)
-            self.rotateAngle = self.rotateAngle + CGFloat(self.outputOffset) + CGFloat(spacing)
-            self.node?.addChild(section)
-            self.outputArcs.append(section)
-            
-            if(self.node?.maxOutput == Int.max){
-                section.multipleEdges = true
-            }
-        }
-        if(self.rotateAngle==0){
-            self.rotateAngle = self.rotateAngle + CGFloat.pi
-        }
-        
-        self.rotateAngle = self.rotateAngle + self.spacing
-        for _ in 0..<self.inputArcsAmount{
-            let section = Arc(angle: CGFloat(self.inputOffset), radius: 110, isInput: true, rotation:CGFloat(rotateAngle))
-            let angle = section.angle!/2.0 + self.rotateAngle
-            
-            section.localPos = self.polarToDecart(radius: section.radius!, angle: section.angle!)
-            section.globalPos = self.localToGlobal(node: self.node!, coords: section.localPos!)
-            rotateAngle = rotateAngle + CGFloat(self.inputOffset) + CGFloat(spacing)
+        self.drawOutputArcs()
+        self.drawInputArcs()
+    }
+    
+    func drawInputArcs(){
+        for index in 0..<self.inputArcsAmount{
+            var list = Array(self.node?.mainArgDicts.keys ?? [:].keys).sorted()
+            let rotateAngle = CGFloat.pi + ( CGFloat(self.inputOffset) + CGFloat(spacing))*CGFloat(index)
+            let section = Arc(angle: CGFloat(self.inputOffset),
+                              radius: 140,
+                              isInput: true,
+                              rotation:CGFloat(rotateAngle),
+                              name:list[index],
+                              parentNode:self.node!)
             self.node?.addChild(section)
             self.inputArcs.append(section)
-            if(self.node?.maxInput == Int.max){
-                section.multipleEdges = true
-            }
+            section.alias = self.node?.mainArgDicts[section.name!]?.stringValue ?? ""
+            section.drawLabel( angle: section.polarAngle)
         }
-    }
-    
-    func getArc(with id:String)->Arc?{
-        let arcs = self.inputArcs + self.outputArcs
-        if !arcs.isEmpty{
-            return arcs.filter {$0.id == id}[0]
-        }
-        return nil
-    }
-    
-    func getArc(with coord:CGPoint)->Arc{
-        return Arc()
-    }
-    
-    
-    func polarToDecart(radius:CGFloat,angle:CGFloat)->CGPoint{
-        let x = radius*cos(angle)
-        let y = radius*sin(angle)
-        return CGPoint(x: x, y: y)
         
     }
     
-    func localToGlobal(node:SKNode,coords:CGPoint) -> CGPoint{
-        let x = node.position.x + coords.x
-        let y = node.position.y + coords.y
-        return CGPoint(x:x,y:y)
+    
+    func drawOutputArcs(){
+        for index in 0..<self.outputArcsAmount{
+            //if !node!.funcName.contains("terminal"){
+                let rotateAngle =  ( CGFloat(self.outputOffset) + CGFloat(spacing))*CGFloat(index)
+                let section = Arc(angle: CGFloat(self.outputOffset),
+                                  radius: 140, isInput: false,
+                                  rotation: CGFloat(rotateAngle),
+                                  parentNode: self.node!)
+                self.node?.addChild(section)
+                self.outputArcs.append(section)
+            var close = MTKButton(size: CGSize(width: 20, height: 20), image: "close.png")
+            close.add(target: self, action: #selector(self.removeArc(button:)))
+            if self.outputArcs.count != 1 {
+                section.drawX(angle: section.polarAngle,button: close)
+                
+            }
+           // }
+        }
+        
+        
     }
     
-    func popArc(at position:CGPoint){
-        if !(self.scene?.nodes(at: position).isEmpty)!{
-            print("i worked")
-            print(self.counter)
-            self.counter = self.counter + 1
-            if let a = self.scene?.nodes(at: position)[0] as? Arc{
-                var parent = a.parent
-                var currentParent = self.currentArc?.parent
-                if self.currentArc != nil{
-                    if a.id != self.currentArc?.id{
-                        self.currentArc?.redrawArc(with: -1)
-                        currentParent?.addChild(self.currentArc!)
-                        a.redrawArc(with: 1)
-                        parent?.addChild(a)
-                        self.currentArc = a
-                    }
-                }else {
-                    self.currentArc = a
-                    a.redrawArc(with: 1)
-                    parent?.addChild(a)
+    
+    func addOutputArc(){
+        if self.outputArcsAmount < 6{
+             Logger.shared.logWrite(message: "Add arc to Node \(self.node)")
+            self.outputArcsAmount += 1
+            let section = Arc(angle: CGFloat(self.outputOffset), radius: 140, isInput: false, parentNode: self.node!)
+            self.outputArcs.append(section)
+            for index in 0..<self.outputArcs.count{
+                self.outputArcs[index].zRotation = ( CGFloat(self.outputOffset) + CGFloat(spacing))*CGFloat(index)
+                self.outputArcs[index].redrawArc(with: CGFloat(self.outputOffset))
+                var close = MTKButton(size: CGSize(width: 20, height: 20), image: "close.png")
+                
+                close.add(target: self, action: #selector(self.removeArc(button:)))
+                self.outputArcs[index].drawX(angle: self.outputArcs[index].polarAngle ,button: close)
                 }
-            }
-        }else {
-            print("i did not")
-            let parent = self.currentArc?.parent
-            self.currentArc?.redrawArc(with: -1)
-            parent?.addChild(self.currentArc!)
-            self.currentArc = nil
+            
+        }
+        //section.drawX(angle: section.angle!)
+    }
+    
+    @objc func removeArc(button:MTKButton){
+        print("HELLO")
+        self.outputArcsAmount -= 1
+        var arc = self.outputArcs.filter{$0.id == button.name!}[0]
+        if let activity = TraceToActivity.getActivity(by: arc){
+            Logger.shared.logWrite(message: "Remove arc \(arc.id!). Node \(self.node)")
+            activity.to?.parentNode?.inArgs[activity.to!.name!] = nil
+            //arc.edges[0].to?.parentNode
+            TraceToActivity.removeActivity(activity: activity)
         }
         
         
+        arc.closeButton?.removeFromParent()
+        arc.removeFromParent()
+        self.outputArcs = self.outputArcs.filter{$0.id != button.name!}
         
-        
-    }
-    
-    func getArc(at position:CGPoint)->Arc?{
-        if !(self.scene?.nodes(at: position).isEmpty)!{
-            if let a = self.scene?.nodes(at: position)[0] as? Arc{
-                return a
-            }
+        for index in 0..<self.outputArcs.count{
+            self.outputArcs[index].zRotation = ( CGFloat(self.outputOffset) + CGFloat(spacing))*CGFloat(index)
+            self.outputArcs[index].redrawArc(with: CGFloat(self.outputOffset))
+            self.outputArcs[index].closeButton?.removeFromParent()
+            if self.outputArcs.count != 1 {
+                var close = MTKButton(size: CGSize(width: 20, height: 20), image: "close.png")
+                
+                close.add(target: self, action: #selector(self.removeArc(button:)))
+                    self.outputArcs[index].drawX(angle: self.outputArcs[index].polarAngle ,button: close)}
         }
-        return nil
     }
-    
 }

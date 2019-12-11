@@ -11,23 +11,33 @@ import SpriteKit
 
 
 class EdgeManager{
-    var edgeList:[Edge] = []
-    var scene:SKScene? = nil
+    static var edgeList:Set<Edge> = Set()
+     var scene:SKScene? = nil
 
     func addEdge(edge:Edge){
-        self.edgeList.append(edge)
-        self.scene?.addChild(edge)
-        
+         Logger.shared.logWrite(message: "Add edge \(edge.id!) ")
+            EdgeManager.edgeList.insert(edge)
+            self.scene?.addChild(edge)
     }
     
     
-    func getEdge(by id:String)->Edge{
+    class func getEdge(by id:String)->Edge{
         return  self.edgeList.filter {$0.id == id}[0]
     }
     
-    func removeEdge(with id:String){
-        let edge = getEdge(by: id)
-        edge.removeFromParent()
-        self.edgeList = self.edgeList.filter {$0.id != id}
+    class func removeEdge(with id:String?){
+        if let id = id {
+            Logger.shared.logWrite(message: "Remove edge id")
+            let edge = getEdge(by: id)
+            TraceToActivity.removeActivity(activity: TraceToActivity.getActivity(by: edge.from))
+            TraceToActivity.removeActivity(activity: TraceToActivity.getActivity(by: edge.to))
+//            edge.from?.removeEdge(edge: edge)
+//            edge.to?.removeEdge(edge: edge)
+//            edge.from?.redrawArc(with: -1)
+//            edge.to?.redrawArc(with: -1)
+            //edge.removeFromParent()
+                self.edgeList = self.edgeList.filter {$0.id != id}
+            
+            }
     }
 }
