@@ -1,0 +1,14 @@
+{	"project_name":"MyProject1"
+	"type":"arithmetic",
+	"graph":{
+		"func1":["func2"],
+		"func2":["func3"],
+		"func3":["func4"],
+		"func4":[]},
+	"graph_reverse":{
+		"func1":[],
+		"func2":["func1"],
+		"func3":["func2"],
+		"func4":["func3"]
+	}
+}

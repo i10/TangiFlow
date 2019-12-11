@@ -1,0 +1,66 @@
+{
+  "arg_data" : {
+    "PT-127.99.7" : {
+      "main_args" : {
+        "image" : "PT-127.99.01_copy1"
+      },
+      "controled_args" : {
+
+      }
+    },
+    "PT-127.99.01_copy2" : {
+      "main_args" : {
+
+      },
+      "controled_args" : {
+        "controled_value" : "\/Users\/ppi\/Desktop\/ImageSource\/Cities\/London.jpg"
+      }
+    },
+    "PT-127.99.01_copy1" : {
+      "main_args" : {
+
+      },
+      "controled_args" : {
+        "controled_value" : "\/Users\/ppi\/Desktop\/ImageSource\/Documentary\/penguins.jpg"
+      }
+    },
+    "PT-127.99.6" : {
+      "main_args" : {
+        "image" : "PT-127.99.01_copy2"
+      },
+      "controled_args" : {
+
+      }
+    }
+  },
+  "graph_reverse" : {
+    "PT-127.99.6" : [
+      "PT-127.99.01_copy2"
+    ],
+    "PT-127.99.01_copy2" : [
+
+    ],
+    "PT-127.99.01_copy1" : [
+
+    ],
+    "PT-127.99.7" : [
+      "PT-127.99.01_copy1"
+    ]
+  },
+  "type" : "image",
+  "caller" : "PT-127.99.6",
+  "graph" : {
+    "PT-127.99.6" : [
+
+    ],
+    "PT-127.99.7" : [
+
+    ],
+    "PT-127.99.01_copy2" : [
+      "PT-127.99.6"
+    ],
+    "PT-127.99.01_copy1" : [
+      "PT-127.99.7"
+    ]
+  }
+}
