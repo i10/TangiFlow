@@ -49,6 +49,7 @@ They can have some extra input as textual data and those inputs can be provided 
 <img src="https://github.com/i10/TangiFlow/blob/master/ReadMe%20Images/slider.jpg" alt="" height="300">
 <img src="https://github.com/i10/TangiFlow/blob/master/ReadMe%20Images/keyboard.png" alt="" height="300">
 
+<a name="available"/>
 
 ## Available Functionalities
 
@@ -66,6 +67,7 @@ Users can use the following predefined functionalities to edit image files:
 Users can also create their own functions using Python; see [Extending Tangiflow](#custom)
 
 <a name="installation"/>
+
 ## Installation
 
 This git repository consists of two parts: Python back-end and Swift front-end. 
@@ -100,6 +102,7 @@ You can check how to install dependencies from official [site]((https://cocoapod
 After all these dependencies are installed the software is ready to run on our setup. Simply open file _MasterAsif2.workspace_ in XCode and run the project.
 
 <a name="custom"/>
+
 ## Extending TangiFlow
 
 Developers can create their own functions. 
