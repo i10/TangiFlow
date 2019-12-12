@@ -3,7 +3,7 @@
 ## Table of Contents  
 * [What is TangiFlow?](#description)
 * [Available Functionalities](#available)  
-* [Installation](#instalation)  
+* [Installation](#installation)  
 * [Extending TangiFlow](#custom)
 <a name="description"/>
 
