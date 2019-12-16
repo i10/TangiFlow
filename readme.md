@@ -100,8 +100,12 @@ You can check how to install dependencies from official [repository]((https://gi
   * textwrap
   
 After all these dependencies are installed the software is ready to run on our setup. Simply open file _MasterAsif2.workspace_ in XCode and run the project. 
-Note: please make sure to checkout TangiFlow_Version branch from MTK repository and build that version of MTK. If you encounter error like this ![Workspace](https://github.com/i10/TangiFlow/blob/master/ReadMe%20Images/mtkerror.png)
-just go to the path which stands after _Referenced from_ and copy paste the MTK inside the Frameworks folder.
+Note: please make sure to checkout TangiFlow_Version branch from MTK repository and build that version of MTK. If you encounter error like one on the next screenshot just go to the path which stands after _Referenced from_ and copy paste the MTK inside the Frameworks folder. 
+
+![errorscreen](https://github.com/i10/TangiFlow/blob/master/ReadMe%20Images/mtkerror.PNG)
+
+
+
 
 <a name="custom"/>
 
