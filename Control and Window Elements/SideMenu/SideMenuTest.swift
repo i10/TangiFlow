@@ -27,16 +27,8 @@ class SideMenuTest:SKNode,MTKButtonDelegate{
     override init() {
         super.init()
         let frame = SKShapeNode(rectOf: CGSize(width: 365, height: 1100))
-        //let openButton = MTKButton(size: CGSize(width: 50, height: 50), label: ">")
-        
-        //openButton.add(target: self, action: #selector(self.buttonTapped(button:)))
-        //openButton.zPosition = 4
-        //self.addChild(openButton)
-        //  openButton.position = CGPoint(x: 208, y: 30)
-        
         frame.fillColor = NSColor.gray
         self.position = CGPoint(x: 180, y: 550)
-        //self.drawMenu()
         self.addChild(frame)
     }
     
@@ -137,9 +129,13 @@ class SideMenuTest:SKNode,MTKButtonDelegate{
         }
         self.drawMenu(chunked: true)
     }
-    
+    /**
+        Based on projects json file this function populates toolbars with functions
+    */
     func decomposeJSON(json:JSON) -> [MTKButton:[[MTKButton]]]{
+        //list of group titles
         var groupSets = Set<String>()
+        //menu structure
         var menuStruct:[MTKButton:[[MTKButton]]] = [:]
         
         for (key,_) in json{
