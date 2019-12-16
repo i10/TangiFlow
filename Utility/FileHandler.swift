@@ -25,7 +25,12 @@ class FileHandler{
     var imageSource = "/Users/ppi/Desktop/ImageSource"
     var fileManager = FileManager.default
     
-    
+   /**
+    This function returns list of all files in some path
+        - parameters:
+            - path: an absolute path to some folder
+            
+    */
     public func getContent(of path:String) -> [URL]{
         var files:[URL] = []
         do {
@@ -34,6 +39,12 @@ class FileHandler{
         return files
     }
     
+    /**
+    This function deletes all files in some path
+        - parameters:
+            - path: an absolute path to some folder
+            
+    */
     public func cleanContent(of path:String){
         print("CLEANING CONTENT OF")
         let files = self.getContent(of: path)
@@ -43,12 +54,24 @@ class FileHandler{
         }
     }
     
+    /**
+    This function removes specific file
+        - parameters:
+            - path: an absolute path to some file
+            
+    */
     func removeFile(at path:URL){
         do{
             try  fileManager.removeItem(at: path)
         }catch{ print("Error while deleting file: \(error.localizedDescription)") }
     }
     
+    /**
+    This function returns json file at path
+        - parameters:
+            - path: an absolute path to some folder
+            
+    */
     func getJsonContent(of path:String) -> JSON?{
         do{
             let data = try Data(contentsOf: URL(fileURLWithPath: path), options: .mappedIfSafe)
@@ -61,6 +84,13 @@ class FileHandler{
         }catch{print("Error while getting json: \(error.localizedDescription)")}
         return nil
     }
+    
+    /**
+    This function writes json data to file
+        - parameters:
+            - path: an absolute path to some folder
+            
+    */
     func writeJsonContent(data:JSON,to path:String){
        // let json = JSON(data)
         let str = data.description
