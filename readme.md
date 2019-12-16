@@ -89,9 +89,9 @@ var imageSource = "/Users/ppi/Desktop/ImageSource"
 _/Users/ppi/Documents/Code/MasterAsifPythonBackEnd/_ is the path where our back-end is installed. 
 You can change this part of paths to the location of python back-end on your machine.
 After installing the back-end and front-end, make sure to install dependencies. 
-For the front-end you can use _CocoaPods_  to install SwiftyJSON. 
-This is the only dependency we are using (_CocoaPods_ is dependency manager for Swift projects. 
-You can check how to install dependencies from official [site]((https://cocoapods.org/))).  For the back-end you will need to install next libraries using _PIP_ (PIP is a package installer for python. You can learn how to install packages using pip from official [site](https://pypi.org/project/pip/)):
+For the front-end you can use _Carthage_  to install SwiftyJSON. 
+This is the only dependency we are using (_Carthage_ is dependency manager for Swift projects. 
+You can check how to install dependencies from official [repository]((https://github.com/Carthage/Carthage))).  For the back-end you will need to install next libraries using _PIP_ (PIP is a package installer for python. You can learn how to install packages using pip from official [site](https://pypi.org/project/pip/)):
   * pythonflow
   * cv2
   * pilgram
@@ -99,7 +99,9 @@ You can check how to install dependencies from official [site]((https://cocoapod
   * numpy
   * textwrap
   
-After all these dependencies are installed the software is ready to run on our setup. Simply open file _MasterAsif2.workspace_ in XCode and run the project.
+After all these dependencies are installed the software is ready to run on our setup. Simply open file _MasterAsif2.workspace_ in XCode and run the project. 
+Note: please make sure to checkout TangiFlow_Version branch from MTK repository and build that version of MTK. If you encounter error like this ![Workspace](https://github.com/i10/TangiFlow/blob/master/ReadMe%20Images/mtkerror.png)
+just go to the path which stands after _Referenced from_ and copy paste the MTK inside the Frameworks folder.
 
 <a name="custom"/>
 
