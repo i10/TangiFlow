@@ -9,7 +9,9 @@
 import Foundation
 import MultiTouchKitSwift
 class TangibleInteraction:MTKButtonDelegate{
+    //tangibleList contains ids of all instantiated tangible nodes in the scene
     static var tangibleList:[String] = []
+    //tangibleEntities contains all instantiated tangible objects in the scene
     static var tangibleEntities:[Tangible] = []
     static var view:SKView? = nil
     
