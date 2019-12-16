@@ -17,6 +17,7 @@ class Tangible: SKNode,MTKButtonDelegate {
     var image:String = ""
     var view:SKView? = nil
     var previousPosition:CGPoint? = nil
+    
     override init() {
         super.init()
     }
@@ -37,14 +38,16 @@ class Tangible: SKNode,MTKButtonDelegate {
         closeButton.position = CGPoint(x: 0, y: 140)
         closeButton.add(target: self, action: #selector(self.close(button:)))
         self.view = view
-        self.addChild(closeButton)
-        
+        self.addChild(closeButton) 
     }
     
     @objc func close(button:MTKButton){
         TangibleInteraction.removeTangible(id: self.id)
     }
     
+    /**
+    This function adds button with label copy on it near tangible node            
+    */
     func addCopy(nodes:[SKNode]){
         self.cloneButton.removeFromParent()
         self.copyButton.removeFromParent()
@@ -52,16 +55,16 @@ class Tangible: SKNode,MTKButtonDelegate {
         self.copyButton.add(target: self, action: #selector(self.copyImage(button:)))
         self.copyButton.name = (nodes[0] as! ImageTypeResultNode).url
         self.addChild(self.copyButton)
-        //tangible.addChild(copy)
         self.copyButton.position = CGPoint(x: -180, y: 0)
         self.copyButton.zPosition = 20
     }
-    
+     /**
+    This function adds button with label paste on it near tangible node            
+    */
     func addClone(){
-         self.copyButton.removeFromParent()
+        self.copyButton.removeFromParent()
         self.cloneButton.removeFromParent()
         if let name = copyButton.name{
-       
             self.cloneButton = MTKButton(size: CGSize(width: 120, height: 40), label: "paste")
             self.cloneButton.add(target: self, action: #selector(self.cloneImage(button:)))
             self.cloneButton.name = name
@@ -69,7 +72,6 @@ class Tangible: SKNode,MTKButtonDelegate {
             //tangible.addChild(copy)
             self.cloneButton.position = CGPoint(x: 180, y: 0)
             self.cloneButton.zPosition = 20
-            
         }
     }
     
