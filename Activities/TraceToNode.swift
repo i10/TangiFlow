@@ -5,7 +5,9 @@
 //  Created by PPI on 16.04.19.
 //  Copyright © 2019 RWTH Aachen University. All rights reserved.
 //
-
+/**
+While working with nodes e.g. moving them around we attach them to specific MTKTrace
+*/
 import Foundation
 import MultiTouchKitSwift
 class TraceToNode{
@@ -26,7 +28,9 @@ class TraceToNode{
         }
     }
     
-    
+    /*
+    Returns instance of class which stores data which MTKTrace is moving which node
+    */
     class func getActivity(by id:Int) -> TraceToNode?{
         let activities = TraceToNode.nodeList.filter{$0.trace?.uuid == id}
         if activities.isEmpty{return nil}
