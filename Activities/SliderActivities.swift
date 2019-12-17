@@ -5,7 +5,9 @@
 //  Created by PPI on 06.05.19.
 //  Copyright © 2019 RWTH Aachen University. All rights reserved.
 //
-
+/*
+While being used sliders get attached to MTKTrace creating SliderActivity which we can identify given touch by specific MTKTrace unique id
+*/
 import Foundation
 import MultiTouchKitSwift
 class SliderActivity{
