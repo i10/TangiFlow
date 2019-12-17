@@ -167,6 +167,10 @@ class Node: SKNode,MTKButtonDelegate {
         self.base.fillColor = color
     }
     
+    /*
+        While running the program TangiFlow colors the path of the flow based on Breadth First Search (BFS) algorithm. 
+        Following function finds next nodes to which current node is connected as a part of BFS algorithm
+    */
     func crawl(){
         var checked:[Node] = [self]
         var checking:[Node] = [self]
