@@ -87,7 +87,9 @@ class Slider: SKNode {
         self.addChild(leftLabel)
         self.addChild(rightLabel)
     }
-    
+    /**
+    This function counts value of slider based on position of slider bar
+    */
     func countValue(){
         if let parent = self.parent as? Node {
             if parent.funcName  != "image_source"{
@@ -112,7 +114,9 @@ class Slider: SKNode {
             image.reloadImage(zoom: CGFloat((currentValue as NSString).doubleValue ))
         }
     }
-    
+    /**
+    This function returns position of bar of the slide
+    */
     func countPosition() -> CGFloat{
         let distance = abs(self.min - self.defaultVal)*self.pixelsPerStep
         let position = -80 + distance
