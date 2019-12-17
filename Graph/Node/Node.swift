@@ -57,6 +57,31 @@ class Node: SKNode,MTKButtonDelegate {
         self.arcManager?.addOutputArc()
     }
     
+    /*
+    Init for node
+        -Parameters:
+            -id: unique id of the node
+            -position: position of the node in the scene
+            -json: json data for example in following format based on which TangiFlow will create a node
+                            "info" : {
+                              "text" : "Lorem Ipsum Lorem Ipsum Lorem Ipsum",
+                              "img" : "\/Users\/ppi\/Documents\/Code\/MasterAsifPythonBackEnd\/Samples\/valencia.jpg"
+                            },
+                            "group_id" : "Apply filters",
+                            "alias" : "Apply Valencia filter",
+                            "arguments" : {
+                              "controled_args" : {
+
+                              },
+                              "main_args" : {
+                                "image" : "Image input"
+                              }
+                            },
+                            "function" : "apply_valencia"
+                          }
+            -view:SKView object to which scene of the node belongs
+        
+    */
     convenience init(id:String,position:CGPoint,json:JSON,view:SKView) {
         self.init()
         status.fontColor = .black
@@ -117,6 +142,8 @@ class Node: SKNode,MTKButtonDelegate {
         label?.position = CGPoint(x:0,y:185)
     }
     
+    
+
     @objc func play(button:MTKButton){
         //self.crawl()
         if status.parent == nil {
@@ -144,14 +171,6 @@ class Node: SKNode,MTKButtonDelegate {
         var checked:[Node] = [self]
         var checking:[Node] = [self]
         var result:[Node] = []
-//        for (_,value) in self.inArgs{
-//            if let node = NodeManager.getNode(with: value){
-//                checking.append(node)
-//                result.append(node)
-//                checked.append(node)
-//            }
-//
-//        }
         while !checking.isEmpty{
             var popped = checking.popLast()
             for (_,value) in popped!.inArgs{
