@@ -9,7 +9,11 @@
 import Foundation
 import MultiTouchKitSwift
 import SpriteKit
-
+/**
+Since MTK supports multi-touch while working we 
+and connecting nodes with edges we need to keep track of which process of connection belongs to which MTKTrace.
+This class helps to accomplish this task.
+*/
 class TraceToActivity{
     static var activityList:[TraceToActivity] = []
     var id:String?
@@ -32,13 +36,18 @@ class TraceToActivity{
         }
         TraceToActivity.activityList.append(self)
     }
-    
+    /*
+    Returns instance of TraceToActivity given unique id
+    */
     class func getActivity(by id:String) -> TraceToActivity?{
         let activities = TraceToActivity.activityList.filter{$0.id == id && ($0.from?.id == id || $0.to?.id == id)}
         if activities.isEmpty{return nil}
         return activities[0]
     }
     
+     /*
+    Returns instance of TraceToActivity given input or output arc
+    */
     class func getActivity(by arc:Arc?) -> TraceToActivity?{
         guard let arc = arc else {return nil}
         let activities = TraceToActivity.activityList.filter{$0.from == arc || $0.to == arc}
@@ -46,6 +55,9 @@ class TraceToActivity{
         return activities[0]
     }
     
+     /*
+    Returns instance of TraceToActivity given unique id of MTKTrace 
+    */
     class func getActivity(by trace:Int) -> TraceToActivity?{
         let activities = TraceToActivity.activityList.filter{$0.currentTrace == trace}
         if activities.isEmpty{return nil}
