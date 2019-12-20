@@ -26,6 +26,8 @@ class Graph2{
         self.nodeManager.addNode(node: node)
     }
     
+    
+    //each touch event which deals with connecting two arcs creates activity object which stores information about to which arc touch is related
     func setActivity(activity:TraceToActivity,trace:MTKTrace,to:Arc?,from:Arc?,arc:Arc){
         activity.currentTrace = trace.uuid
         activity.edge = Edge(from: CGPoint.zero, to: CGPoint.zero)
@@ -34,6 +36,9 @@ class Graph2{
         activity.edge?.from = from
         activity.fulcrum = arc
     }
+    
+    //this function returns boolean value wether point is in bounds of circle with given center and radius or not
+    //
     func inCircle(center:CGPoint?,point:CGPoint?,radius:CGFloat?)->Bool{
         if let center = center,let point = point,let radius = radius{
             let x2 = (center.x - point.x)*(center.x - point.x)
@@ -43,6 +48,7 @@ class Graph2{
         return false
     }
     
+    //this function returns boolean value wether point is in bounds of ring with given center, inner radius and outer radius
     func inRing(center:CGPoint?,point:CGPoint?,radiusIn:CGFloat?,radiusOut:CGFloat?)->Bool{
         if let center = center,let point = point,let radiusIn = radiusIn, let radiusOut = radiusOut{
             let x2 = (center.x - point.x)*(center.x - point.x)
@@ -52,9 +58,8 @@ class Graph2{
         return false
     }
     
-    
+    //this function handles general touch down events
     func touchDown(trace:MTKTrace){
-        Logger.shared.logWrite(message: "Touch down event with trace id \(trace.uuid)")
         if let scene = self.scene{
             var allNodes = scene.nodes(at:trace.position!).filter{$0 is Node}
             var sliderButton = scene.nodes(at: trace.position!).filter{$0.name == "sliderButton"}
@@ -64,10 +69,7 @@ class Graph2{
                 return
             }
             var node:Node? = nil
-//            if !allNodes.isEmpty{
-//                node = allNodes[0] as? Node
-//            }
-            
+
             for item in allNodes{
                 if self.inCircle(center: item.position, point: trace.position, radius: 100){
                     node = item as? Node
@@ -80,12 +82,11 @@ class Graph2{
             } else{
                 _ = TraceToNode(node: node ?? nil, trace: trace)
             }
-            // self.nodeTouchDown(event:event,scene: scene)
         }
     }
     
+    //this function handles touch  down events on arcs of nodes
     func arcTouchDown(trace:MTKTrace,scene:SKScene){
-        
         var allArcs = scene.nodes(at:trace.position!).filter{$0 is Arc}
         if !allArcs.isEmpty{
             let arc = allArcs[0] as! Arc
@@ -122,10 +123,8 @@ class Graph2{
         }
     }
     
-    
+    //this function handles general touch up events
     func touchUp(trace:MTKTrace) {
-        Logger.shared.logWrite(message: "Touch up event with trace id \(trace.uuid)")
-        //TraceToNode.removeActivity(id: trace.uuid)
         guard let scene = self.scene as? GameScene else {return}
         guard let activity = TraceToActivity.getActivity(by: trace.uuid) else{return}
         var allNodes = scene.nodes(at: trace.position!).filter{!($0 is Edge) && ($0 is Arc)}
@@ -162,9 +161,8 @@ class Graph2{
         }
     }
     
-    
+    //this function handles touch dragging events
     func touchMove(trace:MTKTrace){
-        Logger.shared.logWrite(message: "Touch move event with trace id \(trace.uuid)")
         guard let scene = self.scene else {return}
         var allNodes = scene.nodes(at:trace.position!).filter{$0 is Node}
         
@@ -204,7 +202,7 @@ class Graph2{
         }
     }
 
-    
+    //this funtion connects two arcs if it is possible otherwise it throws ArcIsFull.CanNotAddEdge exception
     func putEdge(trace:MTKTrace) throws{
         Logger.shared.logWrite(message: "Put edge with trace id \(trace.uuid)")
         guard let scene = self.scene as? GameScene else {return}
@@ -222,6 +220,7 @@ class Graph2{
         }
     }
     
+    
     func moveNode(node:Node, trace:MTKTrace){
         Logger.shared.logWrite(message: "Move node \(node.id!) with trace id \(trace.uuid)")
         guard let activity = TraceToNode.getActivity(by: trace.uuid) else {return}
@@ -238,6 +237,8 @@ class Graph2{
         }
     }
     
+    //Since text fields are not MTKScene objects and are subclasses of regular NSTextField 
+    //when we move nodes text fields assigned to the node does not move and we have to handle it separately
     func moveTextFields(node:Node,deltaX:CGFloat,deltaY:CGFloat){
         if let controlElements = node.controlElements {
             for item in (controlElements.textFields){
