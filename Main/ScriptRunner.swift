@@ -9,6 +9,8 @@
 import Foundation
 import SwiftyJSON
 class ScriptRunner{
+    
+    //This function runs pytho script using shell
     func script(id:String){
         //FileHandler.shared.cleanContent(of:FileHandler.shared.resultFolderPath)
         self.extractJson(path: FileHandler.shared.graphDataPath,id:id)
@@ -26,7 +28,8 @@ class ScriptRunner{
         //task.waitUntilExit()
     }
     
-    
+    //python needs json file with structure of graph and arguments passed by users
+    //this function gathers information about graph and all arguments and creates json file
     func extractJson(path:String,id:String){
         var graphStruct:JSON = [:]
         var projData:JSON = [:]
@@ -53,15 +56,13 @@ class ScriptRunner{
         FileHandler.shared.writeJsonContent(data: projData, to: path)
     }
     
-    
+    //This function creates json structure with reverted direction graph
+    //which is need for python
     func revertGraph(graph:JSON)->JSON{
         var result:JSON = [:]
         for key in graph.dictionary!.keys{
             if !result[key].exists() {
-                print("HELLO!")
                 result[key]=[]
-                
-                
             }
             for innerkey in graph.dictionary!.keys{
                 if graph[innerkey].arrayValue.contains(JSON(key)) {
