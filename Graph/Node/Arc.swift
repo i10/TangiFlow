@@ -17,7 +17,6 @@ class Arc:SKShapeNode{
     var isInput:Bool = false
     let inColors:[Bool:NSColor] = [true:NSColor(calibratedRed: 111.0/255.0, green: 195.0/255.0, blue: 223.0/255.0, alpha: 1.0),
                                  false:NSColor(calibratedRed: 144/255.0, green: 238.0/255.0, blue: 144/255.0, alpha: 1.0)]
-    
     let outColors:[Bool:NSColor] = [true:NSColor(calibratedRed: 111.0/255.0, green: 195.0/255.0, blue: 223.0/255.0, alpha: 1.0),false:NSColor(calibratedRed: 144/255.0, green: 238/255.0, blue: 144/255.0, alpha: 1.0)]
     var segmentRadius:CGFloat = 30
     var angle:CGFloat?
@@ -71,12 +70,6 @@ class Arc:SKShapeNode{
         self.name = name
         self.parentNode = parentNode
         self.setLocation()
-        
-//        var close = MTKButton(size: CGSize(width: 10, height: 10), image: "close")
-//        close.position = CoordinateConverter.polarToDecart(radius: self.radius! + 40, angle: self.polarAngle)
-//        close.zPosition = 20
-//        //close.position = CGPoint(x: 150, y: 0)
-//        self.parentNode?.addChild(close)
     }
     
     
@@ -88,7 +81,6 @@ class Arc:SKShapeNode{
         let parent = self.parent
         self.removeFromParent()
         if(factor==1 && !popped){
-            
             self.radius = self.radius! + self.segmentRadius*0.5
             self.segmentRadius = 1.5*self.segmentRadius
             self.popped = true
@@ -155,7 +147,6 @@ class Arc:SKShapeNode{
     
     func changeArcColor(){
         if isInput{
-            
             self.strokeColor = .black
             self.fillColor = inColors[self.canAdd]!
             self.fillColor = self.inColors[self.canAdd]!
@@ -163,7 +154,6 @@ class Arc:SKShapeNode{
             self.strokeColor = self.outColors[self.canAdd]!
             self.fillColor = self.outColors[self.canAdd]!
         }
-        
     }
     
     
