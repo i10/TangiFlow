@@ -10,7 +10,7 @@ class Graph:
             raise
 
 
-
+    #returns all nodes of graph which don't have output edges
     def get_terminal_nodes(self)->dict:
         terminal = []
         for key,value in self.graph.items():
@@ -18,14 +18,14 @@ class Graph:
                 terminal.append(key)
         return terminal
 
-
+     #returns all nodes of graph which don't have input edges
     def get_source_nodes(self)->dict:
         source = []
         for key, value in self.reverse_graph.items():
             if not value:
                 source.append(key)
         return source
-
+    #returns nodes which have input and output edges
     def get_middle_nodes(self)->dict:
         terminal = self.get_terminal_nodes()
         source = self.get_source_nodes()
@@ -34,7 +34,9 @@ class Graph:
             if not key in terminal and not key in source:
                 middle.append(key)
         return middle
-
+    
+    #implementation of Breadth First Search algorithm. Finds path from node s
+    #https://en.wikipedia.org/wiki/Breadth-first_search
     def BFS(self,s,graph):
         visited = {}
         for key in self.graph.keys():
@@ -52,7 +54,8 @@ class Graph:
                     visited[i] = True
 
         return visited
-
+    
+    #returns non-oriented version of the graph
     def oriented_to_non(self):
         import copy
         new_graph = copy.deepcopy(self.graph) #dict(self.graph)
@@ -65,7 +68,10 @@ class Graph:
 
     def len_filter(self,item):
         return len(item.items()) > 1
-
+    
+    
+    #this function decomposes the graph into components
+    #https://en.wikipedia.org/wiki/Component_(graph_theory)
     def graph_components(self):
         components = []
         non_or_graph = self.oriented_to_non()
