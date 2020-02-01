@@ -5,9 +5,11 @@ from PythonToSwift.BackToSwift import BackToSwift
 import Config
 
 class FlowManager:
+    #this function creates smaller graph structures from components of graph
     def populate_components(self,components,graph_data,project_data):
         self.components_flows = []
         for component in components:
+            #we iterate through all smaller components of graph and create dictionary which stores all information about that smaller graph
             sub_graph = {"graph": {}, "graph_reverse": {}, "type": "","arg_data":{},"caller":""}
             for key in component.keys():
                 sub_graph["graph"][key] = graph_data["graph"][key]
@@ -19,9 +21,11 @@ class FlowManager:
                 Config.Config.data_processing_tool = project_data["config"]["tool_type"]
             self.components_flows.append(FlowGenerator(Graph(sub_graph), project_data))
 
-
+    #this function runs components of graph which processes data passing through graph
     def run_components(self):
         for flow in self.components_flows:
+            #we iterate through components and find out which component was called by user from UI
+            #Then using BackToSwift module we create results as JSON files
             terminal = flow.terminal_nodes
             middle = flow.middle_nodes
             start = flow.source_nodes
