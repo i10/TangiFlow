@@ -15,6 +15,7 @@ class ControlElements{
     var filePicker:MTKFileManager = MTKFileManager()
     var parent:Node?
     
+    //initializes control elements for node such as sliders, textfields and handles how to place them around the node
     init(json:JSON,node:Node) {
         self.parent = node
         for control in Array(json.dictionaryValue.keys){
@@ -27,21 +28,11 @@ class ControlElements{
                 textField.parent = node
                 textField.type = "number"
                 textField.alignment = .right
-               // textField.font?.se
-                //textField.font?.
-                //textField.font = NSFont(name: "Arial", size: 35)
-//                textField.setFont(NSFont(name: "Arial", size: 35)!, range: NSRange(location: 0, length: 200))
-                
                 textField.backgroundColor = NSColor.red
                 self.textFields.append(textField)
-                //textField.setFrameOrigin(CGPoint(x:self.position.x-80,y:self.position.y + 60 + multiplier*60.0))
-                //multiplier-=1.0
                 textField.backgroundColor = NSColor.white
-                //textField.placeHo = json[control]["alias"].stringValue
                 parent!.view?.addSubview(textField)
-                //view.addSubview(textField)
             case "text":
-                
                 var textStorage = NSTextStorage()
                 var layoutManager = NSLayoutManager()
                 textStorage.addLayoutManager(layoutManager)
@@ -54,27 +45,6 @@ class ControlElements{
                 textView.isEditable = true
                 textView.isSelectable = true
                 parent!.view!.addSubview(textView)
-                
-                //textView.textStorage?.append(NSAttributedString(string: "5"))
-                
-                
-                
-                
-//                
-//                let textFieldFrame = CGRect(origin: CGPoint(x:0,y:0), size: CGSize(width: 300, height: 300))
-//                var textStorage = NSTextContainer(containerSize: CGSize(width: 300, height: 300))
-//                let textField = CustomTextFields(frame: textFieldFrame, textContainer: textStorage ,id:control)
-//                textField.parent = node
-//                textField.textStorage?.append(NSAttributedString(string: "lskdjfdslf"))
-//                textField.type = "text"
-//                textField.backgroundColor = NSColor.red
-//                self.textFields.append(textField)
-//               //textField.setFrameOrigin(CGPoint(x:500,y:500))
-//                //multiplier-=1.0
-//                textField.backgroundColor = NSColor.white
-//               // textField.placeholderString = json[control]["alias"].stringValue
-//                parent!.view?.addSubview(textField)
-            //view.addSubview(textField)
             case "slider":
                 let slider = Slider(min: CGFloat(json[control]["min"].floatValue),
                                     max: CGFloat(json[control]["max"].floatValue),
@@ -113,19 +83,6 @@ class ControlElements{
     
     
     func positionControls(){
-        
-//        for index in 0..<textFields.count{
-//            print(index)
-//    
-//            print(parent!.position.y + CGFloat(60 + (index+1)*120))
-//            textFields[index].setFrameOrigin(CGPoint(x:parent!.position.x-80,y:parent!.position.y + CGFloat(150 + index*70)))
-//        }
-//        var y = 150  + textFields.count * 70
-//        for index in 0..<sliders.count{
-//            sliders[index].position = CGPoint(x: 0, y: y + 120*index)
-//        }
-        
-        
         for index in 0..<textFields.count{
             print(index)
             
@@ -138,7 +95,8 @@ class ControlElements{
         }
     }
     
-    
+    //when UI passes data to back-end this function collects all arguments available in control elements 
+    //such as current value of slider, current text in textfield etc.
     func retrieveJSON()->JSON{
         var json:JSON = [:]
         for item in textFields {
