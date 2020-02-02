@@ -4,6 +4,7 @@ from PythonToSwift.ResultMaker.ResultMakerBase import ResultMakerBase
 
 
 class PlotTypeResultMaker(ResultMakerBase):
+    #this is base class for plot result on UI
     def create_file(self,plot_type,id="",data=None,error=None,project_name="",x=[],y=[]):
         if not error:
             json_data = {"project_name":project_name,\
