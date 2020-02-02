@@ -64,12 +64,13 @@ class Graph2{
             var allNodes = scene.nodes(at:trace.position!).filter{$0 is Node}
             var sliderButton = scene.nodes(at: trace.position!).filter{$0.name == "sliderButton"}
             print(sliderButton)
+            //if we are touching slider SliderActivity should take over and handle changing the value of slider
             if !sliderButton.isEmpty{
                 let activity = SliderActivity(trace: trace, slider: sliderButton[0].parent?.parent as! Slider)
                 return
             }
             var node:Node? = nil
-
+            //otherwise if we are touching body of the node we should handle node touchdown
             for item in allNodes{
                 if self.inCircle(center: item.position, point: trace.position, radius: 100){
                     node = item as? Node
@@ -90,6 +91,7 @@ class Graph2{
         var allArcs = scene.nodes(at:trace.position!).filter{$0 is Arc}
         if !allArcs.isEmpty{
             let arc = allArcs[0] as! Arc
+            //if touch down event happens on arc of the node it creates an instance of TraceToActivity
             if  self.inRing(center: arc.parentNode?.position, point: trace.position, radiusIn: 110, radiusOut: 140){
                 if TraceToActivity.getActivity(by: arc) == nil {
                     let to:Arc? = arc.isInput ? arc:nil
@@ -129,10 +131,13 @@ class Graph2{
         guard let activity = TraceToActivity.getActivity(by: trace.uuid) else{return}
         var allNodes = scene.nodes(at: trace.position!).filter{!($0 is Edge) && ($0 is Arc)}
         var sliderButton = scene.nodes(at: trace.position!).filter{$0.name == "sliderButton"}
+        //if touch up appears from slide bar it removes activities related to that slide bar
         if !sliderButton.isEmpty{
             SliderActivity.removeActivity(id: trace.uuid)
             return
         }
+        //if  hte point of screen from where touch was lift of is empty just delete any activity
+        //otherwise if it is Arc check if an edge is being dragged to that arc if yes connect edge to the arc
         if allNodes.isEmpty{
             EdgeManager.removeEdge(with: activity.edge?.id)
             TraceToActivity.removeActivity( activity:activity)
@@ -167,6 +172,7 @@ class Graph2{
         var allNodes = scene.nodes(at:trace.position!).filter{$0 is Node}
         
         //if !sliderButton.isEmpty{
+        //if move action is happening on slider button calculate the value of slider
             if let activity = SliderActivity.getActivity(by: trace.uuid){
                 let deltaX = activity.oldX - activity.trace!.position!.x
                
@@ -192,6 +198,7 @@ class Graph2{
         if !allNodes.isEmpty{
             position = allNodes[0].position
         }
+        //if finger is placed on the body of node then it is moving node action and we need to handle node movement
         if let activity = TraceToNode.getActivity(by: trace.uuid){
             self.moveNode(node: activity.node!, trace: trace)
         }
