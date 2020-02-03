@@ -61,6 +61,8 @@ class SideMenuTest:SKNode,MTKButtonDelegate{
     
     //this function draws toolbars. 
     //In case there to many elements in menu it divides it into chunks of 6 and adds navigation button
+    //argument 'item' is nil when the user in outer level of the menu. 
+    //If item is not nil it means user has selected some item from the menu and drawMenu should draw inner level
     func drawMenu(item:MTKButton? = nil,chunked:Bool = false){
         self.forwardButton.removeFromParent()
         self.backButton.removeFromParent()
