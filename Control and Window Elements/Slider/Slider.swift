@@ -13,16 +13,21 @@ class Slider: SKNode {
     var values:[CGFloat] = []
     var pixelValues:[CGFloat] = []
     var defaultVal:CGFloat = 0
+    //returns if step of a slider is integer or float value
     var isInt:Bool {
         get {
             return step == 1.0
         }
     }
+    //rreturns amount of total steps of slider
     var totalSteps:Int{
         get{
             return Int(abs(max-min)/step)
         }
     }
+    
+    //computers how many pixels is per step
+    //160 is total length in pixels of the slider. distance is difference between maximum and minimum values of slider
     var pixelsPerStep:CGFloat{
         get{
             return 160.0/self.distance
