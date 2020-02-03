@@ -10,9 +10,9 @@ import Foundation
 import MultiTouchKitSwift
 import SpriteKit
 /**
-Since MTK supports multi-touch while working we 
+Since MTK supports multi-touch while working 
 and connecting nodes with edges we need to keep track of which process of connection belongs to which MTKTrace.
-This class helps to accomplish this task.
+This class helps to accomplish this task. 
 */
 class TraceToActivity{
     static var activityList:[TraceToActivity] = []
@@ -25,6 +25,10 @@ class TraceToActivity{
     var firstArc:Int = 0
     var currentTrace:Int?
     var fulcrum:Arc?
+    /**
+    Object of this class is being instantiated whenever user touches arc of the node and drags finger out of arc
+    creating an edge.
+    */
     init(from:Arc?,to:Arc?) {
         self.id = UUID().uuidString
         if let from = from {
@@ -64,6 +68,10 @@ class TraceToActivity{
         return activities[0]
     }
     
+    /*
+    when user lifts finger from screen and edge is not connected to 2 arcs
+    the edge must be removed from screen 
+    */
     class func removeActivity(activity:TraceToActivity?){
         if let activity = activity{
             activity.edge?.removeFromParent()
