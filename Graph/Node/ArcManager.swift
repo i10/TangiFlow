@@ -19,9 +19,11 @@ class ArcManager:MTKButtonDelegate{
     var outputArcsAmount:Int = 1
     var inputArcsAmount:Int = 1
     var currentArc:Arc?
+    //the angle to rotate SpriteKits drawing element to start to draw a new input arc
     var inputOffset:CGFloat {
         get { return (CGFloat.pi - CGFloat((self.inputArcsAmount+1))*self.spacing)/CGFloat(self.inputArcsAmount) }
     }
+    ////the angle to rotate SpriteKits drawing element to start to draw a new output arc
     var outputOffset:CGFloat {
         get { return (CGFloat.pi - CGFloat((self.outputArcsAmount+1))*self.spacing)/CGFloat(self.outputArcsAmount) }
     }
@@ -78,7 +80,7 @@ class ArcManager:MTKButtonDelegate{
         
     }
     
-    
+    //being called when branch button on node is pressed
     func addOutputArc(){
         if self.outputArcsAmount < 6{
              Logger.shared.logWrite(message: "Add arc to Node \(self.node)")
@@ -97,7 +99,7 @@ class ArcManager:MTKButtonDelegate{
         }
         //section.drawX(angle: section.angle!)
     }
-    
+    //called when close button near arc is pressed
     @objc func removeArc(button:MTKButton){
         print("HELLO")
         self.outputArcsAmount -= 1
