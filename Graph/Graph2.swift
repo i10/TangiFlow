@@ -91,7 +91,8 @@ class Graph2{
         var allArcs = scene.nodes(at:trace.position!).filter{$0 is Arc}
         if !allArcs.isEmpty{
             let arc = allArcs[0] as! Arc
-            //if touch down event happens on arc of the node it creates an instance of TraceToActivity
+            //if touch down event happens on arc of the node it creates an instance of TraceToActivity 
+            //or returns existing TraceToActivity event
             if  self.inRing(center: arc.parentNode?.position, point: trace.position, radiusIn: 110, radiusOut: 140){
                 if TraceToActivity.getActivity(by: arc) == nil {
                     let to:Arc? = arc.isInput ? arc:nil
@@ -136,7 +137,7 @@ class Graph2{
             SliderActivity.removeActivity(id: trace.uuid)
             return
         }
-        //if  hte point of screen from where touch was lift of is empty just delete any activity
+        //if location of touch point is empty just delete any activity
         //otherwise if it is Arc check if an edge is being dragged to that arc if yes connect edge to the arc
         if allNodes.isEmpty{
             EdgeManager.removeEdge(with: activity.edge?.id)
@@ -171,7 +172,6 @@ class Graph2{
         guard let scene = self.scene else {return}
         var allNodes = scene.nodes(at:trace.position!).filter{$0 is Node}
         
-        //if !sliderButton.isEmpty{
         //if move action is happening on slider button calculate the value of slider
             if let activity = SliderActivity.getActivity(by: trace.uuid){
                 let deltaX = activity.oldX - activity.trace!.position!.x
@@ -186,14 +186,11 @@ class Graph2{
                         
                     }
                     
-                    //sliderButton[0].position.y = sliderButton[0].position.y - deltaY
-                    //self.moveArcs(node: node, deltaX: -deltaX, deltaY: -deltaY)
-                    //self.moveTextFields(node: node, deltaX: -deltaX, deltaY: -deltaY)
+
                 }
                 return
             }
-          //  return
-        //}
+
         var position:CGPoint? = nil
         if !allNodes.isEmpty{
             position = allNodes[0].position
