@@ -6,7 +6,8 @@
 //  Copyright © 2019 RWTH Aachen University. All rights reserved.
 //
 /*
-While being used sliders get attached to MTKTrace creating SliderActivity which we can identify given touch by specific MTKTrace unique id
+While being used sliders get attached to MTKTrace creating SliderActivity 
+which we can identify given touch by specific MTKTrace unique id
 */
 import Foundation
 import MultiTouchKitSwift
